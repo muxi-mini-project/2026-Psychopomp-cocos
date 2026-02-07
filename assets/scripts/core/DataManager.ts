@@ -61,7 +61,7 @@ export class DataManager extends Component {
             flags: {}, // 空对象代表所有 Flag 为 false/undefined
             timestamp: Date.now()
         };
-        
+
         // 设置一些初始状态
         // this.setFlag("DOOR_LOCKED", true); 
         // this.setFlag("QUEST_STAGE", 1);
@@ -110,6 +110,14 @@ export class DataManager extends Component {
         }
     }
 
+    public hasItem(itemId: string): boolean {
+        return this._saveData.inventory.includes(itemId);
+    }
+
+    public getInventoryList(): string[] {
+        return this._saveData.inventory;
+    }
+
     public removeItem(itemId: string) {
         const index = this._saveData.inventory.indexOf(itemId);
         if (index > -1) {
@@ -119,14 +127,13 @@ export class DataManager extends Component {
         }
     }
 
-    public hasItem(itemId: string): boolean {
-        return this._saveData.inventory.includes(itemId);
+    public getFlag(key: string, defaultValue: any = false): any {
+        if (this._saveData.flags.hasOwnProperty(key)) {
+            return this._saveData.flags[key];
+        }
+        return defaultValue;
     }
-
-    public getInventoryList(): string[] {
-        return this._saveData.inventory;
-    }
-
+    
     /**
      * 设置 Flag
      * @param key 标识符，如 'is_door_open'
@@ -138,12 +145,7 @@ export class DataManager extends Component {
         this.save(); 
     }
 
-    public getFlag(key: string, defaultValue: any = false): any {
-        if (this._saveData.flags.hasOwnProperty(key)) {
-            return this._saveData.flags[key];
-        }
-        return defaultValue;
-    }
+
 
     public getBool(key: string): boolean {
         return !!this.getFlag(key, false);

@@ -4,10 +4,7 @@ import { _decorator, Component, Node, director, game, Game } from 'cc';
 
 const { ccclass, property } = _decorator;
 
-/**
- * 定义游戏的所有可能状态
- * 队友 A/B/C 请注意：所有的逻辑跳转都以此状态为准
- */
+
 export enum GameState {
     INIT = "INIT",           // 初始化（加载资源）
     MENU = "MENU",           // 主菜单/标题界面
@@ -18,10 +15,6 @@ export enum GameState {
     GAME_OVER = "GAME_OVER"  // 结局
 }
 
-/**
- * 全局事件名称常量
- * 用于通知其他脚本：状态变了！
- */
 
 export const GameEvent = {
     STATE_CHANGED: 'GAME_STATE_CHANGED'
@@ -59,18 +52,14 @@ export class GameManager extends Component {
             return;
         }
 
-        // 初始化其他模块 (预留位)
         this.initManagers();
     }
 
     start() {
-        // 游戏启动，默认进入菜单或直接开始
-        this.setState(GameState.INIT);
+        // 游戏启动，默认进入菜单
+        this.setState(GameState.MENU);
     }
 
-    /**
-     * 初始化其他管理器（数据、音频等）
-     */
     private initManagers() {
         console.log("[GameManager] 正在初始化子系统...");
         // DataManager.instance.init();
