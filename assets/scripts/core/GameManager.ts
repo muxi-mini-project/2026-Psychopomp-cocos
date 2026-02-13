@@ -1,20 +1,17 @@
-import { _decorator, Component, Node, director, game, Game } from 'cc';
-// import { DataManager } from './DataManager'; 
-// import { UIManager } from '../ui/UIManager';
-
-const { ccclass, property } = _decorator;
-
+import { _decorator, Component, director } from 'cc';
+const { ccclass } = _decorator;
 
 export enum GameState {
-    INIT = "INIT",           // 初始化（加载资源）
-    MENU = "MENU",           // 主菜单/标题界面
-    CUTSCENE = "CUTSCENE",   // 剧情动画中（如手托蝴蝶，不可操作）
-    GAMEPLAY = "GAMEPLAY",   // 正常解谜游戏
-    PAUSED = "PAUSED",       // 暂停（打开设置界面）
-    DIALOGUE = "DIALOGUE",   // 对话中（点击仅用于过文字）
-    GAME_OVER = "GAME_OVER"  // 结局
+    INIT = "INIT",
+    MENU = "MENU",
+    INTRO_INTERACT = "INTRO_INTERACT",
+    CUTSCENE = "CUTSCENE",
+    GAMEPLAY = "GAMEPLAY",
+    PAUSED = "PAUSED",
+    DIALOGUE = "DIALOGUE",
+    SUBSCENE = "SUBSCENE",
+    GAME_OVER = "GAME_OVER"
 }
-
 
 export const GameEvent = {
     STATE_CHANGED: 'GAME_STATE_CHANGED'
@@ -22,111 +19,137 @@ export const GameEvent = {
 
 @ccclass('GameManager')
 export class GameManager extends Component {
-    
-    // 单例模式
     private static _instance: GameManager = null;
+    private _currentState: GameState = GameState.INIT;
+    private _initialized: boolean = false;
 
     public static get instance(): GameManager {
-        if (!this._instance) {
-            console.error("GameManager 尚未初始化！请确保它挂载在初始场景的根节点上。");
-        }
         return this._instance;
     }
-
-    private _currentState: GameState = GameState.INIT;
 
     public get currentState(): GameState {
         return this._currentState;
     }
 
-    onLoad() {
-        if (GameManager._instance === null) {
-            GameManager._instance = this;
+    public get isInputAllowed(): boolean {
+        return this._currentState === GameState.GAMEPLAY ||
+               this._currentState === GameState.DIALOGUE ||
+               this._currentState === GameState.INTRO_INTERACT;
+    }
 
-            director.addPersistRootNode(this.node);
-            
-            console.log("[GameManager] 初始化成功，已设为常驻节点。");
-        } else {
-            console.warn("[GameManager] 检测到重复实例，正在销毁...");
+    onLoad() {
+        if (GameManager._instance) {
             this.node.destroy();
             return;
         }
-
-        this.initManagers();
+        GameManager._instance = this;
+        director.addPersistRootNode(this.node);
     }
 
     start() {
-        // 游戏启动，默认进入菜单
-        this.setState(GameState.MENU);
+        if (this._initialized) return;
+        this._initialized = true;
+
+        ResourceManager.instance.init(() => {
+            this.setState(GameState.MENU);
+        });
     }
 
-    private initManagers() {
-        console.log("[GameManager] 正在初始化子系统...");
-        // DataManager.instance.init();
-        // AudioManager.instance.init();
-    }
-
-    /**
-     * 切换游戏状态的唯一入口
-     * @param newState 目标状态
-     */
-    public setState(newState: GameState) {
+    public setState(newState: GameState): void {
         if (this._currentState === newState) return;
 
-        this.onExitState(this._currentState);
-
+        this._onExitState(this._currentState);
         const oldState = this._currentState;
         this._currentState = newState;
-        console.log(`[GameManager] 状态切换: ${oldState} -> ${newState}`);
 
-        this.onEnterState(newState);
-
-        // 发送全局事件，通知 UI 和 场景脚本
-        director.emit(GameEvent.STATE_CHANGED, newState);
+        director.emit(GameEvent.STATE_CHANGED, newState, oldState);
+        this._onEnterState(newState);
     }
 
-    /**
-     * 处理进入某个状态时的逻辑
-     */
-    private onEnterState(state: GameState) {
+    private _onEnterState(state: GameState): void {
         switch (state) {
             case GameState.INIT:
-                // TODO: 开始预加载资源
                 break;
+
             case GameState.MENU:
-                // TODO: 显示主菜单 UI
-                // UIManager.instance.showMenu();
+                director.emit("SHOW_FULLSCREEN");
+                director.emit("SHOW_MAIN_MENU");
                 break;
+
+            case GameState.INTRO_INTERACT:
+                director.emit("HIDE_FULLSCREEN");
+                director.emit("SHOW_GAME_UI");
+                break;
+
             case GameState.CUTSCENE:
-                // TODO: 禁用玩家操作，隐藏 HUD
-                console.log("进入动画模式，禁止交互");
+                director.emit("HIDE_GAME_UI");
                 break;
+
             case GameState.GAMEPLAY:
-                // TODO: 允许操作，显示道具栏
-                console.log("进入游戏模式，允许交互");
+                director.emit("SHOW_GAME_UI");
                 break;
+
+            case GameState.DIALOGUE:
+                director.emit("SHOW_GAME_UI");
+                break;
+
+            case GameState.SUBSCENE:
+                break;
+
             case GameState.PAUSED:
-                // TODO: 冻结时间，弹出暂停窗
+                director.emit("SHOW_PAUSE_MENU");
+                break;
+
+            case GameState.GAME_OVER:
+                director.emit("SHOW_GAME_OVER");
                 break;
         }
     }
 
-    /**
-     * 处理退出某个状态时的逻辑
-     */
-    private onExitState(state: GameState) {
+    private _onExitState(state: GameState): void {
         switch (state) {
             case GameState.MENU:
-                // TODO: 隐藏主菜单
+                director.emit("HIDE_MAIN_MENU");
                 break;
-            case GameState.CUTSCENE:
-                // TODO: 动画结束，恢复某些设置
+
+            case GameState.PAUSED:
+                director.emit("HIDE_PAUSE_MENU");
                 break;
-            // ...
+
+            case GameState.GAME_OVER:
+                director.emit("HIDE_GAME_OVER");
+                break;
         }
     }
 
-    public get isInputAllowed(): boolean {
-        return this._currentState === GameState.GAMEPLAY || this._currentState === GameState.DIALOGUE;
+    public startNewGame(): void {
+        DataManager.instance.startNewGame();
+        StoryManager.instance.startChapter("chapter_01");
+    }
+
+    public loadGame(slotId: string): boolean {
+        if (DataManager.instance.loadGame(slotId)) {
+            const sceneId = DataManager.instance.getCurrentScene();
+            SceneViewManager.instance.loadScene(sceneId);
+            return true;
+        }
+        return false;
+    }
+
+    public pause(): void {
+        this.setState(GameState.PAUSED);
+    }
+
+    public resume(): void {
+        this.setState(GameState.GAMEPLAY);
+    }
+
+    public quitToMenu(): void {
+        this.setState(GameState.MENU);
     }
 }
+
+import { ResourceManager } from './ResourceManager';
+import { DataManager } from './DataManager';
+import { StoryManager } from './StoryManager';
+import { SceneViewManager } from './SceneViewManager';

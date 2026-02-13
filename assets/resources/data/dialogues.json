@@ -1,0 +1,80 @@
+{
+    "dialogues": {
+        "dialogue_note": {
+            "id": "dialogue_note",
+            "speaker": "纸条",
+            "lines": [
+                {
+                    "text": "彼岸花开，指引迷途之魂。",
+                    "expression": null
+                },
+                {
+                    "text": "寻找红门的钥匙...",
+                    "expression": null
+                }
+            ],
+            "choices": null,
+            "onComplete": {
+                "action": "set_flag",
+                "flag": "read_note",
+                "value": true
+            }
+        },
+        "dialogue_ch01_door": {
+            "id": "dialogue_ch01_door",
+            "speaker": "神秘声音",
+            "lines": [
+                {
+                    "text": "门是锁着的。",
+                    "expression": "normal"
+                },
+                {
+                    "text": "你需要找到正确的钥匙。",
+                    "expression": "normal"
+                }
+            ],
+            "choices": null,
+            "onComplete": null
+        },
+        "dialogue_intro": {
+            "id": "dialogue_intro",
+            "speaker": "",
+            "lines": [
+                {
+                    "text": "追随蝴蝶的指引...",
+                    "expression": null
+                }
+            ],
+            "choices": null,
+            "onComplete": null
+        },
+        "dialogue_door_unlocked": {
+            "id": "dialogue_door_unlocked",
+            "speaker": "",
+            "lines": [
+                {
+                    "text": "门开了。",
+                    "expression": null
+                }
+            ],
+            "choices": null,
+            "onComplete": {
+                "action": "set_flag",
+                "flag": "door_opened",
+                "value": true
+            }
+        },
+        "dialogue_game_over": {
+            "id": "dialogue_game_over",
+            "speaker": "",
+            "lines": [
+                {
+                    "text": "彼岸花已开，迷途之魂找到了归途。",
+                    "expression": null
+                }
+            ],
+            "choices": null,
+            "onComplete": null
+        }
+    }
+}

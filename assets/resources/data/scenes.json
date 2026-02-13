@@ -1,0 +1,95 @@
+{
+    "scenes": {
+        "scene_intro": {
+            "name": "序幕",
+            "prefab": "prefabs/scenes/scene_intro",
+            "background": "textures/backgrounds/intro_bg",
+            "interactables": [
+                {
+                    "id": "point_butterfly",
+                    "type": "custom",
+                    "eventName": "butterfly_click",
+                    "position": { "x": 0, "y": 0 }
+                }
+            ],
+            "preloadNext": ["scene_main_hall"]
+        },
+        "scene_main_hall": {
+            "name": "大厅",
+            "prefab": "prefabs/scenes/scene_main_hall",
+            "background": "textures/backgrounds/main_hall_bg",
+            "preloadNext": ["scene_bedroom", "scene_kitchen"],
+            "interactables": [
+                {
+                    "id": "point_door",
+                    "type": "scene_switch",
+                    "targetScene": "scene_bedroom",
+                    "animation": "door_open",
+                    "position": { "x": 500, "y": 300 },
+                    "size": { "width": 100, "height": 200 }
+                },
+                {
+                    "id": "point_cabinet",
+                    "type": "subscene",
+                    "targetSubscene": "cabinet_closeup",
+                    "position": { "x": 200, "y": 400 },
+                    "size": { "width": 150, "height": 150 }
+                },
+                {
+                    "id": "point_note",
+                    "type": "dialogue",
+                    "dialogueId": "dialogue_note",
+                    "position": { "x": 800, "y": 500 },
+                    "size": { "width": 80, "height": 60 }
+                },
+                {
+                    "id": "point_key",
+                    "type": "pick_item",
+                    "itemId": "key_red",
+                    "compatibleItems": [],
+                    "position": { "x": 350, "y": 200 },
+                    "size": { "width": 50, "height": 50 }
+                }
+            ],
+            "subscenes": [
+                {
+                    "id": "cabinet_closeup",
+                    "name": "柜子内部",
+                    "prefab": "prefabs/scenes/cabinet_closeup",
+                    "interactables": [
+                        {
+                            "id": "point_cabinet_back",
+                            "type": "scene_switch",
+                            "targetScene": "scene_main_hall",
+                            "position": { "x": 960, "y": 540 },
+                            "size": { "width": 100, "height": 100 }
+                        }
+                    ]
+                }
+            ]
+        },
+        "scene_bedroom": {
+            "name": "卧室",
+            "prefab": "prefabs/scenes/scene_bedroom",
+            "background": "textures/backgrounds/bedroom_bg",
+            "preloadNext": ["scene_main_hall"],
+            "interactables": [
+                {
+                    "id": "point_door_locked",
+                    "type": "use_item",
+                    "compatibleItems": ["key_red"],
+                    "requiredState": "locked",
+                    "position": { "x": 500, "y": 300 },
+                    "size": { "width": 100, "height": 200 }
+                },
+                {
+                    "id": "point_door",
+                    "type": "scene_switch",
+                    "targetScene": "scene_main_hall",
+                    "position": { "x": 500, "y": 300 },
+                    "size": { "width": 100, "height": 200 }
+                }
+            ]
+        }
+    }
+}
