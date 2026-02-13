@@ -67,8 +67,6 @@ export class UIManager extends Component {
         this.gameLayer.active = false;
     }
 
-    // === 全屏 UI ===
-
     public showFullscreenUI(): void {
         if (this.fullscreenLayer) {
             this.fullscreenLayer.active = true;
@@ -83,8 +81,6 @@ export class UIManager extends Component {
             this.fullscreenLayer.active = false;
         }
     }
-
-    // === 游戏 UI ===
 
     public showGameUI(): void {
         if (this.gameLayer) {
@@ -104,8 +100,6 @@ export class UIManager extends Component {
         }
     }
 
-    // === 主菜单 ===
-
     public showMainMenu(): void {
         this.showFullscreenUI();
         if (this.mainMenu) {
@@ -119,8 +113,6 @@ export class UIManager extends Component {
         }
     }
 
-    // === 暂停菜单 ===
-
     public showPauseMenu(): void {
         if (this.pauseMenu) {
             this.pauseMenu.active = true;
@@ -133,7 +125,6 @@ export class UIManager extends Component {
         }
     }
 
-    // === 结局画面 ===
 
     public showGameOver(): void {
         this.showFullscreenUI();
@@ -148,8 +139,6 @@ export class UIManager extends Component {
         }
     }
 
-    // === 视频播放 ===
-
     public playVideo(videoId: string): void {
         this.showFullscreenUI();
         if (this.videoPlayer) {
@@ -162,8 +151,6 @@ export class UIManager extends Component {
     public onVideoEnded(): void {
         director.emit("CUTSCENE_END");
     }
-
-    // === 物品栏 ===
 
     public updateInventoryUI(): void {
         if (this.inventoryPanel) {
@@ -179,15 +166,11 @@ export class UIManager extends Component {
         }
     }
 
-    // === 菜单面板 ===
-
     private _showMenuPanel(): void {
         if (this.menuPanel) {
             this.menuPanel.active = true;
         }
     }
-
-    // === 对话框 ===
 
     public showDialogUI(): void {
         if (this.dialogPanel) {
@@ -200,8 +183,6 @@ export class UIManager extends Component {
             this.dialogPanel.active = false;
         }
     }
-
-    // === 提示 ===
 
     public showToast(message: string): void {
         // TODO: 提示组件
