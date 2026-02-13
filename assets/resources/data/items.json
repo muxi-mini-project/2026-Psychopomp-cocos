@@ -1,0 +1,49 @@
+{
+    "items": {
+        "key_red": {
+            "id": "key_red",
+            "name": "红钥匙",
+            "description": "一把红色的钥匙，上面刻着彼岸花的纹样。",
+            "icon": "textures/icons/key_red",
+            "type": "key",
+            "canUse": true,
+            "consumable": false
+        },
+        "key_blue": {
+            "id": "key_blue",
+            "name": "蓝钥匙",
+            "description": "一把蓝色的钥匙，散发出冰冷的气息。",
+            "icon": "textures/icons/key_blue",
+            "type": "key",
+            "canUse": true,
+            "consumable": false
+        },
+        "note_mysterious": {
+            "id": "note_mysterious",
+            "name": "神秘纸条",
+            "description": "一张泛黄的纸条，上面写着模糊的字迹。",
+            "icon": "textures/icons/note",
+            "type": "note",
+            "canUse": false,
+            "consumable": false
+        },
+        "photo_old": {
+            "id": "photo_old",
+            "name": "老照片",
+            "description": "一张褪色的老照片，里面是一家人的合影。",
+            "icon": "textures/icons/photo",
+            "type": "collectible",
+            "canUse": false,
+            "consumable": false
+        },
+        "flower": {
+            "id": "flower",
+            "name": "彼岸花",
+            "description": "鲜红的花朵，传说能指引亡魂。",
+            "icon": "textures/icons/flower",
+            "type": "key",
+            "canUse": true,
+            "consumable": true
+        }
+    }
+}
