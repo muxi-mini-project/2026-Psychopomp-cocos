@@ -1691,7 +1691,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "diary",
+    "_name": "pen",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
@@ -1822,7 +1822,7 @@
       "__expectedType__": "cc.SpriteFrame"
     },
     "isPickable": true,
-    "itemName": "diary",
+    "itemName": "pen",
     "_id": "f8qUUJeZJNY4/N/Np9DQf5"
   },
   {
