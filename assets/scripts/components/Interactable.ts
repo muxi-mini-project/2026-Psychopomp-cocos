@@ -12,7 +12,7 @@ export class Interactable extends Component {
     @property
     hoverCursor: boolean = true;
 
-    protected _enabled: boolean = true;
+    protected _canInteract: boolean = true;
 
     onLoad() {
         input.on(Input.EventType.MOUSE_DOWN, this._onMouseDown, this);
@@ -23,14 +23,14 @@ export class Interactable extends Component {
     }
 
     private _onMouseDown(event: EventMouse) {
-        if (!this._enabled) return;
+        if (!this._canInteract) return;
         if (event.getButton() !== EventMouse.BUTTON_LEFT) return;
 
         director.emit("INTERACTABLE_CLICK", this.interactableId);
     }
 
     public setEnabled(enabled: boolean): void {
-        this._enabled = enabled;
+        this._canInteract = enabled;
         this.node.active = enabled;
     }
 
