@@ -124,7 +124,9 @@ export class GameManager extends Component {
 
     public startNewGame(): void {
         DataManager.instance.startNewGame();
-        StoryManager.instance.startChapter("chapter_01");
+        const sceneConfig = DataManager.instance.getSceneConfig("scene_intro");
+        const startScene = sceneConfig?.startScene || "scene_intro";
+        SceneViewManager.instance.loadScene(startScene);
     }
 
     public loadGame(slotId: string): boolean {
@@ -151,5 +153,4 @@ export class GameManager extends Component {
 
 import { ResourceManager } from './ResourceManager';
 import { DataManager } from './DataManager';
-import { StoryManager } from './StoryManager';
 import { SceneViewManager } from './SceneViewManager';
