@@ -107,9 +107,6 @@ export class DialogManager extends Component {
             case "set_flag":
                 DataManager.instance.setFlag(action.flag, action.value);
                 break;
-            case "advance_story":
-                StoryManager.instance.advance();
-                break;
         }
     }
 
@@ -120,5 +117,5 @@ export class DialogManager extends Component {
 }
 
 import { DataManager } from './DataManager';
-import { GameManager } from './GameManager';
+import { GameManager, GameState } from './GameManager';
 import { StoryManager } from './StoryManager';

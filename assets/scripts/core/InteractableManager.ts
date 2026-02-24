@@ -1,4 +1,5 @@
 import { _decorator, Component, director, Node } from 'cc';
+import { Interactable } from '../components/Interactable';
 const { ccclass } = _decorator;
 
 @ccclass('InteractableManager')
@@ -23,8 +24,13 @@ export class InteractableManager extends Component {
 
     public registerInteractable(node: Node, id: string, type: string): void {
         this._interactables.set(id, node);
-        node.interactableId = id;
-        node.interactableType = type;
+
+        // 通过 Interactable 组件设置属性
+        const interactable = node.getComponent('Interactable') as unknown as Interactable;
+        if (interactable) {
+            interactable.setInteractableId(id);
+            interactable.interactableType = type;
+        }
     }
 
     public handleClick(interactableId: string): void {
@@ -39,7 +45,7 @@ export class InteractableManager extends Component {
                 break;
 
             case "pick_item":
-                InventoryManager.instance.addItem(config.itemId);
+                DataManager.instance.addItem(config.itemId);
                 break;
 
             case "scene_switch":
@@ -86,7 +92,7 @@ export class InteractableManager extends Component {
 
     private _getInteractableConfig(interactableId: string): any {
         const sceneConfig = DataManager.instance.getSceneConfig(
-            SceneViewManager.instance.getCurrentScene()
+            SceneViewManager.instance.getCurrentSceneId()
         );
         if (!sceneConfig?.interactables) return null;
 
@@ -111,5 +117,4 @@ export class InteractableManager extends Component {
 
 import { DataManager } from './DataManager';
 import { DialogManager } from './DialogManager';
-import { InventoryManager } from './InventoryManager';
 import { SceneViewManager } from './SceneViewManager';
