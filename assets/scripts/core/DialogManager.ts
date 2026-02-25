@@ -1,4 +1,6 @@
 import { _decorator, Component, director } from 'cc';
+import { DataManager } from './DataManager';
+import { GameManager, GameState } from './GameManager';
 const { ccclass } = _decorator;
 
 @ccclass('DialogManager')
@@ -107,9 +109,6 @@ export class DialogManager extends Component {
             case "set_flag":
                 DataManager.instance.setFlag(action.flag, action.value);
                 break;
-            case "advance_story":
-                StoryManager.instance.advance();
-                break;
         }
     }
 
@@ -118,7 +117,3 @@ export class DialogManager extends Component {
         this._currentDialogue = null;
     }
 }
-
-import { DataManager } from './DataManager';
-import { GameManager } from './GameManager';
-import { StoryManager } from './StoryManager';

@@ -1,4 +1,6 @@
 import { _decorator, Component, director, Node, instantiate } from 'cc';
+import { DataManager } from './DataManager';
+import { ResourceManager } from './ResourceManager';
 const { ccclass, property } = _decorator;
 
 @ccclass('SceneViewManager')
@@ -208,6 +210,3 @@ export class SceneViewManager extends Component {
         this._clearAllScenes();
     }
 }
-
-import { DataManager } from './DataManager';
-import { ResourceManager } from './ResourceManager';

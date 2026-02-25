@@ -1,4 +1,5 @@
 import { _decorator, Component, director } from 'cc';
+import { DataManager } from './DataManager';
 const { ccclass } = _decorator;
 
 @ccclass('InventoryManager')
@@ -77,5 +78,3 @@ export class InventoryManager extends Component {
         this._selectedItem = null;
     }
 }
-
-import { DataManager } from './DataManager';
