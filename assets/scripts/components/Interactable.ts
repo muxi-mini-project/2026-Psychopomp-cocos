@@ -14,11 +14,15 @@ export class Interactable extends Component {
 
     protected _canInteract: boolean = true;
 
-    onLoad() {
+    protected onEnable(): void {
         input.on(Input.EventType.MOUSE_DOWN, this._onMouseDown, this);
     }
 
-    onDestroy() {
+    protected onDisable(): void {
+        input.off(Input.EventType.MOUSE_DOWN, this._onMouseDown, this);
+    }
+
+    protected onDestroy(): void {
         input.off(Input.EventType.MOUSE_DOWN, this._onMouseDown, this);
     }
 

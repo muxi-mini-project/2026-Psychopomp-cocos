@@ -1,4 +1,7 @@
 import { _decorator, Component, director } from 'cc';
+import { ResourceManager } from './ResourceManager';
+import { DataManager } from './DataManager';
+import { SceneViewManager } from './SceneViewManager';
 const { ccclass } = _decorator;
 
 export enum GameState {
@@ -150,7 +153,3 @@ export class GameManager extends Component {
         this.setState(GameState.MENU);
     }
 }
-
-import { ResourceManager } from './ResourceManager';
-import { DataManager } from './DataManager';
-import { SceneViewManager } from './SceneViewManager';

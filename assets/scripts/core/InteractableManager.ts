@@ -1,5 +1,8 @@
 import { _decorator, Component, director, Node } from 'cc';
 import { Interactable } from '../components/Interactable';
+import { DataManager } from './DataManager';
+import { DialogManager } from './DialogManager';
+import { SceneViewManager } from './SceneViewManager';
 const { ccclass } = _decorator;
 
 @ccclass('InteractableManager')
@@ -114,7 +117,3 @@ export class InteractableManager extends Component {
         this._interactables.clear();
     }
 }
-
-import { DataManager } from './DataManager';
-import { DialogManager } from './DialogManager';
-import { SceneViewManager } from './SceneViewManager';
