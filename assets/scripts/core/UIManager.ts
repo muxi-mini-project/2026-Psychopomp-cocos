@@ -146,9 +146,8 @@ export class UIManager extends Component {
     public playVideo(videoId: string): void {
         this.showFullscreenUI();
         if (this.videoPlayer) {
-            // TODO: 视频播放器组件
-            // const videoComp = this.videoPlayer.getComponent(VideoPlayer);
-            // videoComp.play(videoId);
+            this.videoPlayer.active = true;
+            director.emit("VIDEO_PLAY", videoId);
         }
     }
 
@@ -158,9 +157,8 @@ export class UIManager extends Component {
 
     public updateInventoryUI(): void {
         if (this.inventoryPanel) {
-            // TODO: 物品栏UI组件
-            // const items = InventoryManager.instance.getInventoryList();
-            // this.inventoryPanel.updateItems(items);
+            this.inventoryPanel.active = true;
+            director.emit("INVENTORY_REFRESH");
         }
     }
 
@@ -189,8 +187,9 @@ export class UIManager extends Component {
     }
 
     public showToast(message: string): void {
-        // TODO: 提示组件
-        console.log(`[Toast] ${message}`);
+        if (this.gameLayer) {
+            director.emit("TOAST_SHOW", message);
+        }
     }
 
     onDestroy() {
