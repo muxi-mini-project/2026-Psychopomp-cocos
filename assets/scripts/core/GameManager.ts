@@ -49,6 +49,9 @@ export class GameManager extends Component {
 
         // 监听交互点触发，检查结局条件
         director.on("INTERACTABLE_TRIGGERED", this._onInteractableTriggered, this);
+
+        // 监听场景加载完成，自动存档
+        director.on("SCENE_READY", this._onSceneReady, this);
     }
 
     start() {
@@ -60,9 +63,6 @@ export class GameManager extends Component {
         });
     }
 
-    /**
-     * 初始化游戏（根据存档状态决定流程）
-     */
     public initializeGame(): void {
         const loaded = DataManager.instance.loadGame("auto_save");
 
@@ -125,6 +125,7 @@ export class GameManager extends Component {
 
     private _onStartNewGame(_data: { slotId?: string }): void {
         DataManager.instance.startNewGame();
+        DataManager.instance.saveGame("auto_save", true);
         const sceneConfig = DataManager.instance.getSceneConfig("scene_intro");
         const startScene = sceneConfig?.startScene || "scene_intro";
         SceneViewManager.instance.loadScene(startScene);
@@ -148,11 +149,11 @@ export class GameManager extends Component {
         director.emit("SHOW_MAIN_MENU");
     }
 
-    /**
-     * 检查交互点触发后是否满足结局条件
-     */
     private _onInteractableTriggered(result: { changedFlags?: { name: string; value: boolean }[] }): void {
         if (!result?.changedFlags?.length) return;
+
+        // flag 变化时自动存档
+        DataManager.instance.saveGame("auto_save", true);
 
         // 检查是否设置了结局条件且未触发
         const endingCondition = DataManager.instance.getEndingCondition();
@@ -167,6 +168,13 @@ export class GameManager extends Component {
         }
     }
 
+    /**
+     * 场景加载完成后自动存档
+     */
+    private _onSceneReady(): void {
+        DataManager.instance.saveGame("auto_save", true);
+    }
+
     protected onDestroy(): void {
         director.off("INTRO_COMPLETE", this._onIntroComplete, this);
         director.off("ENDING_COMPLETE", this._onEndingComplete, this);
@@ -176,5 +184,6 @@ export class GameManager extends Component {
         director.off("RESUME_GAME", this._onResumeGame, this);
         director.off("QUIT_TO_MENU", this._onQuitToMenu, this);
         director.off("INTERACTABLE_TRIGGERED", this._onInteractableTriggered, this);
+        director.off("SCENE_READY", this._onSceneReady, this);
     }
 }

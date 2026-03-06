@@ -1,5 +1,4 @@
-import { _decorator, Component, director, Node } from 'cc';
-import { Interactable } from '../components/Interactable';
+import { _decorator, Component, director } from 'cc';
 import { DataManager } from './DataManager';
 import { SceneViewManager } from './SceneViewManager';
 import { InventoryManager } from './InventoryManager';
@@ -43,7 +42,6 @@ export interface InteractableTriggerResult {
 @ccclass('InteractableManager')
 export class InteractableManager extends Component {
     private static _instance: InteractableManager = null;
-    private _interactables: Map<string, Node> = new Map();
 
     public static get instance(): InteractableManager {
         return this._instance;
@@ -59,19 +57,6 @@ export class InteractableManager extends Component {
 
         director.on("INTERACTABLE_CLICK", this._onInteractableClick, this);
         director.on("SET_FLAG_REQUEST", this._onSetFlagRequest, this);
-    }
-
-    public registerInteractable(node: Node, id: string): void {
-        this._interactables.set(id, node);
-
-        const interactable = node.getComponent('Interactable') as unknown as Interactable;
-        if (interactable) {
-            interactable.setInteractableId(id);
-        }
-    }
-
-    public unregisterInteractable(id: string): void {
-        this._interactables.delete(id);
     }
 
     public handleClick(interactableId: string): void {
@@ -182,6 +167,5 @@ export class InteractableManager extends Component {
     protected onDestroy(): void {
         director.off("INTERACTABLE_CLICK", this._onInteractableClick, this);
         director.off("SET_FLAG_REQUEST", this._onSetFlagRequest, this);
-        this._interactables.clear();
     }
 }
