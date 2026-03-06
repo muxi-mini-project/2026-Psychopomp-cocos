@@ -3,66 +3,192 @@
         "scene_intro": {
             "name": "序幕",
             "prefab": "prefabs/scenes/scene_intro",
-            "background": "textures/backgrounds/intro_bg",
             "interactables": [
                 {
                     "id": "point_butterfly",
-                    "type": "custom",
-                    "eventName": "butterfly_click",
-                    "position": { "x": 0, "y": 0 }
+                    "description": "点击蝴蝶触发对话并切换场景",
+                    "states": [
+                        {
+                            "id": "default",
+                            "result": {
+                                "code": "INTRO_COMPLETE",
+                                "data": { "dialogueId": "dialogue_intro" },
+                                "switchScene": "scene_main_hall"
+                            }
+                        }
+                    ]
                 }
-            ],
-            "preloadNext": ["scene_main_hall"]
+            ]
         },
         "scene_main_hall": {
             "name": "大厅",
             "prefab": "prefabs/scenes/scene_main_hall",
-            "background": "textures/backgrounds/main_hall_bg",
             "preloadNext": ["scene_bedroom", "scene_kitchen"],
             "interactables": [
                 {
-                    "id": "point_door",
-                    "type": "scene_switch",
-                    "targetScene": "scene_bedroom",
-                    "animation": "door_open",
-                    "position": { "x": 500, "y": 300 },
-                    "size": { "width": 100, "height": 200 }
+                    "id": "point_door_bedroom",
+                    "description": "卧室门 - 根据 flag 显示不同状态",
+                    "states": [
+                        {
+                            "id": "locked",
+                            "condition": {
+                                "flag": "BEDROOM_UNLOCKED",
+                                "flagValue": false
+                            },
+                            "result": {
+                                "code": "DOOR_LOCKED",
+                                "data": { "dialogueId": "toast_door_locked" }
+                            }
+                        },
+                        {
+                            "id": "unlocked",
+                            "condition": {
+                                "flag": "BEDROOM_UNLOCKED",
+                                "flagValue": true
+                            },
+                            "result": {
+                                "code": "SCENE_SWITCH",
+                                "switchScene": "scene_bedroom"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "id": "point_door_kitchen",
+                    "description": "厨房门 - 无条件切换场景",
+                    "states": [
+                        {
+                            "id": "default",
+                            "result": {
+                                "code": "SCENE_SWITCH",
+                                "switchScene": "scene_kitchen"
+                            }
+                        }
+                    ]
                 },
                 {
                     "id": "point_cabinet",
-                    "type": "subscene",
-                    "targetSubscene": "cabinet_closeup",
-                    "position": { "x": 200, "y": 400 },
-                    "size": { "width": 150, "height": 150 }
+                    "description": "柜子 - 触发对话",
+                    "states": [
+                        {
+                            "id": "default",
+                            "result": {
+                                "code": "SHOW_DIALOGUE",
+                                "data": { "dialogueId": "dialogue_cabinet" }
+                            }
+                        }
+                    ]
                 },
                 {
                     "id": "point_note",
-                    "type": "dialogue",
-                    "dialogueId": "dialogue_note",
-                    "position": { "x": 800, "y": 500 },
-                    "size": { "width": 80, "height": 60 }
+                    "description": "纸条 - 触发对话",
+                    "states": [
+                        {
+                            "id": "default",
+                            "result": {
+                                "code": "SHOW_DIALOGUE",
+                                "data": { "dialogueId": "dialogue_note" }
+                            }
+                        }
+                    ]
                 },
                 {
-                    "id": "point_key",
-                    "type": "pick_item",
-                    "itemId": "key_red",
-                    "compatibleItems": [],
-                    "position": { "x": 350, "y": 200 },
-                    "size": { "width": 50, "height": 50 }
-                }
-            ],
-            "subscenes": [
-                {
-                    "id": "cabinet_closeup",
-                    "name": "柜子内部",
-                    "prefab": "prefabs/scenes/cabinet_closeup",
-                    "interactables": [
+                    "id": "point_key_red",
+                    "description": "红钥匙 - 拾取物品（通过 code 通知场景隐藏节点）",
+                    "states": [
                         {
-                            "id": "point_cabinet_back",
-                            "type": "scene_switch",
-                            "targetScene": "scene_main_hall",
-                            "position": { "x": 960, "y": 540 },
-                            "size": { "width": 100, "height": 100 }
+                            "id": "default",
+                            "result": {
+                                "code": "PICK_KEY_RED",
+                                "pickItem": "key_red",
+                                "setFlags": [
+                                    { "name": "KEY_RED_PICKED", "value": true }
+                                ]
+                            }
+                        }
+                    ]
+                },
+                {
+                    "id": "point_treasure",
+                    "description": "宝藏 - 拾取物品 + 设置 flag",
+                    "states": [
+                        {
+                            "id": "default",
+                            "result": {
+                                "code": "PICK_TREASURE",
+                                "pickItem": "gold_coin",
+                                "setFlags": [
+                                    { "name": "TREASURE_FOUND", "value": true },
+                                    { "name": "ACHIEVEMENT_TREASURE_HUNTER", "value": true }
+                                ]
+                            }
+                        }
+                    ]
+                },
+                {
+                    "id": "point_safe",
+                    "description": "保险箱 - 需要特定物品才能打开",
+                    "states": [
+                        {
+                            "id": "has_key_pad",
+                            "condition": {
+                                "requireItem": "key_pad"
+                            },
+                            "result": {
+                                "code": "SAFE_OPENED",
+                                "pickItem": "diamond",
+                                "setFlags": [{ "name": "SAFE_OPENED", "value": true }]
+                            }
+                        },
+                        {
+                            "id": "no_key",
+                            "result": {
+                                "code": "SAFE_LOCKED",
+                                "data": { "dialogueId": "toast_need_key_pad" }
+                            }
+                        }
+                    ]
+                },
+                {
+                    "id": "point_chandelier",
+                    "description": "吊灯 - 危险物品，触发剧情",
+                    "states": [
+                        {
+                            "id": "default",
+                            "result": {
+                                "code": "CHANDELIER_FALL",
+                                "setFlags": [{ "name": "CHANDELIER_FALLEN", "value": true }],
+                                "data": { "dialogueId": "dialogue_chandelier" }
+                            }
+                        }
+                    ]
+                },
+                {
+                    "id": "point_picture",
+                    "description": "画像 - 调查后改变状态",
+                    "states": [
+                        {
+                            "id": "not_examined",
+                            "condition": {
+                                "flag": "PICTURE_EXAMINED",
+                                "flagValue": false
+                            },
+                            "result": {
+                                "code": "EXAMINE_PICTURE",
+                                "setFlags": [{ "name": "PICTURE_EXAMINED", "value": true }],
+                                "data": { "dialogueId": "dialogue_picture" }
+                            }
+                        },
+                        {
+                            "id": "examined",
+                            "condition": {
+                                "flag": "PICTURE_EXAMINED",
+                                "flagValue": true
+                            },
+                            "result": {
+                                "code": "EXAMINE_PICTURE_AGAIN",
+                                "data": { "dialogueId": "dialogue_picture_again" }
+                            }
                         }
                     ]
                 }
@@ -71,23 +197,109 @@
         "scene_bedroom": {
             "name": "卧室",
             "prefab": "prefabs/scenes/scene_bedroom",
-            "background": "textures/backgrounds/bedroom_bg",
             "preloadNext": ["scene_main_hall"],
             "interactables": [
                 {
-                    "id": "point_door_locked",
-                    "type": "use_item",
-                    "compatibleItems": ["key_red"],
-                    "requiredState": "locked",
-                    "position": { "x": 500, "y": 300 },
-                    "size": { "width": 100, "height": 200 }
+                    "id": "point_door",
+                    "description": "卧室门 - 通往大厅",
+                    "states": [
+                        {
+                            "id": "default",
+                            "result": {
+                                "code": "SCENE_SWITCH",
+                                "switchScene": "scene_main_hall"
+                            }
+                        }
+                    ]
                 },
                 {
+                    "id": "point_bed",
+                    "description": "床 - 触发剧情",
+                    "states": [
+                        {
+                            "id": "first_time",
+                            "condition": {
+                                "flag": "BED_INTERACTED",
+                                "flagValue": false
+                            },
+                            "result": {
+                                "code": "SLEEP_SCENE",
+                                "setFlags": [{ "name": "BED_INTERACTED", "value": true }],
+                                "data": { "dialogueId": "dialogue_sleep" }
+                            }
+                        },
+                        {
+                            "id": "returned",
+                            "result": {
+                                "code": "SLEEP_AGAIN",
+                                "data": { "dialogueId": "dialogue_sleep_again" }
+                            }
+                        }
+                    ]
+                },
+                {
+                    "id": "point_window",
+                    "description": "窗户 - 结局触发点",
+                    "states": [
+                        {
+                            "id": "default",
+                            "result": {
+                                "code": "ENDING_TRIGGER",
+                                "setFlags": [{ "name": "WINDOW_OPENED", "value": true }]
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        "scene_kitchen": {
+            "name": "厨房",
+            "prefab": "prefabs/scenes/scene_kitchen",
+            "preloadNext": ["scene_main_hall"],
+            "interactables": [
+                {
                     "id": "point_door",
-                    "type": "scene_switch",
-                    "targetScene": "scene_main_hall",
-                    "position": { "x": 500, "y": 300 },
-                    "size": { "width": 100, "height": 200 }
+                    "description": "厨房门 - 通往大厅",
+                    "states": [
+                        {
+                            "id": "default",
+                            "result": {
+                                "code": "SCENE_SWITCH",
+                                "switchScene": "scene_main_hall"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "id": "point_fridge",
+                    "description": "冰箱 - 可交互物品",
+                    "states": [
+                        {
+                            "id": "default",
+                            "result": {
+                                "code": "OPEN_FRIDGE",
+                                "data": { "dialogueId": "dialogue_fridge" }
+                            }
+                        }
+                    ]
+                },
+                {
+                    "id": "point_knife",
+                    "description": "刀 - 危险物品",
+                    "states": [
+                        {
+                            "id": "not_taken",
+                            "condition": {
+                                "flag": "KNIFE_TAKEN",
+                                "flagValue": false
+                            },
+                            "result": {
+                                "code": "TAKE_KNIFE",
+                                "pickItem": "knife",
+                                "setFlags": [{ "name": "KNIFE_TAKEN", "value": true }]
+                            }
+                        }
+                    ]
                 }
             ]
         }

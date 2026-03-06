@@ -1,4 +1,6 @@
 import { _decorator, Component, director } from 'cc';
+import { DataManager } from './DataManager';
+import { GameManager, GameState } from './GameManager';
 const { ccclass } = _decorator;
 
 @ccclass('DialogManager')
@@ -19,6 +21,18 @@ export class DialogManager extends Component {
         }
         DialogManager._instance = this;
         director.addPersistRootNode(this.node);
+
+        // 监听场景脚本发送的 DIALOGUE_REQUEST 请求
+        director.on("DIALOGUE_REQUEST", this._onDialogueRequest, this);
+    }
+
+    /**
+     * 处理 DIALOGUE_REQUEST 请求（由场景脚本发送）
+     */
+    private _onDialogueRequest(data: { dialogueId: string }): void {
+        if (data && data.dialogueId) {
+            this.showDialogue(data.dialogueId);
+        }
     }
 
     public showDialogue(dialogueId: string): void {
@@ -107,18 +121,12 @@ export class DialogManager extends Component {
             case "set_flag":
                 DataManager.instance.setFlag(action.flag, action.value);
                 break;
-            case "advance_story":
-                StoryManager.instance.advance();
-                break;
         }
     }
 
-    onDestroy() {
+    protected onDestroy(): void {
+        director.off("DIALOGUE_REQUEST", this._onDialogueRequest, this);
         this._isActive = false;
         this._currentDialogue = null;
     }
 }
-
-import { DataManager } from './DataManager';
-import { GameManager } from './GameManager';
-import { StoryManager } from './StoryManager';

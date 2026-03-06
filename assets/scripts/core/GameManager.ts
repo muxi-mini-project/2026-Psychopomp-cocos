@@ -1,16 +1,13 @@
 import { _decorator, Component, director } from 'cc';
+import { ResourceManager } from './ResourceManager';
+import { DataManager } from './DataManager';
+import { SceneViewManager } from './SceneViewManager';
 const { ccclass } = _decorator;
 
 export enum GameState {
-    INIT = "INIT",
-    MENU = "MENU",
-    INTRO_INTERACT = "INTRO_INTERACT",
-    CUTSCENE = "CUTSCENE",
     GAMEPLAY = "GAMEPLAY",
     PAUSED = "PAUSED",
-    DIALOGUE = "DIALOGUE",
-    SUBSCENE = "SUBSCENE",
-    GAME_OVER = "GAME_OVER"
+    DIALOGUE = "DIALOGUE"
 }
 
 export const GameEvent = {
@@ -20,7 +17,7 @@ export const GameEvent = {
 @ccclass('GameManager')
 export class GameManager extends Component {
     private static _instance: GameManager = null;
-    private _currentState: GameState = GameState.INIT;
+    private _currentState: GameState = GameState.GAMEPLAY;
     private _initialized: boolean = false;
 
     public static get instance(): GameManager {
@@ -31,12 +28,6 @@ export class GameManager extends Component {
         return this._currentState;
     }
 
-    public get isInputAllowed(): boolean {
-        return this._currentState === GameState.GAMEPLAY ||
-               this._currentState === GameState.DIALOGUE ||
-               this._currentState === GameState.INTRO_INTERACT;
-    }
-
     onLoad() {
         if (GameManager._instance) {
             this.node.destroy();
@@ -44,6 +35,20 @@ export class GameManager extends Component {
         }
         GameManager._instance = this;
         director.addPersistRootNode(this.node);
+
+        // 监听动画完成事件
+        director.on("INTRO_COMPLETE", this._onIntroComplete, this);
+        director.on("ENDING_COMPLETE", this._onEndingComplete, this);
+
+        // 监听 UI 事件
+        director.on("START_NEW_GAME", this._onStartNewGame, this);
+        director.on("LOAD_GAME", this._onLoadGame, this);
+        director.on("PAUSE_GAME", this._onPauseGame, this);
+        director.on("RESUME_GAME", this._onResumeGame, this);
+        director.on("QUIT_TO_MENU", this._onQuitToMenu, this);
+
+        // 监听交互点触发，检查结局条件
+        director.on("INTERACTABLE_TRIGGERED", this._onInteractableTriggered, this);
     }
 
     start() {
@@ -51,105 +56,125 @@ export class GameManager extends Component {
         this._initialized = true;
 
         ResourceManager.instance.init(() => {
-            this.setState(GameState.MENU);
+            this.initializeGame();
         });
+    }
+
+    /**
+     * 初始化游戏（根据存档状态决定流程）
+     */
+    public initializeGame(): void {
+        const loaded = DataManager.instance.loadGame("auto_save");
+
+        if (!loaded) {
+            // 无存档 → 新游戏
+            this._startNewGame();
+        } else {
+            // 有存档 → 检查动画状态
+            this._resumeGame();
+        }
+    }
+
+    private _startNewGame(): void {
+        DataManager.instance.startNewGame();
+        director.emit("INTRO_START");
+    }
+
+    private _resumeGame(): void {
+        const introPlayed = DataManager.instance.getIntroPlayed();
+        const endingPlayed = DataManager.instance.getEndingPlayed();
+
+        if (!introPlayed) {
+            // 开场动画未完整播放，重新播放
+            director.emit("INTRO_START");
+        } else if (endingPlayed) {
+            // 结局已播放，回主菜单
+            director.emit("SHOW_MAIN_MENU");
+        } else {
+            // 正常恢复游戏
+            SceneViewManager.instance.initializeFromSave();
+            this.setState(GameState.GAMEPLAY);
+        }
+    }
+
+    private _onIntroComplete(): void {
+        DataManager.instance.setIntroPlayed(true);
+        DataManager.instance.saveGame("auto_save", true);
+
+        // 进入游戏
+        SceneViewManager.instance.initializeFromSave();
+        this.setState(GameState.GAMEPLAY);
+    }
+
+    private _onEndingComplete(): void {
+        DataManager.instance.setEndingPlayed(true);
+        DataManager.instance.saveGame("auto_save", true);
+
+        // 结局动画播放完成，回主菜单
+        director.emit("SHOW_MAIN_MENU");
     }
 
     public setState(newState: GameState): void {
         if (this._currentState === newState) return;
 
-        this._onExitState(this._currentState);
         const oldState = this._currentState;
         this._currentState = newState;
 
         director.emit(GameEvent.STATE_CHANGED, newState, oldState);
-        this._onEnterState(newState);
     }
 
-    private _onEnterState(state: GameState): void {
-        switch (state) {
-            case GameState.INIT:
-                break;
-
-            case GameState.MENU:
-                director.emit("SHOW_FULLSCREEN");
-                director.emit("SHOW_MAIN_MENU");
-                break;
-
-            case GameState.INTRO_INTERACT:
-                director.emit("HIDE_FULLSCREEN");
-                director.emit("SHOW_GAME_UI");
-                break;
-
-            case GameState.CUTSCENE:
-                director.emit("HIDE_GAME_UI");
-                break;
-
-            case GameState.GAMEPLAY:
-                director.emit("SHOW_GAME_UI");
-                break;
-
-            case GameState.DIALOGUE:
-                director.emit("SHOW_GAME_UI");
-                break;
-
-            case GameState.SUBSCENE:
-                break;
-
-            case GameState.PAUSED:
-                director.emit("SHOW_PAUSE_MENU");
-                break;
-
-            case GameState.GAME_OVER:
-                director.emit("SHOW_GAME_OVER");
-                break;
-        }
-    }
-
-    private _onExitState(state: GameState): void {
-        switch (state) {
-            case GameState.MENU:
-                director.emit("HIDE_MAIN_MENU");
-                break;
-
-            case GameState.PAUSED:
-                director.emit("HIDE_PAUSE_MENU");
-                break;
-
-            case GameState.GAME_OVER:
-                director.emit("HIDE_GAME_OVER");
-                break;
-        }
-    }
-
-    public startNewGame(): void {
+    private _onStartNewGame(_data: { slotId?: string }): void {
         DataManager.instance.startNewGame();
-        StoryManager.instance.startChapter("chapter_01");
+        const sceneConfig = DataManager.instance.getSceneConfig("scene_intro");
+        const startScene = sceneConfig?.startScene || "scene_intro";
+        SceneViewManager.instance.loadScene(startScene);
     }
 
-    public loadGame(slotId: string): boolean {
-        if (DataManager.instance.loadGame(slotId)) {
-            const sceneId = DataManager.instance.getCurrentScene();
-            SceneViewManager.instance.loadScene(sceneId);
-            return true;
+    private _onLoadGame(data: { slotId: string }): void {
+        if (data?.slotId && DataManager.instance.loadGame(data.slotId)) {
+            SceneViewManager.instance.initializeFromSave();
         }
-        return false;
     }
 
-    public pause(): void {
+    private _onPauseGame(): void {
         this.setState(GameState.PAUSED);
     }
 
-    public resume(): void {
+    private _onResumeGame(): void {
         this.setState(GameState.GAMEPLAY);
     }
 
-    public quitToMenu(): void {
-        this.setState(GameState.MENU);
+    private _onQuitToMenu(): void {
+        director.emit("SHOW_MAIN_MENU");
+    }
+
+    /**
+     * 检查交互点触发后是否满足结局条件
+     */
+    private _onInteractableTriggered(result: { changedFlags?: { name: string; value: boolean }[] }): void {
+        if (!result?.changedFlags?.length) return;
+
+        // 检查是否设置了结局条件且未触发
+        const endingCondition = DataManager.instance.getEndingCondition();
+        if (!endingCondition || endingCondition.triggered) return;
+
+        // 检查是否满足结局条件
+        if (DataManager.instance.checkEndingCondition()) {
+            // 标记已触发
+            endingCondition.triggered = true;
+            const endingId = endingCondition.endingId || "default";
+            director.emit("ENDING_START", { endingId });
+        }
+    }
+
+    protected onDestroy(): void {
+        director.off("INTRO_COMPLETE", this._onIntroComplete, this);
+        director.off("ENDING_COMPLETE", this._onEndingComplete, this);
+        director.off("START_NEW_GAME", this._onStartNewGame, this);
+        director.off("LOAD_GAME", this._onLoadGame, this);
+        director.off("PAUSE_GAME", this._onPauseGame, this);
+        director.off("RESUME_GAME", this._onResumeGame, this);
+        director.off("QUIT_TO_MENU", this._onQuitToMenu, this);
+        director.off("INTERACTABLE_TRIGGERED", this._onInteractableTriggered, this);
     }
 }
-
-import { ResourceManager } from './ResourceManager';
-import { DataManager } from './DataManager';
-import { StoryManager } from './StoryManager';
-import { SceneViewManager } from './SceneViewManager';

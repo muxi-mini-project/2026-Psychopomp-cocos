@@ -1,17 +1,20 @@
 {
     "dialogues": {
+        "dialogue_intro": {
+            "id": "dialogue_intro",
+            "speaker": "",
+            "lines": [
+                { "text": "追随蝴蝶的指引...", "expression": null }
+            ],
+            "choices": null,
+            "onComplete": null
+        },
         "dialogue_note": {
             "id": "dialogue_note",
             "speaker": "纸条",
             "lines": [
-                {
-                    "text": "彼岸花开，指引迷途之魂。",
-                    "expression": null
-                },
-                {
-                    "text": "寻找红门的钥匙...",
-                    "expression": null
-                }
+                { "text": "彼岸花开，指引迷途之魂。", "expression": null },
+                { "text": "寻找红门的钥匙...", "expression": null }
             ],
             "choices": null,
             "onComplete": {
@@ -24,26 +27,8 @@
             "id": "dialogue_ch01_door",
             "speaker": "神秘声音",
             "lines": [
-                {
-                    "text": "门是锁着的。",
-                    "expression": "normal"
-                },
-                {
-                    "text": "你需要找到正确的钥匙。",
-                    "expression": "normal"
-                }
-            ],
-            "choices": null,
-            "onComplete": null
-        },
-        "dialogue_intro": {
-            "id": "dialogue_intro",
-            "speaker": "",
-            "lines": [
-                {
-                    "text": "追随蝴蝶的指引...",
-                    "expression": null
-                }
+                { "text": "门是锁着的。", "expression": "normal" },
+                { "text": "你需要找到正确的钥匙。", "expression": "normal" }
             ],
             "choices": null,
             "onComplete": null
@@ -52,10 +37,7 @@
             "id": "dialogue_door_unlocked",
             "speaker": "",
             "lines": [
-                {
-                    "text": "门开了。",
-                    "expression": null
-                }
+                { "text": "门开了。", "expression": null }
             ],
             "choices": null,
             "onComplete": {
@@ -68,10 +50,91 @@
             "id": "dialogue_game_over",
             "speaker": "",
             "lines": [
-                {
-                    "text": "彼岸花已开，迷途之魂找到了归途。",
-                    "expression": null
-                }
+                { "text": "彼岸花已开，迷途之魂找到了归途。", "expression": null }
+            ],
+            "choices": null,
+            "onComplete": null
+        },
+        "toast_door_locked": {
+            "id": "toast_door_locked",
+            "speaker": "",
+            "lines": [
+                { "text": "门锁住了，需要找到钥匙。", "expression": null }
+            ],
+            "choices": null,
+            "onComplete": null
+        },
+        "toast_need_key_pad": {
+            "id": "toast_need_key_pad",
+            "speaker": "",
+            "lines": [
+                { "text": "需要密码钥匙才能打开。", "expression": null }
+            ],
+            "choices": null,
+            "onComplete": null
+        },
+        "dialogue_cabinet": {
+            "id": "dialogue_cabinet",
+            "speaker": "",
+            "lines": [
+                { "text": "一个古老的柜子，里面空无一物。", "expression": null }
+            ],
+            "choices": null,
+            "onComplete": null
+        },
+        "dialogue_chandelier": {
+            "id": "dialogue_chandelier",
+            "speaker": "",
+            "lines": [
+                { "text": "吊灯突然摇晃起来...", "expression": null },
+                { "text": "危险！快跑！", "expression": null }
+            ],
+            "choices": null,
+            "onComplete": null
+        },
+        "dialogue_picture": {
+            "id": "dialogue_picture",
+            "speaker": "",
+            "lines": [
+                { "text": "画中是一位神秘女子的肖像。", "expression": null },
+                { "text": "她的眼神似乎在注视着你...", "expression": null }
+            ],
+            "choices": null,
+            "onComplete": null
+        },
+        "dialogue_picture_again": {
+            "id": "dialogue_picture_again",
+            "speaker": "",
+            "lines": [
+                { "text": "画中的女子依然静静地看着你。", "expression": null }
+            ],
+            "choices": null,
+            "onComplete": null
+        },
+        "dialogue_sleep": {
+            "id": "dialogue_sleep",
+            "speaker": "",
+            "lines": [
+                { "text": "你感到一阵倦意袭来...", "expression": null },
+                { "text": "闭上眼睛，仿佛做了一个很长的梦。", "expression": null }
+            ],
+            "choices": null,
+            "onComplete": null
+        },
+        "dialogue_sleep_again": {
+            "id": "dialogue_sleep_again",
+            "speaker": "",
+            "lines": [
+                { "text": "你已经休息够了。", "expression": null }
+            ],
+            "choices": null,
+            "onComplete": null
+        },
+        "dialogue_fridge": {
+            "id": "dialogue_fridge",
+            "speaker": "",
+            "lines": [
+                { "text": "冰箱里只剩下过期的牛奶。", "expression": null }
             ],
             "choices": null,
             "onComplete": null

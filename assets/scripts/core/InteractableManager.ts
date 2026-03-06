@@ -1,5 +1,44 @@
 import { _decorator, Component, director, Node } from 'cc';
+import { Interactable } from '../components/Interactable';
+import { DataManager } from './DataManager';
+import { SceneViewManager } from './SceneViewManager';
+import { InventoryManager } from './InventoryManager';
 const { ccclass } = _decorator;
+
+export interface InteractableConfig {
+    id: string;
+    states: InteractableState[];
+}
+
+export interface InteractableState {
+    id: string;
+    condition?: InteractableCondition;
+    result: InteractableResult;
+}
+
+export interface InteractableCondition {
+    flag?: string;
+    flagValue?: boolean;
+    requireItem?: string;
+}
+
+export interface InteractableResult {
+    setFlags?: { name: string; value: boolean }[];
+    pickItem?: string;
+    switchScene?: string;
+    code: string;
+    data?: any;
+}
+
+export interface InteractableTriggerResult {
+    interactableId: string;
+    stateId: string;
+    code: string;
+    data?: any;
+    changedFlags?: { name: string; value: boolean }[];
+    pickedItem?: string;
+    switchedScene?: string;
+}
 
 @ccclass('InteractableManager')
 export class InteractableManager extends Component {
@@ -10,7 +49,7 @@ export class InteractableManager extends Component {
         return this._instance;
     }
 
-    onLoad() {
+    protected onLoad(): void {
         if (InteractableManager._instance) {
             this.node.destroy();
             return;
@@ -19,97 +58,130 @@ export class InteractableManager extends Component {
         director.addPersistRootNode(this.node);
 
         director.on("INTERACTABLE_CLICK", this._onInteractableClick, this);
+        director.on("SET_FLAG_REQUEST", this._onSetFlagRequest, this);
     }
 
-    public registerInteractable(node: Node, id: string, type: string): void {
+    public registerInteractable(node: Node, id: string): void {
         this._interactables.set(id, node);
-        node.interactableId = id;
-        node.interactableType = type;
+
+        const interactable = node.getComponent('Interactable') as unknown as Interactable;
+        if (interactable) {
+            interactable.setInteractableId(id);
+        }
+    }
+
+    public unregisterInteractable(id: string): void {
+        this._interactables.delete(id);
     }
 
     public handleClick(interactableId: string): void {
         const config = this._getInteractableConfig(interactableId);
-        if (!config) return;
-
-        const type = config.type;
-
-        switch (type) {
-            case "dialogue":
-                DialogManager.instance.showDialogue(config.dialogueId);
-                break;
-
-            case "pick_item":
-                InventoryManager.instance.addItem(config.itemId);
-                break;
-
-            case "scene_switch":
-                SceneViewManager.instance.switchToScene(config.targetScene);
-                break;
-
-            case "subscene":
-                SceneViewManager.instance.enterSubscene(config.targetSubscene);
-                break;
-
-            case "animation":
-                director.emit("PLAY_ANIMATION", config.animation);
-                break;
-
-            case "custom":
-                director.emit(config.eventName, config.eventData);
-                break;
+        if (!config || !config.states || config.states.length === 0) {
+            console.warn(`[InteractableManager] 交互点配置不存在或无状态: ${interactableId}`);
+            return;
         }
 
-        director.emit("INTERACTABLE_CLICKED", interactableId);
+        const matchingState = this._findMatchingState(config);
+        if (!matchingState) {
+            console.warn(`[InteractableManager] 未找到匹配状态: ${interactableId}`);
+            return;
+        }
+
+        const result = this._executeResult(matchingState.result, interactableId, matchingState.id);
+
+        this._emitResult(result);
     }
 
-    public setState(interactableId: string, state: any): void {
-        DataManager.instance.setInteractableState(interactableId, state);
+    private _findMatchingState(config: InteractableConfig): InteractableState | null {
+        for (const state of config.states) {
+            if (this._checkCondition(state.condition)) {
+                return state;
+            }
+        }
+        return null;
     }
 
-    public getState(interactableId: string): any {
-        return DataManager.instance.getInteractableState(interactableId);
+    private _checkCondition(condition?: InteractableCondition): boolean {
+        if (!condition) return true;
+
+        // 检查 flag 条件
+        if (condition.flag !== undefined) {
+            const currentValue = DataManager.instance.getBool(condition.flag);
+            const expectedValue = condition.flagValue ?? true;
+            if (currentValue !== expectedValue) {
+                return false;
+            }
+        }
+
+        // 检查物品条件
+        if (condition.requireItem) {
+            const selectedItem = InventoryManager.instance.getSelectedItem();
+            if (selectedItem !== condition.requireItem) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
-    public show(interactableId: string): void {
-        const node = this._interactables.get(interactableId);
-        if (node) node.active = true;
+    private _executeResult(result: InteractableResult, interactableId: string, stateId: string): InteractableTriggerResult {
+        const triggerResult: InteractableTriggerResult = {
+            interactableId,
+            stateId,
+            code: result.code,
+            data: result.data,
+            changedFlags: [],
+        };
+
+        // 设置 flag
+        if (result.setFlags && result.setFlags.length > 0) {
+            for (const flag of result.setFlags) {
+                DataManager.instance.setFlag(flag.name, flag.value);
+                triggerResult.changedFlags!.push(flag);
+            }
+        }
+
+        // 拾取物品
+        if (result.pickItem) {
+            DataManager.instance.addItem(result.pickItem);
+            triggerResult.pickedItem = result.pickItem;
+        }
+
+        // 切换场景
+        if (result.switchScene) {
+            triggerResult.switchedScene = result.switchScene;
+        }
+
+        return triggerResult;
     }
 
-    public hide(interactableId: string): void {
-        const node = this._interactables.get(interactableId);
-        if (node) node.active = false;
+    private _emitResult(result: InteractableTriggerResult): void {
+        director.emit("INTERACTABLE_TRIGGERED", result);
     }
 
     private _onInteractableClick(interactableId: string): void {
         this.handleClick(interactableId);
     }
 
-    private _getInteractableConfig(interactableId: string): any {
+    private _onSetFlagRequest(data: { name: string; value: boolean }): void {
+        if (data && data.name !== undefined) {
+            DataManager.instance.setFlag(data.name, data.value ?? true);
+        }
+    }
+
+
+    private _getInteractableConfig(interactableId: string): InteractableConfig | null {
         const sceneConfig = DataManager.instance.getSceneConfig(
-            SceneViewManager.instance.getCurrentScene()
+            SceneViewManager.instance.getCurrentSceneId()
         );
         if (!sceneConfig?.interactables) return null;
 
-        const isSubscene = SceneViewManager.instance.isInSubscene();
-        const subscenes = sceneConfig.subscenes || [];
-        let targetList = sceneConfig.interactables;
-
-        if (isSubscene) {
-            const subsceneId = SceneViewManager.instance.getCurrentSubsceneId();
-            const subscene = subscenes.find((s: any) => s.id === subsceneId);
-            targetList = subscene?.interactables || [];
-        }
-
-        return targetList.find((i: any) => i.id === interactableId);
+        return sceneConfig.interactables.find((i: { id: string }) => i.id === interactableId) as InteractableConfig ?? null;
     }
 
-    onDestroy() {
+    protected onDestroy(): void {
         director.off("INTERACTABLE_CLICK", this._onInteractableClick, this);
+        director.off("SET_FLAG_REQUEST", this._onSetFlagRequest, this);
         this._interactables.clear();
     }
 }
-
-import { DataManager } from './DataManager';
-import { DialogManager } from './DialogManager';
-import { InventoryManager } from './InventoryManager';
-import { SceneViewManager } from './SceneViewManager';
