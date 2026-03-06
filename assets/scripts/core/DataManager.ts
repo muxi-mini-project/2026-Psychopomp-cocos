@@ -6,15 +6,19 @@ interface SaveData {
     saveTime: number;
     gameVersion: string;
     currentScene: string;
-    isSubscene: boolean;
-    currentSubscene?: string;
-    currentChapter: string;
-    currentStoryNode: string;
     storyFlags: { [key: string]: any };
     inventory: string[];
-    usedItems: string[];
-    interactableStates: { [interactableId: string]: any };
-    readDialogues: string[];
+    // 进度状态
+    introPlayed: boolean;
+    endingPlayed: boolean;
+    visitedScenes: string[];
+    endingCondition?: EndingCondition;
+}
+
+interface EndingCondition {
+    targetFlags: { name: string; value: boolean }[];
+    triggered: boolean;
+    endingId?: string;
 }
 
 interface SaveSlotInfo {
@@ -29,7 +33,7 @@ const GAME_VERSION = "1.0.0";
 const MAX_SAVE_SLOTS = 6;
 const AUTO_SAVE_SLOT = "auto_save";
 
-export type { SaveData, SaveSlotInfo };
+export type { SaveData, SaveSlotInfo, EndingCondition };
 
 @ccclass('DataManager')
 export class DataManager extends Component {
@@ -119,7 +123,7 @@ export class DataManager extends Component {
             return {
                 slotId: slotId,
                 saveTime: data.saveTime,
-                chapter: data.currentChapter || "-",
+                chapter: "-",
                 scene: data.currentScene || "-",
                 hasSave: true
             };
@@ -210,15 +214,11 @@ export class DataManager extends Component {
             saveTime: Date.now(),
             gameVersion: GAME_VERSION,
             currentScene: "scene_intro",
-            isSubscene: false,
-            currentSubscene: undefined,
-            currentChapter: "chapter_01",
-            currentStoryNode: "node_01",
             storyFlags: {},
             inventory: [],
-            usedItems: [],
-            interactableStates: {},
-            readDialogues: []
+            introPlayed: false,
+            endingPlayed: false,
+            visitedScenes: []
         };
 
         console.log("[DataManager] 新游戏已初始化");
@@ -227,26 +227,6 @@ export class DataManager extends Component {
 
     public hasSave(slotId: string): boolean {
         return this.getSaveSlotInfo(slotId).hasSave;
-    }
-
-    public getCurrentChapter(): string {
-        return this._saveData?.currentChapter || "chapter_01";
-    }
-
-    public setCurrentChapter(chapterId: string): void {
-        if (this._saveData) {
-            this._saveData.currentChapter = chapterId;
-        }
-    }
-
-    public getCurrentStoryNode(): string {
-        return this._saveData?.currentStoryNode || "node_01";
-    }
-
-    public setCurrentStoryNode(nodeId: string): void {
-        if (this._saveData) {
-            this._saveData.currentStoryNode = nodeId;
-        }
     }
 
     public getStoryFlag(key: string, defaultValue: any = undefined): any {
@@ -277,41 +257,6 @@ export class DataManager extends Component {
     public setCurrentScene(sceneId: string): void {
         if (this._saveData) {
             this._saveData.currentScene = sceneId;
-        }
-    }
-
-    public isInSubscene(): boolean {
-        return this._saveData?.isSubscene || false;
-    }
-
-    public enterSubscene(subsceneId: string): void {
-        if (this._saveData) {
-            this._saveData.isSubscene = true;
-            this._saveData.currentSubscene = subsceneId;
-        }
-    }
-
-    public exitSubscene(): void {
-        if (this._saveData) {
-            this._saveData.isSubscene = false;
-            this._saveData.currentSubscene = undefined;
-        }
-    }
-
-    public getInteractableState(interactableId: string, defaultValue: any = undefined): any {
-        if (!this._saveData || !this._saveData.interactableStates) {
-            return defaultValue;
-        }
-        if (this._saveData.interactableStates.hasOwnProperty(interactableId)) {
-            return this._saveData.interactableStates[interactableId];
-        }
-        return defaultValue;
-    }
-
-    public setInteractableState(interactableId: string, state: any): void {
-        if (this._saveData) {
-            this._saveData.interactableStates[interactableId] = state;
-            console.log(`[DataManager] InteractableState: ${interactableId} =`, state);
         }
     }
 
@@ -346,32 +291,6 @@ export class DataManager extends Component {
         return this._saveData?.inventory || [];
     }
 
-    public markItemUsed(itemId: string): void {
-        if (!this._saveData) return;
-
-        if (!this._saveData.usedItems.includes(itemId)) {
-            this._saveData.usedItems.push(itemId);
-            director.emit("ITEM_USED", itemId);
-            console.log(`[DataManager] 物品已使用: ${itemId}`);
-        }
-    }
-
-    public isItemUsed(itemId: string): boolean {
-        return this._saveData?.usedItems.includes(itemId) || false;
-    }
-
-    public markDialogueRead(dialogueId: string): void {
-        if (!this._saveData) return;
-
-        if (!this._saveData.readDialogues.includes(dialogueId)) {
-            this._saveData.readDialogues.push(dialogueId);
-        }
-    }
-
-    public isDialogueRead(dialogueId: string): boolean {
-        return this._saveData?.readDialogues.includes(dialogueId) || false;
-    }
-
     public getFlag(key: string, defaultValue: any = false): any {
         return this.getStoryFlag(key, defaultValue);
     }
@@ -384,16 +303,77 @@ export class DataManager extends Component {
         return this.getStoryFlagBool(key, false);
     }
 
-    private _getStorageKey(slotId: string): string {
-        return `Psychopomp_Save_${slotId}`;
+    public getAllFlags(): Record<string, any> {
+        return this._saveData?.storyFlags || {};
     }
 
-    public checkFirstVisit(sceneName: string): boolean {
-        const key = `VISITED_${sceneName}`;
-        if (!this.getStoryFlagBool(key)) {
-            this.setStoryFlag(key, true);
+    // ===== 进度管理方法 =====
+
+    public getIntroPlayed(): boolean {
+        return this._saveData?.introPlayed || false;
+    }
+
+    public setIntroPlayed(value: boolean): void {
+        if (this._saveData) {
+            this._saveData.introPlayed = value;
+        }
+    }
+
+    public getEndingPlayed(): boolean {
+        return this._saveData?.endingPlayed || false;
+    }
+
+    public setEndingPlayed(value: boolean): void {
+        if (this._saveData) {
+            this._saveData.endingPlayed = value;
+        }
+    }
+
+    public isFirstVisit(sceneId: string): boolean {
+        if (!this._saveData || !this._saveData.visitedScenes) {
             return true;
         }
+        return !this._saveData.visitedScenes.includes(sceneId);
+    }
+
+    public markSceneVisited(sceneId: string): void {
+        if (this._saveData) {
+            if (!this._saveData.visitedScenes) {
+                this._saveData.visitedScenes = [];
+            }
+            if (!this._saveData.visitedScenes.includes(sceneId)) {
+                this._saveData.visitedScenes.push(sceneId);
+            }
+        }
+    }
+
+    public getEndingCondition(): EndingCondition | undefined {
+        return this._saveData?.endingCondition;
+    }
+
+    public setEndingCondition(condition: EndingCondition): void {
+        if (this._saveData) {
+            this._saveData.endingCondition = condition;
+        }
+    }
+
+    public checkEndingCondition(): boolean {
+        const condition = this._saveData?.endingCondition;
+        if (!condition || condition.triggered) return false;
+
+        const allMet = condition.targetFlags.every(flag =>
+            this.getBool(flag.name) === flag.value
+        );
+
+        if (allMet) {
+            condition.triggered = true;
+            return true;
+        }
+
         return false;
+    }
+
+    private _getStorageKey(slotId: string): string {
+        return `Psychopomp_Save_${slotId}`;
     }
 }

@@ -32,6 +32,9 @@ export class UIManager extends Component {
     @property(Node)
     videoPlayer: Node = null;
 
+    @property(Node)
+    sceneContainer: Node = null;
+
     public static get instance(): UIManager {
         return this._instance;
     }
@@ -60,10 +63,6 @@ export class UIManager extends Component {
         director.on("SHOW_GAME_OVER", this.showGameOver, this);
         director.on("HIDE_GAME_OVER", this.hideGameOver, this);
         director.on("INVENTORY_UPDATE", this.updateInventoryUI, this);
-
-        // 对话系统事件
-        director.on("DIALOGUE_START", this.showDialogUI, this);
-        director.on("DIALOGUE_END", this.hideDialogUI, this);
     }
 
     private _initUI(): void {
@@ -204,9 +203,5 @@ export class UIManager extends Component {
         director.off("SHOW_GAME_OVER", this.showGameOver, this);
         director.off("HIDE_GAME_OVER", this.hideGameOver, this);
         director.off("INVENTORY_UPDATE", this.updateInventoryUI, this);
-
-        // 对话系统事件清理
-        director.off("DIALOGUE_START", this.showDialogUI, this);
-        director.off("DIALOGUE_END", this.hideDialogUI, this);
     }
 }

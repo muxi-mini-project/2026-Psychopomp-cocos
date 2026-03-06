@@ -1,6 +1,7 @@
 import { _decorator, Component, director, Node, instantiate } from 'cc';
 import { DataManager } from './DataManager';
 import { ResourceManager } from './ResourceManager';
+import { UIManager } from './UIManager';
 const { ccclass, property } = _decorator;
 
 @ccclass('SceneViewManager')
@@ -17,7 +18,6 @@ export class SceneViewManager extends Component {
     transitionNode: Node = null;
 
     private _currentSceneId: string | null = null;
-    private _currentSubsceneId: string | null = null;
     private _preloadedSceneId: string | null = null;
     private _transitioning: boolean = false;
 
@@ -32,15 +32,23 @@ export class SceneViewManager extends Component {
         }
         SceneViewManager._instance = this;
         director.addPersistRootNode(this.node);
+    }
+
+    protected start(): void {
+        this.initializeSceneNodes();
+    }
+
+    private initializeSceneNodes(): void {
+        const container = UIManager.instance?.sceneContainer ?? this.node;
 
         if (!this.currentSceneNode) {
             this.currentSceneNode = new Node("CurrentScene");
-            this.node.addChild(this.currentSceneNode);
+            container.addChild(this.currentSceneNode);
         }
         if (!this.nextSceneNode) {
             this.nextSceneNode = new Node("NextScene");
             this.nextSceneNode.active = false;
-            this.node.addChild(this.nextSceneNode);
+            container.addChild(this.nextSceneNode);
         }
         if (!this.transitionNode) {
             this.transitionNode = new Node("Transition");
@@ -49,7 +57,18 @@ export class SceneViewManager extends Component {
         }
     }
 
-    public loadScene(sceneId: string): void {
+    /**
+     * 从存档初始化场景（游戏启动时调用）
+     */
+    public initializeFromSave(): void {
+        const currentScene = DataManager.instance.getCurrentScene();
+        this.loadScene(currentScene);
+
+        // 预加载相邻场景（不阻塞）
+        this.preloadNextScenes();
+    }
+
+    public loadScene(sceneId: string, onComplete?: () => void): void {
         this._clearAllScenes();
 
         const config = DataManager.instance.getSceneConfig(sceneId);
@@ -59,13 +78,29 @@ export class SceneViewManager extends Component {
         }
 
         this._currentSceneId = sceneId;
-        this._currentSubsceneId = null;
 
         ResourceManager.instance.loadScene(sceneId).then((prefab) => {
             const node = instantiate(prefab);
             node.name = sceneId;
             this.currentSceneNode.addChild(node);
-            director.emit("SCENE_LOAD_COMPLETE", sceneId);
+
+            // 发送 SCENE_READY 事件，包含当前 flag
+            this._emitSceneReady();
+
+            if (onComplete) {
+                onComplete();
+            }
+        });
+    }
+
+    /**
+     * 发送 SCENE_READY 事件
+     */
+    private _emitSceneReady(): void {
+        const flags = DataManager.instance.getAllFlags();
+        director.emit("SCENE_READY", {
+            sceneId: this._currentSceneId,
+            flags: flags,
         });
     }
 
@@ -111,10 +146,12 @@ export class SceneViewManager extends Component {
         this.nextSceneNode.active = false;
 
         this._currentSceneId = sceneId;
-        this._currentSubsceneId = null;
         this._preloadedSceneId = null;
 
         director.emit("SCENE_SWITCH_COMPLETE", sceneId);
+
+        // 发送 SCENE_READY 事件
+        this._emitSceneReady();
 
         director.emit("TRANSITION_IN_START");
         this._doTransitionIn(() => {
@@ -133,53 +170,8 @@ export class SceneViewManager extends Component {
         director.emit("TRANSITION_IN", onComplete);
     }
 
-    public enterSubscene(subsceneId: string): void {
-        const sceneConfig = DataManager.instance.getSceneConfig(this._currentSceneId);
-        const subscene = sceneConfig?.subscenes?.find((s: any) => s.id === subsceneId);
-
-        if (!subscene) {
-            console.warn(`[SceneViewManager] 子场景不存在: ${subsceneId}`);
-            return;
-        }
-
-        this._currentSubsceneId = subsceneId;
-        DataManager.instance.enterSubscene(subsceneId);
-
-        director.emit("SUBSCENE_ENTER", subsceneId);
-
-        ResourceManager.instance.loadScene(subscene.prefab).then((prefab) => {
-            this._clearNextScene();
-            const node = instantiate(prefab);
-            node.name = subsceneId;
-            this.nextSceneNode.addChild(node);
-            this.nextSceneNode.active = true;
-            this.currentSceneNode.active = false;
-        });
-    }
-
-    public exitSubscene(): void {
-        if (!this._currentSubsceneId) return;
-
-        director.emit("SUBSCENE_EXIT", this._currentSubsceneId);
-
-        this.nextSceneNode.active = false;
-        this.currentSceneNode.active = true;
-        this._clearNextScene();
-
-        this._currentSubsceneId = null;
-        DataManager.instance.exitSubscene();
-    }
-
     public getCurrentSceneId(): string {
         return this._currentSceneId;
-    }
-
-    public isInSubscene(): boolean {
-        return this._currentSubsceneId !== null;
-    }
-
-    public getCurrentSubsceneId(): string | null {
-        return this._currentSubsceneId;
     }
 
     public preloadNextScenes(): void {

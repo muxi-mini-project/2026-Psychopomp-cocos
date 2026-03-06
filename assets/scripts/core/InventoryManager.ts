@@ -33,35 +33,6 @@ export class InventoryManager extends Component {
         }
     }
 
-    public useItem(interactableId: string): boolean {
-        if (!this._selectedItem) {
-            return false;
-        }
-
-        const itemConfig = DataManager.instance.getItemConfig(this._selectedItem);
-        const sceneConfig = DataManager.instance.getSceneConfig(DataManager.instance.getCurrentScene());
-        const interactables = sceneConfig?.interactables || [];
-        const interactable = interactables.find((i: any) => i.id === interactableId);
-
-        const compatibleItems = interactable?.compatibleItems || [];
-        if (compatibleItems.length > 0 && !compatibleItems.includes(this._selectedItem)) {
-            return false;
-        }
-
-        DataManager.instance.markItemUsed(this._selectedItem);
-
-        director.emit("ITEM_USED_ON_INTERACTABLE", {
-            itemId: this._selectedItem,
-            interactableId: interactableId
-        });
-
-        if (itemConfig?.consumable) {
-            this._selectedItem = null;
-        }
-
-        return true;
-    }
-
     public getSelectedItem(): string | null {
         return this._selectedItem;
     }
