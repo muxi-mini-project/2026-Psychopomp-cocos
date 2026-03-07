@@ -1,13 +1,16 @@
 import { _decorator, Component, Node } from 'cc';
 import { SfxControl_Slider } from './SfxControl_Slider';
+import { BgmControl_Slider } from './BgmControl_Slider';
 import { AudioSource, director, tween, Vec3 } from 'cc';
 const { ccclass, property } = _decorator;
 
-@ccclass('HidePauseMenu2_Button')
-export class HidePauseMenu2_Button extends Component {
-
+@ccclass('Reset_Button')
+export class Reset_Button extends Component {
     @property({ type: SfxControl_Slider, displayName: "音效滑块组件" })
     public sfxSliderComp: SfxControl_Slider = null
+
+    @property({ type: BgmControl_Slider, displayName: "背景音乐滑块组件" })
+    public bgmSliderComp: BgmControl_Slider = null
 
     @property({
         type: AudioSource['clip'],
@@ -24,19 +27,29 @@ export class HidePauseMenu2_Button extends Component {
 
     @property({ tooltip: "动画时长（秒）" })
     animDuration: number = 0.15
+
     onLoad() {
         this.node.on('mouse-move', this.onMouseMove, this)
         this.node.on('mouse-leave', this.onMouseLeave, this)
-        this.node.on('click', this.onHidePauseMenu2, this)
+        this.node.on('click', this.onResetClick, this)
     }
 
-    onHidePauseMenu2() {
+    onResetClick() {
         this.playClickSound()
         this.playClickAnimation(() => {
-            director.emit("HIDE_PAUSE_MENU")//触发隐藏暂停菜单事件(待定具体事件名称)
-            console.log('已点击HidePauseMenu2_Button')
-
+            this.resetVolumeToDefault()
+            console.log('已点击Reset_Button')
         })
+    }
+
+    //重置音量到默认值
+    private resetVolumeToDefault() {
+        const defaultVolume = 0.5
+        this.sfxSliderComp.volumeSlider.progress = defaultVolume
+        this.sfxSliderComp.realTimeVolume = defaultVolume
+        this.bgmSliderComp.volumeSlider.progress = defaultVolume
+        this.bgmSliderComp.bgmVolume = defaultVolume
+        console.log("已重置音量到默认值：", defaultVolume)
     }
 
     //播放点击音效
@@ -88,7 +101,8 @@ export class HidePauseMenu2_Button extends Component {
     onDestroy() {
         this.node.off('mouse-move', this.onMouseMove, this)
         this.node.off('mouse-leave', this.onMouseLeave, this)
-        this.node.off('click', this.onHidePauseMenu2, this)
+        this.node.off('click', this.onResetClick, this)
     }
 }
+
 

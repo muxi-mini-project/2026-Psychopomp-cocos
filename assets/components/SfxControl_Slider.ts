@@ -13,7 +13,7 @@ export class SfxControl_Slider extends Component {
     @property({ type: Slider, displayName: "音量控制滑动组件" })
     public volumeSlider: Slider = null
 
-    public realTimeVolume: number = 0.8
+    public realTimeVolume: number = 0.5
 
 
     onLoad() {

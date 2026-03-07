@@ -27,14 +27,14 @@ export class HidePauseMenu1_Button extends Component {
     onLoad() {
         this.node.on('mouse-move', this.onMouseMove, this)
         this.node.on('mouse-leave', this.onMouseLeave, this)
-        this.node.on('click', this.onHideMainMenu, this)
+        this.node.on('click', this.onHidePauseMenu1, this)
     }
 
-    onHideMainMenu() {
+    onHidePauseMenu1() {
         this.playClickSound()
         this.playClickAnimation(() => {
-            director.emit("HIDE_MENU")
-            console.log('已点击HideMainMenu_Button')
+            director.emit("HIDE_PAUSE_MENU")//触发隐藏暂停菜单事件(待定具体事件名称)
+            console.log('已点击HidePauseMenu1_Button')
 
         })
     }
@@ -88,7 +88,7 @@ export class HidePauseMenu1_Button extends Component {
     onDestroy() {
         this.node.off('mouse-move', this.onMouseMove, this)
         this.node.off('mouse-leave', this.onMouseLeave, this)
-        this.node.off('click', this.onHideMainMenu, this)
+        this.node.off('click', this.onHidePauseMenu1, this)
     }
 }
 

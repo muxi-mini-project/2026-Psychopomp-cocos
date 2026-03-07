@@ -13,7 +13,7 @@ export class BgmControl_Slider extends Component {
     public volumeSlider: Slider = null
 
     @property({ displayName: "背景音乐音量" })
-    public bgmVolume: number = 0.8
+    public bgmVolume: number = 0.5
 
     onLoad() {
         this.initBgmConfig()
