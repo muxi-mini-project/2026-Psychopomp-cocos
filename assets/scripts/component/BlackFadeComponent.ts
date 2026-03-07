@@ -1,6 +1,6 @@
 import { _decorator, Color, Component, log, Sprite, Node, tween } from "cc";
 const { ccclass, property } = _decorator;
-import { CommonEnum } from "../../../../NewProject_1/assets/scripts/common/CommonEnum";
+// import { CommonEnum } from "../../../../NewProject_1/assets/scripts/common/CommonEnum";
 
 @ccclass('BlackFadeComponent')
 export class BlackFadeComponent extends Component {
