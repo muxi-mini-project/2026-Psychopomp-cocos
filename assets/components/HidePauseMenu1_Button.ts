@@ -1,14 +1,14 @@
-import { _decorator, Component, Node, AudioSource, Vec3, tween } from 'cc';
-import { SfxControl_Slider } from './SfxControl_Slider';
-const { ccclass, property } = _decorator;
+import { _decorator, Component, director, AudioSource, tween, Vec3 } from 'cc'
+const { ccclass, property } = _decorator
+import { SfxControl_Slider } from './SfxControl_Slider'
 
-@ccclass('ShowMainMenu_Button')
-export class ShowMainMenu_Button extends Component {
-    @property({ displayName: "主菜单节点" })
-    public mainMenuNode: Node | null = null
+@ccclass('HidePauseMenu1_Button')
+export class HidePauseMenu1_Button extends Component {
+
 
     @property({ type: SfxControl_Slider, displayName: "音效滑块组件" })
     public sfxSliderComp: SfxControl_Slider = null
+
     @property({
         type: AudioSource['clip'],
         tooltip: "按钮点击音效组件"
@@ -24,19 +24,22 @@ export class ShowMainMenu_Button extends Component {
 
     @property({ tooltip: "动画时长（秒）" })
     animDuration: number = 0.15
-
     onLoad() {
         this.node.on('mouse-move', this.onMouseMove, this)
         this.node.on('mouse-leave', this.onMouseLeave, this)
-        this.node.on('click', this.onButtonClick, this)
+        this.node.on('click', this.onHideMainMenu, this)
     }
 
-    onButtonClick() {
+    onHideMainMenu() {
         this.playClickSound()
-        if (this.mainMenuNode) {
-            this.mainMenuNode.active = true
-        }
+        this.playClickAnimation(() => {
+            director.emit("HIDE_MENU")
+            console.log('已点击HideMainMenu_Button')
+
+        })
     }
+
+    //播放点击音效
     private playClickSound() {
         const currentVol = Math.max(0, Math.min(1, this.sfxSliderComp.volumeSlider.progress))
         console.log("按钮绑定的滑块组件：", this.sfxSliderComp)
@@ -85,8 +88,7 @@ export class ShowMainMenu_Button extends Component {
     onDestroy() {
         this.node.off('mouse-move', this.onMouseMove, this)
         this.node.off('mouse-leave', this.onMouseLeave, this)
-        this.node.off('click', this.onButtonClick, this)
+        this.node.off('click', this.onHideMainMenu, this)
     }
 }
-
 

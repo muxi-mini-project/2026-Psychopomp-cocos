@@ -49,8 +49,8 @@ export class TestText extends Component {
     //对话开始
     private _onDialogueStart(dialogueId: string) {
         console.log(`[TestText] 对话开始: ${dialogueId}`)
-        this.initPanel() // 确保面板已初始化
-        // 重置段落索引
+        this.initPanel()
+        //重置段落索引
         this.currentLineIndex = 0
         this.totalLines = 0
         this.panelNode.active = true
@@ -100,7 +100,7 @@ export class TestText extends Component {
     }
 
     onDestroy() {
-        // 移除面板点击事件
+        //移除面板点击事件
         if (this.panelNode) {
             this.panelNode.off(Input.EventType.TOUCH_START, this.onPanelClick, this)
         }
