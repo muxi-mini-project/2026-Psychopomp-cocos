@@ -1,7 +1,7 @@
 [
   {
     "__type__": "cc.Prefab",
-    "_name": "scene_bathroom",
+    "_name": "scene_bathroom_sinkClose",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_native": "",
@@ -13,7 +13,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "scene_bathroom",
+    "_name": "scene_bathroom_sinkClose",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": null,
@@ -58,7 +58,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "bathroomAll",
+    "_name": "sinkClose",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
@@ -108,7 +108,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "point_xuanZhi",
+    "_name": "point_sink",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
@@ -165,14 +165,14 @@
     "__prefab": {
       "__id__": 5
     },
-    "interactableId": "point_xuanZhi",
-    "interactableType": "pick_item",
+    "interactableId": "point_sink",
+    "interactableType": "ude_item",
     "hoverCursor": true,
     "_id": ""
   },
   {
     "__type__": "cc.CompPrefabInfo",
-    "fileId": "37kcbu/J9CL54Up2ySpPeG"
+    "fileId": "cabajE0qtEWZ6EM8QM6Whj"
   },
   {
     "__type__": "cc.PrefabInfo",
@@ -182,14 +182,14 @@
     "asset": {
       "__id__": 0
     },
-    "fileId": "78dHvCLClHmpbDMpgdQ16a",
+    "fileId": "3aRIAUy2FOQ6ANtgTBIfCt",
     "instance": null,
     "targetOverrides": null,
     "nestedPrefabInstanceRoots": null
   },
   {
     "__type__": "cc.Node",
-    "_name": "bathroomAllBg",
+    "_name": "sinkCloseBg",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
@@ -238,7 +238,7 @@
     "asset": {
       "__id__": 0
     },
-    "fileId": "dcxCB+1JdCzadIxX4aFbi6",
+    "fileId": "8d2GLP681Jh7PFSWpvJtj8",
     "instance": null,
     "targetOverrides": null,
     "nestedPrefabInstanceRoots": null
@@ -251,7 +251,7 @@
     "asset": {
       "__id__": 0
     },
-    "fileId": "6eRB9dnDBHObz2XDBQjFAG",
+    "fileId": "6f8g4rtvROfIE92gPcIwuC",
     "instance": null,
     "targetOverrides": null,
     "nestedPrefabInstanceRoots": null

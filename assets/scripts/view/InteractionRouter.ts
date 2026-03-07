@@ -79,12 +79,12 @@ export class InteractionRouter extends Component {
 
     onEnable() {
         director.on(event.INTERACTABLE_TRIGGERED, this.onTriggered, this);
-        director.on(event.ITEM_SELECTED, this.onSelected, this);
+        // director.on(event.ITEM_SELECTED, this.onSelected, this);
     }
 
     onDisable() {
         director.off(event.INTERACTABLE_TRIGGERED, this.onTriggered, this);
-        director.off(event.ITEM_SELECTED, this.onSelected, this);
+        // director.off(event.ITEM_SELECTED, this.onSelected, this);
     }
 
     private onTriggered(result: any) {

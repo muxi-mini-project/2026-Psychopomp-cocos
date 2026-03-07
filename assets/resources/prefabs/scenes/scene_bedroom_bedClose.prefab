@@ -1,7 +1,7 @@
 [
   {
     "__type__": "cc.Prefab",
-    "_name": "scene_bathroom",
+    "_name": "scene_bedroom_bedClose",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_native": "",
@@ -13,7 +13,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "scene_bathroom",
+    "_name": "scene_bedroom_bedClose",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": null,
@@ -25,7 +25,7 @@
     "_active": true,
     "_components": [],
     "_prefab": {
-      "__id__": 10
+      "__id__": 18
     },
     "_lpos": {
       "__type__": "cc.Vec3",
@@ -58,7 +58,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "bathroomAll",
+    "_name": "bedroomAll",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
@@ -69,13 +69,16 @@
         "__id__": 3
       },
       {
-        "__id__": 7
+        "__id__": 9
+      },
+      {
+        "__id__": 15
       }
     ],
     "_active": true,
     "_components": [],
     "_prefab": {
-      "__id__": 9
+      "__id__": 17
     },
     "_lpos": {
       "__type__": "cc.Vec3",
@@ -108,7 +111,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "point_xuanZhi",
+    "_name": "point_desk",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
@@ -119,14 +122,17 @@
     "_components": [
       {
         "__id__": 4
+      },
+      {
+        "__id__": 6
       }
     ],
     "_prefab": {
-      "__id__": 6
+      "__id__": 8
     },
     "_lpos": {
       "__type__": "cc.Vec3",
-      "x": 0,
+      "x": -1.524,
       "y": 0,
       "z": 0
     },
@@ -152,6 +158,40 @@
       "z": 0
     },
     "_id": ""
+  },
+  {
+    "__type__": "cc.BoxCollider2D",
+    "_name": "",
+    "_objFlags": 0,
+    "__editorExtras__": {},
+    "node": {
+      "__id__": 3
+    },
+    "_enabled": true,
+    "__prefab": {
+      "__id__": 5
+    },
+    "tag": 0,
+    "_group": 1,
+    "_density": 1,
+    "_sensor": true,
+    "_friction": 0.2,
+    "_restitution": 0,
+    "_offset": {
+      "__type__": "cc.Vec2",
+      "x": 0,
+      "y": 0
+    },
+    "_size": {
+      "__type__": "cc.Size",
+      "width": 1,
+      "height": 1
+    },
+    "_id": ""
+  },
+  {
+    "__type__": "cc.CompPrefabInfo",
+    "fileId": "3d8ZVRf11BTbSc1S/h4CXa"
   },
   {
     "__type__": "e7f66MZ789M2Yep4xuANxl4",
@@ -163,16 +203,16 @@
     },
     "_enabled": true,
     "__prefab": {
-      "__id__": 5
+      "__id__": 7
     },
-    "interactableId": "point_xuanZhi",
-    "interactableType": "pick_item",
+    "interactableId": "point_desk",
+    "interactableType": "subscene",
     "hoverCursor": true,
     "_id": ""
   },
   {
     "__type__": "cc.CompPrefabInfo",
-    "fileId": "37kcbu/J9CL54Up2ySpPeG"
+    "fileId": "36/GDGmHZBZ7DGeLAqj4QU"
   },
   {
     "__type__": "cc.PrefabInfo",
@@ -182,14 +222,132 @@
     "asset": {
       "__id__": 0
     },
-    "fileId": "78dHvCLClHmpbDMpgdQ16a",
+    "fileId": "434jmNOGRL04812HYbw8U1",
     "instance": null,
     "targetOverrides": null,
     "nestedPrefabInstanceRoots": null
   },
   {
     "__type__": "cc.Node",
-    "_name": "bathroomAllBg",
+    "_name": "point_bed",
+    "_objFlags": 0,
+    "__editorExtras__": {},
+    "_parent": {
+      "__id__": 2
+    },
+    "_children": [],
+    "_active": true,
+    "_components": [
+      {
+        "__id__": 10
+      },
+      {
+        "__id__": 12
+      }
+    ],
+    "_prefab": {
+      "__id__": 14
+    },
+    "_lpos": {
+      "__type__": "cc.Vec3",
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "_lrot": {
+      "__type__": "cc.Quat",
+      "x": 0,
+      "y": 0,
+      "z": 0,
+      "w": 1
+    },
+    "_lscale": {
+      "__type__": "cc.Vec3",
+      "x": 1,
+      "y": 1,
+      "z": 1
+    },
+    "_mobility": 0,
+    "_layer": 1073741824,
+    "_euler": {
+      "__type__": "cc.Vec3",
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "_id": ""
+  },
+  {
+    "__type__": "cc.BoxCollider2D",
+    "_name": "",
+    "_objFlags": 0,
+    "__editorExtras__": {},
+    "node": {
+      "__id__": 9
+    },
+    "_enabled": true,
+    "__prefab": {
+      "__id__": 11
+    },
+    "tag": 0,
+    "_group": 1,
+    "_density": 1,
+    "_sensor": true,
+    "_friction": 0.2,
+    "_restitution": 0,
+    "_offset": {
+      "__type__": "cc.Vec2",
+      "x": 0,
+      "y": 0
+    },
+    "_size": {
+      "__type__": "cc.Size",
+      "width": 1,
+      "height": 1
+    },
+    "_id": ""
+  },
+  {
+    "__type__": "cc.CompPrefabInfo",
+    "fileId": "ebWWEMhltKabjt5aGaBIc1"
+  },
+  {
+    "__type__": "e7f66MZ789M2Yep4xuANxl4",
+    "_name": "",
+    "_objFlags": 0,
+    "__editorExtras__": {},
+    "node": {
+      "__id__": 9
+    },
+    "_enabled": true,
+    "__prefab": {
+      "__id__": 13
+    },
+    "interactableId": "point_bed",
+    "interactableType": "subscene",
+    "hoverCursor": true,
+    "_id": ""
+  },
+  {
+    "__type__": "cc.CompPrefabInfo",
+    "fileId": "e1leKaD/lAmKgtgIjpKydq"
+  },
+  {
+    "__type__": "cc.PrefabInfo",
+    "root": {
+      "__id__": 1
+    },
+    "asset": {
+      "__id__": 0
+    },
+    "fileId": "cfIuuKRV5IS6CjrQMP8EaT",
+    "instance": null,
+    "targetOverrides": null,
+    "nestedPrefabInstanceRoots": null
+  },
+  {
+    "__type__": "cc.Node",
+    "_name": "bedroomBg",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
@@ -199,7 +357,7 @@
     "_active": true,
     "_components": [],
     "_prefab": {
-      "__id__": 8
+      "__id__": 16
     },
     "_lpos": {
       "__type__": "cc.Vec3",
@@ -238,7 +396,7 @@
     "asset": {
       "__id__": 0
     },
-    "fileId": "dcxCB+1JdCzadIxX4aFbi6",
+    "fileId": "e78xuaGahHar7jJN9SrGZj",
     "instance": null,
     "targetOverrides": null,
     "nestedPrefabInstanceRoots": null
@@ -251,7 +409,7 @@
     "asset": {
       "__id__": 0
     },
-    "fileId": "6eRB9dnDBHObz2XDBQjFAG",
+    "fileId": "a43yymV5xOkYkPNqihrSGk",
     "instance": null,
     "targetOverrides": null,
     "nestedPrefabInstanceRoots": null

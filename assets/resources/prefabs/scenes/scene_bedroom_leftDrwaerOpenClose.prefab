@@ -1,7 +1,7 @@
 [
   {
     "__type__": "cc.Prefab",
-    "_name": "scene_bathroom",
+    "_name": "scene_bedroom_leftDrwaerOpenClose",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_native": "",
@@ -13,7 +13,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "scene_bathroom",
+    "_name": "scene_bedroom_leftDrwaerOpenClose",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": null,
@@ -58,7 +58,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "bathroomAll",
+    "_name": "leftDrawerClose",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
@@ -108,7 +108,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "point_xuanZhi",
+    "_name": "point_picture",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
@@ -165,14 +165,14 @@
     "__prefab": {
       "__id__": 5
     },
-    "interactableId": "point_xuanZhi",
-    "interactableType": "pick_item",
+    "interactableId": "point_picture",
+    "interactableType": "subscene",
     "hoverCursor": true,
     "_id": ""
   },
   {
     "__type__": "cc.CompPrefabInfo",
-    "fileId": "37kcbu/J9CL54Up2ySpPeG"
+    "fileId": "648YEGNylMEITQTgf8FobB"
   },
   {
     "__type__": "cc.PrefabInfo",
@@ -182,14 +182,14 @@
     "asset": {
       "__id__": 0
     },
-    "fileId": "78dHvCLClHmpbDMpgdQ16a",
+    "fileId": "48CH1IKB5Cl7GNRL3arO+W",
     "instance": null,
     "targetOverrides": null,
     "nestedPrefabInstanceRoots": null
   },
   {
     "__type__": "cc.Node",
-    "_name": "bathroomAllBg",
+    "_name": "leftDrawerBg",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
@@ -238,7 +238,7 @@
     "asset": {
       "__id__": 0
     },
-    "fileId": "dcxCB+1JdCzadIxX4aFbi6",
+    "fileId": "ffGC3NSNRDqIDQfByrhP7h",
     "instance": null,
     "targetOverrides": null,
     "nestedPrefabInstanceRoots": null
@@ -251,7 +251,7 @@
     "asset": {
       "__id__": 0
     },
-    "fileId": "6eRB9dnDBHObz2XDBQjFAG",
+    "fileId": "b6TMWLMBJE3oxAWpGvTdKP",
     "instance": null,
     "targetOverrides": null,
     "nestedPrefabInstanceRoots": null
