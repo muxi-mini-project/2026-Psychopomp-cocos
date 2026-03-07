@@ -4,6 +4,17 @@
 
   /* Add your custom configuration here. */
   "compilerOptions": {
-    "strict": false
+    "strict": false,
+    /* 解决 includes 报错：引入更高版本的 ES 标准库 */
+    "lib": [
+      "ESNext",
+      "DOM",
+      "DOM.Iterable"
+    ],
+    /* 解决 node10 弃用警告 */
+    "ignoreDeprecations": "5.0",
+    /* 确保编译器以最新标准解析模块 */
+    "target": "ESNext",
+    "module": "ESNext"
   }
 }
