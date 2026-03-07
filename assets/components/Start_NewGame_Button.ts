@@ -9,6 +9,7 @@ export class Start_NewGame_Button extends Component {
     @property({ type: SfxControl_Slider, displayName: "音效滑块组件" })
     public sfxSliderComp: SfxControl_Slider = null
 
+
     @property({
         type: AudioSource['clip'],
         tooltip: "按钮点击音效组件"
@@ -34,7 +35,7 @@ export class Start_NewGame_Button extends Component {
         this.playClickSound()
         this.playClickAnimation(() => {
             director.emit("START_NEW_GAME")
-
+            director.emit("HIDE_MAIN_MENU")
         })
     }
 

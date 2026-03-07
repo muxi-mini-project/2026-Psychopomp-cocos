@@ -2,12 +2,12 @@
   "ver": "1.1.50",
   "importer": "prefab",
   "imported": true,
-  "uuid": "1e364df5-d7ed-4a46-b6a6-11b4a33cd9e5",
+  "uuid": "1af44eca-b462-4949-abd8-f7217d57d78d",
   "files": [
     ".json"
   ],
   "subMetas": {},
   "userData": {
-    "syncNodeName": "MainMenu_Button"
+    "syncNodeName": "Volume_Button"
   }
 }
