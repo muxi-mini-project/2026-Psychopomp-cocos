@@ -13,7 +13,7 @@ export class ItemInventory extends Component {
     }
 
     //判断物品栏是否空闲，若有空位则添加物品图标
-    onPickupItem(data: { itemId: string, iconSprite: Sprite }) {
+    onPickupItem(data: { itemId: string, iconNode: Node }) {
         for (let i = 0; i < this.slots.length; i++) {
             const slotNode = this.slots[i]
             const slot = slotNode.getComponent(Slot)
@@ -21,7 +21,7 @@ export class ItemInventory extends Component {
             if (slot && slot.isEmpty()) {
                 const iconNode = new Node('ItemIcon')
                 const sprite = iconNode.addComponent(Sprite)
-                sprite.spriteFrame = data.iconSprite.spriteFrame
+                sprite.spriteFrame = data.iconNode.getComponent(Sprite).spriteFrame
                 iconNode.setParent(slotNode)
                 iconNode.setScale(1, 1, 1)
                 slot.setItemIcon(iconNode, data.itemId)
@@ -35,3 +35,4 @@ export class ItemInventory extends Component {
         console.log('物品栏已满！')
     }
 }
+

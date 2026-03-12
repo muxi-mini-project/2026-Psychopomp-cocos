@@ -25,10 +25,12 @@ export class ResumeGame_Button extends Component {
         this.node.on('click', this.onResumeClick, this)
     }
 
+
     onResumeClick() {
         this.playClickSound()
         this.playClickAnimation(() => {
-            director.emit("RESUME_GAME")
+            director.emit("LOAD_GAME")//加载游戏
+            director.emit("HIDE_MAIN_MENU")
             console.log('已点击ResumeGame_Button')
         })
     }

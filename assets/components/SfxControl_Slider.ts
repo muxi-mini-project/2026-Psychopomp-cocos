@@ -1,5 +1,6 @@
-import { _decorator, AudioSource, Component, Node, Slider } from 'cc';
-const { ccclass, property } = _decorator;
+import { _decorator, AudioSource, Component, director, Node, Slider } from 'cc'
+import { masterVolume } from './TotalVolumeContol_Slider'
+const { ccclass, property } = _decorator
 
 @ccclass('SfxControl_Slider')
 export class SfxControl_Slider extends Component {
@@ -17,8 +18,11 @@ export class SfxControl_Slider extends Component {
 
 
     onLoad() {
+        console.log("SfxControl_Slider组件已加载")
         this.initSfxConfig()
         this.volumeSlider.node.on('slide', this.onSlide, this)
+        director.on("SFX_VOLUME_ZERO", this.setSfxVolumeZero, this)
+        director.on("SFX_RESTORE", this.initSfxConfig, this)
     }
 
     initSfxConfig() {
@@ -28,22 +32,28 @@ export class SfxControl_Slider extends Component {
         this.realTimeVolume = initVolume
         this.volumeSlider.progress = initVolume
         //Todo:音源同步
-        const volumePercent = Math.round(this.realTimeVolume * 100);
-        console.log(`初始音效音量: ${volumePercent}%`);
+        const volumePercent = Math.round(this.realTimeVolume * 100)
+        console.log(`初始音效音量: ${volumePercent}%`)
     }
     onSlide(slider: Slider) {
         const realTimeVolume = Math.max(0, Math.min(1, slider.progress))
         if (this.sfxAudioSource) {
-            this.sfxAudioSource.volume = realTimeVolume
+            this.sfxAudioSource.volume = realTimeVolume * masterVolume
         }
-        console.log("音效音量已更新为:", realTimeVolume)
-        const volumePercent = Math.round(realTimeVolume * 100);
-        console.log(`当前音效音量: ${volumePercent}%`);
+        console.log("音效音量已更新为:", realTimeVolume * masterVolume)
+        const volumePercent = Math.round(realTimeVolume * masterVolume * 100)
+        console.log(`当前音效音量: ${volumePercent}%`)
 
+    }
+    setSfxVolumeZero() {
+        this.volumeSlider.progress = 0
+        this.onSlide(this.volumeSlider) //触发音量更新逻辑
     }
 
     onDestroy() {
         this.volumeSlider.node.off('slide', this.onSlide, this)
+        director.off("SFX_VOLUME_ZERO", this.setSfxVolumeZero, this)
+        director.off("SFX_RESTORE", this.initSfxConfig, this)
     }
 }
 

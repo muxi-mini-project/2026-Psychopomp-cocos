@@ -1,11 +1,11 @@
-import { _decorator, Component, director, AudioSource, tween, Vec3 } from 'cc'
-const { ccclass, property } = _decorator
-import { SfxControl_Slider } from './SfxControl_Slider'
+import { _decorator, Component, director, Node } from 'cc';
+import { SfxControl_Slider } from './SfxControl_Slider';
+import { AudioSource } from 'cc';
+import { tween, Vec3 } from 'cc';
+const { ccclass, property } = _decorator;
 
-
-@ccclass('SavedGame_Button')
-export class SavedGame_Button extends Component {
-
+@ccclass('Volume_Button')
+export class Volume_Button extends Component {
     @property({ type: SfxControl_Slider, displayName: "音效滑块组件" })
     public sfxSliderComp: SfxControl_Slider = null
 
@@ -24,19 +24,33 @@ export class SavedGame_Button extends Component {
 
     @property({ tooltip: "动画时长（秒）" })
     animDuration: number = 0.15
+
+    private isClicked: boolean = false
+
     onLoad() {
         this.node.on('mouse-move', this.onMouseMove, this)
         this.node.on('mouse-leave', this.onMouseLeave, this)
-        this.node.on('click', this.onStartClick, this)
+        this.node.on('click', this.onButtonClick, this)
     }
 
-    onStartClick() {
+
+    onButtonClick() {
         this.playClickSound()
         this.playClickAnimation(() => {
-            director.emit("LOAD_SAVED_GAME")//触发加载存档事件(待定具体事件名称)
-            director.emit("SHOW_MAIN_MENU")//加载存档后显示主菜单
-            console.log('已点击SavedGame_Button')
+            console.log('已点击Volume_Button')
+            if (!this.isClicked) {
+                director.emit("SET_VOLUME_ZERO")
+                director.emit("SFX_VOLUME_ZERO")
+                director.emit("BGM_VOLUME_ZERO")
+                this.isClicked = true
+            } else {
+                director.emit("RESTORE_VOLUME")
+                director.emit("SFX_RESTORE")
+                director.emit("BGM_RESTORE")
+                this.isClicked = false
+            }
         })
+
     }
 
     //播放点击音效
@@ -88,6 +102,8 @@ export class SavedGame_Button extends Component {
     onDestroy() {
         this.node.off('mouse-move', this.onMouseMove, this)
         this.node.off('mouse-leave', this.onMouseLeave, this)
-        this.node.off('click', this.onStartClick, this)
+        this.node.off('click', this.onButtonClick, this)
     }
 }
+
+

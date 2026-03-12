@@ -28,8 +28,7 @@ export class StopGame_Button extends Component {
     onStopClick() {
         this.playClickSound()
         this.playClickAnimation(() => {
-            director.emit("PAUSE_GAME")//暂停
-            director.emit("SHOW_MENU")//点击后显示暂停菜单
+            director.emit("SHOW_MAIN_MENU")//显示主菜单
             console.log('已点击StopGame_Button')
         })
     }

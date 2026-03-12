@@ -4,14 +4,6 @@ const { ccclass, property } = _decorator;
 
 @ccclass('ShowPauseMenu1_Button')
 export class ShowPauseMenu1_Button extends Component {
-    @property({ displayName: "主菜单节点" })
-    public mainMenuNode: Node | null = null
-
-    @property({ displayName: "开始游戏节点" })
-    public startNewGameNode: Node | null = null
-
-    @property({ displayName: "继续游戏节点" })
-    public continueGameNode: Node | null = null
 
     @property({ type: SfxControl_Slider, displayName: "音效滑块组件" })
     public sfxSliderComp: SfxControl_Slider = null
@@ -37,14 +29,11 @@ export class ShowPauseMenu1_Button extends Component {
         this.node.on('click', this.onButtonClick, this)
     }
 
+
     onButtonClick() {
         this.playClickSound()
         this.playClickAnimation(() => {
             director.emit("SHOW_PAUSE_MENU")//触发显示暂停菜单事件(待定具体事件名称)
-            if (this.mainMenuNode && this.mainMenuNode.active === true) {
-                if (this.startNewGameNode) this.startNewGameNode.active = false
-                if (this.continueGameNode) this.continueGameNode.active = false
-            }
             console.log('已点击ShowPauseMenu1_Button')
         })
     }

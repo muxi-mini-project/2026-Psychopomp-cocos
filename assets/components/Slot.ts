@@ -1,10 +1,20 @@
-import { _decorator, Component, director, Vec3, tween, Node, Sprite } from 'cc'
+import { _decorator, Component, director, Vec3, tween, Node, AudioSource } from 'cc'
+import { SfxControl_Slider } from './SfxControl_Slider';
 const { ccclass, property } = _decorator
 
 @ccclass('Slot')
 export class Slot extends Component {
+    @property({ type: SfxControl_Slider, displayName: "音效滑块组件" })
+    public sfxSliderComp: SfxControl_Slider = null
+
+    @property({
+        type: AudioSource,
+        tooltip: "按钮点击音效组件"
+    })
+    clickAudio: AudioSource = null
+
     @property
-    itemId: string = ""
+    itemId: string
 
     @property(Node)
     bgNode: Node | null = null
@@ -18,6 +28,7 @@ export class Slot extends Component {
     currentTween: any = null
 
     onLoad() {
+        console.log("Slot脚本加载成功")
         this.originalScale = new Vec3(1, 1, 1)
         this.node.on('click', this.onItemClick, this)
     }
@@ -31,19 +42,22 @@ export class Slot extends Component {
 
 
     onItemClick() {
-        if (!this.ItemIcon) return //没有图标就不响应点击
+        if (!this.ItemIcon) {
+            console.log("没有道具")
+            return
+        }//没有图标就不响应点击
         if (this.isSelected) {
             this.isSelected = false
             director.emit("ITEM_DESELECTED", this.itemId)
             if (this.currentTween) this.currentTween.stop()
-
+            console.log('已点击物品')
             tween(this.ItemIcon)
                 .to(0.18, { scale: this.originalScale.clone() })
                 .start()
 
         } else {
             this.isSelected = true
-
+            console.log('已放下物品')
             this.playSelectAnimation(() => {
                 director.emit("ITEM_SELECTED", this.itemId)
             })
@@ -65,7 +79,7 @@ export class Slot extends Component {
     startBreathAnimation() {
         this.currentTween = tween(this.ItemIcon)
             .to(0.8, { scale: new Vec3(1.25, 1.25, 1.25) })
-            .to(0.8, { scale: new Vec3(1.28, 1.28, 1.28) })
+            .to(0.8, { scale: new Vec3(1.5, 1.5, 1.5) })
             .union()
             .repeatForever()
             .start()

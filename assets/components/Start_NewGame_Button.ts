@@ -31,6 +31,7 @@ export class Start_NewGame_Button extends Component {
         this.node.on('click', this.onStartClick, this)
     }
 
+
     onStartClick() {
         this.playClickSound()
         this.playClickAnimation(() => {
