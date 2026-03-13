@@ -1,16 +1,9 @@
 import { _decorator, Component, Node } from 'cc';
-import { SfxControl_Slider } from './SfxControl_Slider';
-import { BgmControl_Slider } from './BgmControl_Slider';
 import { AudioSource, director, tween, Vec3 } from 'cc';
 const { ccclass, property } = _decorator;
 
 @ccclass('Reset_Button')
 export class Reset_Button extends Component {
-    @property({ type: SfxControl_Slider, displayName: "音效滑块组件" })
-    public sfxSliderComp: SfxControl_Slider = null
-
-    @property({ type: BgmControl_Slider, displayName: "背景音乐滑块组件" })
-    public bgmSliderComp: BgmControl_Slider = null
 
     @property({
         type: AudioSource['clip'],
@@ -44,20 +37,11 @@ export class Reset_Button extends Component {
 
     //重置音量到默认值
     private resetVolumeToDefault() {
-        const defaultVolume = 0.5
-        this.sfxSliderComp.volumeSlider.progress = defaultVolume
-        this.sfxSliderComp.realTimeVolume = defaultVolume
-        this.bgmSliderComp.volumeSlider.progress = defaultVolume
-        this.bgmSliderComp.bgmVolume = defaultVolume
-        console.log("已重置音量到默认值：", defaultVolume)
     }
 
     //播放点击音效
     private playClickSound() {
-        const currentVol = Math.max(0, Math.min(1, this.sfxSliderComp.volumeSlider.progress))
-        console.log("按钮绑定的滑块组件：", this.sfxSliderComp)
-        console.log("滑块组件的实时音量：", currentVol)
-        //Todo:添加从本地存储加载音量设置的逻辑
+
     }
 
     //鼠标移入播放缩放动画

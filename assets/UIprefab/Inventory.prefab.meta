@@ -2,12 +2,12 @@
   "ver": "1.1.50",
   "importer": "prefab",
   "imported": true,
-  "uuid": "e3197c01-c40e-4441-982b-9f5be3f1f892",
+  "uuid": "b7b0afff-d6aa-4f7f-b8a5-7b8fd1c4a25f",
   "files": [
     ".json"
   ],
   "subMetas": {},
   "userData": {
-    "syncNodeName": "TotalVolumControl_Slider"
+    "syncNodeName": "Inventory"
   }
 }

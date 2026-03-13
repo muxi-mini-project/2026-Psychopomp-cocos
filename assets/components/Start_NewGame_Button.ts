@@ -1,14 +1,8 @@
 import { _decorator, Component, director, AudioSource, tween, Vec3 } from 'cc'
 const { ccclass, property } = _decorator
-import { SfxControl_Slider } from './SfxControl_Slider'
-
 
 @ccclass('Start_NewGame_Button')
 export class Start_NewGame_Button extends Component {
-
-    @property({ type: SfxControl_Slider, displayName: "音效滑块组件" })
-    public sfxSliderComp: SfxControl_Slider = null
-
 
     @property({
         type: AudioSource['clip'],
@@ -42,9 +36,7 @@ export class Start_NewGame_Button extends Component {
 
     //播放点击音效
     private playClickSound() {
-        const currentVol = Math.max(0, Math.min(1, this.sfxSliderComp.volumeSlider.progress))
-        console.log("按钮绑定的滑块组件：", this.sfxSliderComp)
-        console.log("滑块组件的实时音量：", currentVol)
+        console.log("（点击音效）")
         //Todo:添加从本地存储加载音量设置的逻辑
     }
 

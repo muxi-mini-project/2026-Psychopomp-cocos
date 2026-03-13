@@ -2,12 +2,12 @@
   "ver": "1.1.50",
   "importer": "prefab",
   "imported": true,
-  "uuid": "85776fa2-f893-43cf-bb2a-93e689a96835",
+  "uuid": "8bae6bad-77aa-4f44-aa2e-dbccc66d32df",
   "files": [
     ".json"
   ],
   "subMetas": {},
   "userData": {
-    "syncNodeName": "StopGame_Button"
+    "syncNodeName": "Volume_Control_Slider"
   }
 }

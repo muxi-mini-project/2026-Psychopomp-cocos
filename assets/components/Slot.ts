@@ -1,11 +1,8 @@
 import { _decorator, Component, director, Vec3, tween, Node, AudioSource } from 'cc'
-import { SfxControl_Slider } from './SfxControl_Slider';
 const { ccclass, property } = _decorator
 
 @ccclass('Slot')
 export class Slot extends Component {
-    @property({ type: SfxControl_Slider, displayName: "音效滑块组件" })
-    public sfxSliderComp: SfxControl_Slider = null
 
     @property({
         type: AudioSource,
