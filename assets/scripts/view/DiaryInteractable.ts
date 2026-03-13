@@ -27,6 +27,9 @@ export class DiaryInteractable extends Component {
             case "DIARY_COVER":
                 director.emit(event.UI_OPEN, "diaryCoverBg")
                 return
+                case "DIARY_BLANK":
+                director.emit(event.UI_OPEN, "diaryBlankBg");
+                return;
             
         }
     }
