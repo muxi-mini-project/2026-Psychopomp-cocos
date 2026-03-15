@@ -2,12 +2,12 @@
   "ver": "1.1.50",
   "importer": "prefab",
   "imported": true,
-  "uuid": "76ead153-dfdc-4226-a45a-1013323b1461",
+  "uuid": "3d7103b2-4357-4a96-b972-80a2c269ad1b",
   "files": [
     ".json"
   ],
   "subMetas": {},
   "userData": {
-    "syncNodeName": "scene_bedroom_frameClose"
+    "syncNodeName": "xuanZhiDetail"
   }
 }

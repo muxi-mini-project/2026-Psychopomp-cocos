@@ -18,7 +18,7 @@ export class BedInteractable extends Component {
             return
         switch(result?.code){
             case "ENTER_BED":
-                director.emit(event.SCENE_VISUAL,"bedCloseBg")
+                director.emit(event.SCENE_VISUAL,"bedClose")
                 return
         }
     }

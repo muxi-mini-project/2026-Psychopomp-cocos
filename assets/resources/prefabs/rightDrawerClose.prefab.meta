@@ -2,12 +2,12 @@
   "ver": "1.1.50",
   "importer": "prefab",
   "imported": true,
-  "uuid": "26ee39d8-6b9d-43ba-b308-7c611eba4391",
+  "uuid": "0d0521f5-e46e-4955-b8d4-440823e914ae",
   "files": [
     ".json"
   ],
   "subMetas": {},
   "userData": {
-    "syncNodeName": "scene_bedroom_bed_codeYuanLiArise"
+    "syncNodeName": "rightDrawerClose"
   }
 }

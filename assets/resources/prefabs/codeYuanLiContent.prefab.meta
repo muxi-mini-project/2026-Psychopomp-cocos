@@ -2,12 +2,12 @@
   "ver": "1.1.50",
   "importer": "prefab",
   "imported": true,
-  "uuid": "73007b3d-d4e8-49cc-b698-ac60dfe5db02",
+  "uuid": "602e8f74-d010-421f-92fd-000142799496",
   "files": [
     ".json"
   ],
   "subMetas": {},
   "userData": {
-    "syncNodeName": "scene_bedroom_phoneClose"
+    "syncNodeName": "codeYuanLiContent"
   }
 }

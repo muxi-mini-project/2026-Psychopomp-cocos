@@ -2,12 +2,12 @@
   "ver": "1.1.50",
   "importer": "prefab",
   "imported": true,
-  "uuid": "36879616-425e-4ae9-98b6-e0c570006fc3",
+  "uuid": "2160787c-6b8c-4f34-aa1c-ed1dc52db28e",
   "files": [
     ".json"
   ],
   "subMetas": {},
   "userData": {
-    "syncNodeName": "scene_bedroom_leftDrwaerOpenClose"
+    "syncNodeName": "diaryCloseContent"
   }
 }

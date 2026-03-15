@@ -2,12 +2,12 @@
   "ver": "1.1.50",
   "importer": "prefab",
   "imported": true,
-  "uuid": "d2674dd9-ccdd-495a-94eb-96d95c55ce93",
+  "uuid": "36be8629-77ba-4dee-8210-912837b6d714",
   "files": [
     ".json"
   ],
   "subMetas": {},
   "userData": {
-    "syncNodeName": "scene_bedroom_calendarClose"
+    "syncNodeName": "phoneClose"
   }
 }

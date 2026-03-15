@@ -2,12 +2,12 @@
   "ver": "1.1.50",
   "importer": "prefab",
   "imported": true,
-  "uuid": "f2aed0ed-4621-4481-a230-7362c388dc85",
+  "uuid": "c10ee7c1-9325-4a34-9c94-8cb60e5ae0a0",
   "files": [
     ".json"
   ],
   "subMetas": {},
   "userData": {
-    "syncNodeName": "scene_bedroom_rightDrawerClose"
+    "syncNodeName": "rightDrawerCloseUp"
   }
 }
