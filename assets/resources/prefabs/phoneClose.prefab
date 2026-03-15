@@ -22,13 +22,13 @@
         "__id__": 2
       },
       {
-        "__id__": 6
+        "__id__": 8
       }
     ],
     "_active": true,
     "_components": [],
     "_prefab": {
-      "__id__": 12
+      "__id__": 14
     },
     "_lpos": {
       "__type__": "cc.Vec3",
@@ -72,10 +72,13 @@
     "_components": [
       {
         "__id__": 3
+      },
+      {
+        "__id__": 5
       }
     ],
     "_prefab": {
-      "__id__": 5
+      "__id__": 7
     },
     "_lpos": {
       "__type__": "cc.Vec3",
@@ -118,7 +121,7 @@
     "__prefab": {
       "__id__": 4
     },
-    "interactableId": "point_phoneClose",
+    "interactableId": "point_phone",
     "interactableType": "custom",
     "hoverCursor": true,
     "_id": ""
@@ -126,6 +129,25 @@
   {
     "__type__": "cc.CompPrefabInfo",
     "fileId": "13TZ64bVJDD7AGvAwES9zd"
+  },
+  {
+    "__type__": "dd46bYzf8tCS4okMh6M0BZv",
+    "_name": "",
+    "_objFlags": 0,
+    "__editorExtras__": {},
+    "node": {
+      "__id__": 2
+    },
+    "_enabled": true,
+    "__prefab": {
+      "__id__": 6
+    },
+    "phoneLock": null,
+    "_id": ""
+  },
+  {
+    "__type__": "cc.CompPrefabInfo",
+    "fileId": "4d7ik2RT1GG6g2wpQksbDl"
   },
   {
     "__type__": "cc.PrefabInfo",
@@ -152,14 +174,14 @@
     "_active": true,
     "_components": [
       {
-        "__id__": 7
+        "__id__": 9
       },
       {
-        "__id__": 9
+        "__id__": 11
       }
     ],
     "_prefab": {
-      "__id__": 11
+      "__id__": 13
     },
     "_lpos": {
       "__type__": "cc.Vec3",
@@ -196,11 +218,11 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 6
+      "__id__": 8
     },
     "_enabled": true,
     "__prefab": {
-      "__id__": 8
+      "__id__": 10
     },
     "_contentSize": {
       "__type__": "cc.Size",
@@ -224,11 +246,11 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 6
+      "__id__": 8
     },
     "_enabled": true,
     "__prefab": {
-      "__id__": 10
+      "__id__": 12
     },
     "_customMaterial": null,
     "_srcBlendFactor": 2,
@@ -285,6 +307,7 @@
       "__id__": 0
     },
     "fileId": "c1jJax0sJPvJT4bwELT9xT",
+    "instance": null,
     "targetOverrides": null
   }
 ]

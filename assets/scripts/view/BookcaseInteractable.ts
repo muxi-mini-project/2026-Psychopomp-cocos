@@ -19,11 +19,13 @@ export class BookcaseInteractable extends Component {
         if(result?.interactableId !== this.interactableId)
             return
         switch(result?.code){
+            //进入书柜特写
             case "ENTER_BOOKCASE":
                 director.emit(event.SCENE_VISUAL,"bookcaseCloseBg")
                 return
+            //弹选项
             case "OPEN_TWOBOOKS_IN_BOOKCASE":
-                director.emit(event.UI_OPEN,"twoBooksClseBg")
+                director.emit(event.UI_OPEN,"twoBooksCloseBg")
                 return
         }
     }
