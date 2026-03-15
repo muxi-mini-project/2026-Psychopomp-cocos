@@ -2,7 +2,7 @@
   "ver": "1.0.27",
   "importer": "image",
   "imported": true,
-  "uuid": "17de371e-15d8-4a00-a045-35a746359e17",
+  "uuid": "0c927b36-0dfb-439a-b0ec-20198fd988aa",
   "files": [
     ".json",
     ".png"
@@ -10,14 +10,14 @@
   "subMetas": {
     "6c48a": {
       "importer": "texture",
-      "uuid": "17de371e-15d8-4a00-a045-35a746359e17@6c48a",
+      "uuid": "0c927b36-0dfb-439a-b0ec-20198fd988aa@6c48a",
       "displayName": "游戏设置",
       "id": "6c48a",
       "name": "texture",
       "userData": {
         "wrapModeS": "clamp-to-edge",
         "wrapModeT": "clamp-to-edge",
-        "imageUuidOrDatabaseUri": "17de371e-15d8-4a00-a045-35a746359e17",
+        "imageUuidOrDatabaseUri": "0c927b36-0dfb-439a-b0ec-20198fd988aa",
         "isUuid": true,
         "visible": false,
         "minfilter": "linear",
@@ -34,7 +34,7 @@
     },
     "f9941": {
       "importer": "sprite-frame",
-      "uuid": "17de371e-15d8-4a00-a045-35a746359e17@f9941",
+      "uuid": "0c927b36-0dfb-439a-b0ec-20198fd988aa@f9941",
       "displayName": "游戏设置",
       "id": "f9941",
       "name": "spriteFrame",
@@ -113,7 +113,7 @@
           ]
         },
         "isUuid": true,
-        "imageUuidOrDatabaseUri": "17de371e-15d8-4a00-a045-35a746359e17@6c48a",
+        "imageUuidOrDatabaseUri": "0c927b36-0dfb-439a-b0ec-20198fd988aa@6c48a",
         "atlasUuid": "",
         "trimType": "auto"
       },
@@ -129,6 +129,6 @@
     "type": "sprite-frame",
     "fixAlphaTransparencyArtifacts": false,
     "hasAlpha": true,
-    "redirect": "17de371e-15d8-4a00-a045-35a746359e17@6c48a"
+    "redirect": "0c927b36-0dfb-439a-b0ec-20198fd988aa@6c48a"
   }
 }

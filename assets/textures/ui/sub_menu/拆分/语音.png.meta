@@ -2,7 +2,7 @@
   "ver": "1.0.27",
   "importer": "image",
   "imported": true,
-  "uuid": "07e5a015-f992-43a1-8982-4d2fc8dc739b",
+  "uuid": "c14bb04f-3688-4248-8bab-251750fe19d8",
   "files": [
     ".json",
     ".png"
@@ -10,14 +10,14 @@
   "subMetas": {
     "6c48a": {
       "importer": "texture",
-      "uuid": "07e5a015-f992-43a1-8982-4d2fc8dc739b@6c48a",
+      "uuid": "c14bb04f-3688-4248-8bab-251750fe19d8@6c48a",
       "displayName": "语音",
       "id": "6c48a",
       "name": "texture",
       "userData": {
         "wrapModeS": "clamp-to-edge",
         "wrapModeT": "clamp-to-edge",
-        "imageUuidOrDatabaseUri": "07e5a015-f992-43a1-8982-4d2fc8dc739b",
+        "imageUuidOrDatabaseUri": "c14bb04f-3688-4248-8bab-251750fe19d8",
         "isUuid": true,
         "visible": false,
         "minfilter": "linear",
@@ -34,7 +34,7 @@
     },
     "f9941": {
       "importer": "sprite-frame",
-      "uuid": "07e5a015-f992-43a1-8982-4d2fc8dc739b@f9941",
+      "uuid": "c14bb04f-3688-4248-8bab-251750fe19d8@f9941",
       "displayName": "语音",
       "id": "f9941",
       "name": "spriteFrame",
@@ -113,7 +113,7 @@
           ]
         },
         "isUuid": true,
-        "imageUuidOrDatabaseUri": "07e5a015-f992-43a1-8982-4d2fc8dc739b@6c48a",
+        "imageUuidOrDatabaseUri": "c14bb04f-3688-4248-8bab-251750fe19d8@6c48a",
         "atlasUuid": "",
         "trimType": "auto"
       },
@@ -129,6 +129,6 @@
     "type": "sprite-frame",
     "fixAlphaTransparencyArtifacts": false,
     "hasAlpha": true,
-    "redirect": "07e5a015-f992-43a1-8982-4d2fc8dc739b@6c48a"
+    "redirect": "c14bb04f-3688-4248-8bab-251750fe19d8@6c48a"
   }
 }

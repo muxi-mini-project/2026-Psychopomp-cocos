@@ -2,7 +2,7 @@
   "ver": "1.0.27",
   "importer": "image",
   "imported": true,
-  "uuid": "0c9f4795-def6-4383-8338-df756247b0cb",
+  "uuid": "5a664d97-7830-4fb7-83bd-da47fd814ab8",
   "files": [
     ".json",
     ".png"
@@ -10,14 +10,14 @@
   "subMetas": {
     "6c48a": {
       "importer": "texture",
-      "uuid": "0c9f4795-def6-4383-8338-df756247b0cb@6c48a",
+      "uuid": "5a664d97-7830-4fb7-83bd-da47fd814ab8@6c48a",
       "displayName": "退出 切图",
       "id": "6c48a",
       "name": "texture",
       "userData": {
         "wrapModeS": "clamp-to-edge",
         "wrapModeT": "clamp-to-edge",
-        "imageUuidOrDatabaseUri": "0c9f4795-def6-4383-8338-df756247b0cb",
+        "imageUuidOrDatabaseUri": "5a664d97-7830-4fb7-83bd-da47fd814ab8",
         "isUuid": true,
         "visible": false,
         "minfilter": "linear",
@@ -34,7 +34,7 @@
     },
     "f9941": {
       "importer": "sprite-frame",
-      "uuid": "0c9f4795-def6-4383-8338-df756247b0cb@f9941",
+      "uuid": "5a664d97-7830-4fb7-83bd-da47fd814ab8@f9941",
       "displayName": "退出 切图",
       "id": "f9941",
       "name": "spriteFrame",
@@ -113,7 +113,7 @@
           ]
         },
         "isUuid": true,
-        "imageUuidOrDatabaseUri": "0c9f4795-def6-4383-8338-df756247b0cb@6c48a",
+        "imageUuidOrDatabaseUri": "5a664d97-7830-4fb7-83bd-da47fd814ab8@6c48a",
         "atlasUuid": "",
         "trimType": "auto"
       },
@@ -129,6 +129,6 @@
     "type": "sprite-frame",
     "fixAlphaTransparencyArtifacts": false,
     "hasAlpha": true,
-    "redirect": "0c9f4795-def6-4383-8338-df756247b0cb@6c48a"
+    "redirect": "5a664d97-7830-4fb7-83bd-da47fd814ab8@6c48a"
   }
 }

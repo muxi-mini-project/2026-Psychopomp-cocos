@@ -2,7 +2,7 @@
   "ver": "1.0.27",
   "importer": "image",
   "imported": true,
-  "uuid": "796f3e6f-55a2-4521-910d-f78c07532f0c",
+  "uuid": "b9f13443-9fa9-48b3-a864-bba4a6920f9f",
   "files": [
     ".json",
     ".png"
@@ -10,14 +10,14 @@
   "subMetas": {
     "6c48a": {
       "importer": "texture",
-      "uuid": "796f3e6f-55a2-4521-910d-f78c07532f0c@6c48a",
+      "uuid": "b9f13443-9fa9-48b3-a864-bba4a6920f9f@6c48a",
       "displayName": "语音+蝴蝶",
       "id": "6c48a",
       "name": "texture",
       "userData": {
         "wrapModeS": "clamp-to-edge",
         "wrapModeT": "clamp-to-edge",
-        "imageUuidOrDatabaseUri": "796f3e6f-55a2-4521-910d-f78c07532f0c",
+        "imageUuidOrDatabaseUri": "b9f13443-9fa9-48b3-a864-bba4a6920f9f",
         "isUuid": true,
         "visible": false,
         "minfilter": "linear",
@@ -34,7 +34,7 @@
     },
     "f9941": {
       "importer": "sprite-frame",
-      "uuid": "796f3e6f-55a2-4521-910d-f78c07532f0c@f9941",
+      "uuid": "b9f13443-9fa9-48b3-a864-bba4a6920f9f@f9941",
       "displayName": "语音+蝴蝶",
       "id": "f9941",
       "name": "spriteFrame",
@@ -113,7 +113,7 @@
           ]
         },
         "isUuid": true,
-        "imageUuidOrDatabaseUri": "796f3e6f-55a2-4521-910d-f78c07532f0c@6c48a",
+        "imageUuidOrDatabaseUri": "b9f13443-9fa9-48b3-a864-bba4a6920f9f@6c48a",
         "atlasUuid": "",
         "trimType": "auto"
       },
@@ -129,6 +129,6 @@
     "type": "sprite-frame",
     "fixAlphaTransparencyArtifacts": false,
     "hasAlpha": true,
-    "redirect": "796f3e6f-55a2-4521-910d-f78c07532f0c@6c48a"
+    "redirect": "b9f13443-9fa9-48b3-a864-bba4a6920f9f@6c48a"
   }
 }

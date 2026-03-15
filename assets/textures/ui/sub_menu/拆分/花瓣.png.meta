@@ -2,7 +2,7 @@
   "ver": "1.0.27",
   "importer": "image",
   "imported": true,
-  "uuid": "444e956d-6f2b-4131-82a8-c3db225ea735",
+  "uuid": "c3f30ec4-7eeb-4cef-a532-280a0943de66",
   "files": [
     ".json",
     ".png"
@@ -10,14 +10,14 @@
   "subMetas": {
     "6c48a": {
       "importer": "texture",
-      "uuid": "444e956d-6f2b-4131-82a8-c3db225ea735@6c48a",
+      "uuid": "c3f30ec4-7eeb-4cef-a532-280a0943de66@6c48a",
       "displayName": "花瓣",
       "id": "6c48a",
       "name": "texture",
       "userData": {
         "wrapModeS": "clamp-to-edge",
         "wrapModeT": "clamp-to-edge",
-        "imageUuidOrDatabaseUri": "444e956d-6f2b-4131-82a8-c3db225ea735",
+        "imageUuidOrDatabaseUri": "c3f30ec4-7eeb-4cef-a532-280a0943de66",
         "isUuid": true,
         "visible": false,
         "minfilter": "linear",
@@ -34,7 +34,7 @@
     },
     "f9941": {
       "importer": "sprite-frame",
-      "uuid": "444e956d-6f2b-4131-82a8-c3db225ea735@f9941",
+      "uuid": "c3f30ec4-7eeb-4cef-a532-280a0943de66@f9941",
       "displayName": "花瓣",
       "id": "f9941",
       "name": "spriteFrame",
@@ -113,7 +113,7 @@
           ]
         },
         "isUuid": true,
-        "imageUuidOrDatabaseUri": "444e956d-6f2b-4131-82a8-c3db225ea735@6c48a",
+        "imageUuidOrDatabaseUri": "c3f30ec4-7eeb-4cef-a532-280a0943de66@6c48a",
         "atlasUuid": "",
         "trimType": "auto"
       },
@@ -129,6 +129,6 @@
     "type": "sprite-frame",
     "fixAlphaTransparencyArtifacts": false,
     "hasAlpha": true,
-    "redirect": "444e956d-6f2b-4131-82a8-c3db225ea735@6c48a"
+    "redirect": "c3f30ec4-7eeb-4cef-a532-280a0943de66@6c48a"
   }
 }

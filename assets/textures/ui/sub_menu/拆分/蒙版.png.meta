@@ -2,7 +2,7 @@
   "ver": "1.0.27",
   "importer": "image",
   "imported": true,
-  "uuid": "31c615d5-2b59-4e85-a3ac-4d22c617a8ce",
+  "uuid": "500346d0-4516-4ca8-b433-2292d8e75193",
   "files": [
     ".json",
     ".png"
@@ -10,14 +10,14 @@
   "subMetas": {
     "6c48a": {
       "importer": "texture",
-      "uuid": "31c615d5-2b59-4e85-a3ac-4d22c617a8ce@6c48a",
+      "uuid": "500346d0-4516-4ca8-b433-2292d8e75193@6c48a",
       "displayName": "蒙版",
       "id": "6c48a",
       "name": "texture",
       "userData": {
         "wrapModeS": "clamp-to-edge",
         "wrapModeT": "clamp-to-edge",
-        "imageUuidOrDatabaseUri": "31c615d5-2b59-4e85-a3ac-4d22c617a8ce",
+        "imageUuidOrDatabaseUri": "500346d0-4516-4ca8-b433-2292d8e75193",
         "isUuid": true,
         "visible": false,
         "minfilter": "linear",
@@ -34,7 +34,7 @@
     },
     "f9941": {
       "importer": "sprite-frame",
-      "uuid": "31c615d5-2b59-4e85-a3ac-4d22c617a8ce@f9941",
+      "uuid": "500346d0-4516-4ca8-b433-2292d8e75193@f9941",
       "displayName": "蒙版",
       "id": "f9941",
       "name": "spriteFrame",
@@ -113,7 +113,7 @@
           ]
         },
         "isUuid": true,
-        "imageUuidOrDatabaseUri": "31c615d5-2b59-4e85-a3ac-4d22c617a8ce@6c48a",
+        "imageUuidOrDatabaseUri": "500346d0-4516-4ca8-b433-2292d8e75193@6c48a",
         "atlasUuid": "",
         "trimType": "auto"
       },
@@ -129,6 +129,6 @@
     "type": "sprite-frame",
     "fixAlphaTransparencyArtifacts": false,
     "hasAlpha": true,
-    "redirect": "31c615d5-2b59-4e85-a3ac-4d22c617a8ce@6c48a"
+    "redirect": "500346d0-4516-4ca8-b433-2292d8e75193@6c48a"
   }
 }

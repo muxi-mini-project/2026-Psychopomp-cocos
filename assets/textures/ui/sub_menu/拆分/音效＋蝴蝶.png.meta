@@ -2,7 +2,7 @@
   "ver": "1.0.27",
   "importer": "image",
   "imported": true,
-  "uuid": "deb439b8-2ecf-4868-9168-5d876d47b5e4",
+  "uuid": "f4beea55-4da3-421a-b6cd-44be3d0dacd2",
   "files": [
     ".json",
     ".png"
@@ -10,14 +10,14 @@
   "subMetas": {
     "6c48a": {
       "importer": "texture",
-      "uuid": "deb439b8-2ecf-4868-9168-5d876d47b5e4@6c48a",
+      "uuid": "f4beea55-4da3-421a-b6cd-44be3d0dacd2@6c48a",
       "displayName": "音效＋蝴蝶",
       "id": "6c48a",
       "name": "texture",
       "userData": {
         "wrapModeS": "clamp-to-edge",
         "wrapModeT": "clamp-to-edge",
-        "imageUuidOrDatabaseUri": "deb439b8-2ecf-4868-9168-5d876d47b5e4",
+        "imageUuidOrDatabaseUri": "f4beea55-4da3-421a-b6cd-44be3d0dacd2",
         "isUuid": true,
         "visible": false,
         "minfilter": "linear",
@@ -34,7 +34,7 @@
     },
     "f9941": {
       "importer": "sprite-frame",
-      "uuid": "deb439b8-2ecf-4868-9168-5d876d47b5e4@f9941",
+      "uuid": "f4beea55-4da3-421a-b6cd-44be3d0dacd2@f9941",
       "displayName": "音效＋蝴蝶",
       "id": "f9941",
       "name": "spriteFrame",
@@ -113,7 +113,7 @@
           ]
         },
         "isUuid": true,
-        "imageUuidOrDatabaseUri": "deb439b8-2ecf-4868-9168-5d876d47b5e4@6c48a",
+        "imageUuidOrDatabaseUri": "f4beea55-4da3-421a-b6cd-44be3d0dacd2@6c48a",
         "atlasUuid": "",
         "trimType": "auto"
       },
@@ -129,6 +129,6 @@
     "type": "sprite-frame",
     "fixAlphaTransparencyArtifacts": false,
     "hasAlpha": true,
-    "redirect": "deb439b8-2ecf-4868-9168-5d876d47b5e4@6c48a"
+    "redirect": "f4beea55-4da3-421a-b6cd-44be3d0dacd2@6c48a"
   }
 }

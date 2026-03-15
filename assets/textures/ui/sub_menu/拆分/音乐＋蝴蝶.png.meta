@@ -2,7 +2,7 @@
   "ver": "1.0.27",
   "importer": "image",
   "imported": true,
-  "uuid": "4b18d97c-09d3-44f7-8f3a-483c9f0a6341",
+  "uuid": "3e25c08e-3c4a-428d-bf3e-f4abc75e472a",
   "files": [
     ".json",
     ".png"
@@ -10,14 +10,14 @@
   "subMetas": {
     "6c48a": {
       "importer": "texture",
-      "uuid": "4b18d97c-09d3-44f7-8f3a-483c9f0a6341@6c48a",
+      "uuid": "3e25c08e-3c4a-428d-bf3e-f4abc75e472a@6c48a",
       "displayName": "音乐＋蝴蝶",
       "id": "6c48a",
       "name": "texture",
       "userData": {
         "wrapModeS": "clamp-to-edge",
         "wrapModeT": "clamp-to-edge",
-        "imageUuidOrDatabaseUri": "4b18d97c-09d3-44f7-8f3a-483c9f0a6341",
+        "imageUuidOrDatabaseUri": "3e25c08e-3c4a-428d-bf3e-f4abc75e472a",
         "isUuid": true,
         "visible": false,
         "minfilter": "linear",
@@ -34,7 +34,7 @@
     },
     "f9941": {
       "importer": "sprite-frame",
-      "uuid": "4b18d97c-09d3-44f7-8f3a-483c9f0a6341@f9941",
+      "uuid": "3e25c08e-3c4a-428d-bf3e-f4abc75e472a@f9941",
       "displayName": "音乐＋蝴蝶",
       "id": "f9941",
       "name": "spriteFrame",
@@ -113,7 +113,7 @@
           ]
         },
         "isUuid": true,
-        "imageUuidOrDatabaseUri": "4b18d97c-09d3-44f7-8f3a-483c9f0a6341@6c48a",
+        "imageUuidOrDatabaseUri": "3e25c08e-3c4a-428d-bf3e-f4abc75e472a@6c48a",
         "atlasUuid": "",
         "trimType": "auto"
       },
@@ -129,6 +129,6 @@
     "type": "sprite-frame",
     "fixAlphaTransparencyArtifacts": false,
     "hasAlpha": true,
-    "redirect": "4b18d97c-09d3-44f7-8f3a-483c9f0a6341@6c48a"
+    "redirect": "3e25c08e-3c4a-428d-bf3e-f4abc75e472a@6c48a"
   }
 }
