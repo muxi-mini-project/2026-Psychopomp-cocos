@@ -1,33 +1,46 @@
-import { _decorator,Component,director } from "cc";
-const { ccclass, property } = _decorator;
-const event ={
-    INTERACTABLE_TRIGGERED:"INTERACTABLE_TRIGGERED",
-    UI_OPEN:"UI_OPEN",
-    SCENE_VISUAL:"SCENE_VISUAL"
+import { _decorator, Component, director } from "cc";
+const { ccclass } = _decorator;
 
-}
-@ccclass('BookcaseInteractable')
+const event = {
+    INTERACTABLE_TRIGGERED: "INTERACTABLE_TRIGGERED",
+    UI_OPEN: "UI_OPEN",
+    SCENE_VISUAL: "SCENE_VISUAL"
+} as const;
+
+@ccclass("BookcaseInteractable")
 export class BookcaseInteractable extends Component {
-    private readonly interactableId = "point_bookcase"
-    onEnable(){
-        director.on(event.INTERACTABLE_TRIGGERED,this.onTriggered,this)
+    private readonly interactableId = "point_bookcase";
+
+    onEnable() {
+        director.on(event.INTERACTABLE_TRIGGERED, this.onTriggered, this);
+        console.log("BookcaseInteractable onEnable -> 注册监听");
     }
-    onDisable(){
-        director.off(event.INTERACTABLE_TRIGGERED,this.onTriggered,this)
+
+    onDisable() {
+        director.off(event.INTERACTABLE_TRIGGERED, this.onTriggered, this);
+        console.log("BookcaseInteractable onDisable -> 移除监听");
     }
-    private onTriggered(result:any){
-        if(result?.interactableId !== this.interactableId)
-            return
-        switch(result?.code){
-            //进入书柜特写
+
+    private onTriggered(result: any) {
+        console.log("[BookcaseInteractable] 收到交互事件", result);
+
+        if (result?.interactableId !== this.interactableId) {
+            console.log(`[BookcaseInteractable] 交互点不匹配: current=${result?.interactableId}, target=${this.interactableId}`);
+            return;
+        }
+
+        switch (result?.code) {
             case "ENTER_BOOKCASE":
-                director.emit(event.SCENE_VISUAL,"bookcaseCloseBg")
-                return
-            //弹选项
+                console.log("[BookcaseInteractable] 触发 ENTER_BOOKCASE -> 进入书柜特写");
+                director.emit(event.SCENE_VISUAL, "bookcaseCloseBg");
+                console.log("[BookcaseInteractable] 已切换书柜特写");
+                return;
+
             case "OPEN_TWOBOOKS_IN_BOOKCASE":
-                director.emit(event.UI_OPEN,"twoBooksCloseBg")
-                return
+                console.log("[BookcaseInteractable] 触发 OPEN_TWOBOOKS_IN_BOOKCASE -> 打开双书选项");
+                director.emit(event.UI_OPEN, "twoBooksCloseBg");
+                console.log("[BookcaseInteractable] 已打开双书选项");
+                return;
         }
     }
-
 }

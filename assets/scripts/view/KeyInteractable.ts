@@ -10,15 +10,20 @@ export class KeyInteractable extends Component {
 
     onEnable() {
         director.on(event.INTERACTABLE_TRIGGERED, this.onTriggered, this)
+                console.log("KeyInteractable onEnable -> 注册监听")
     }
     onDisable() {
         director.off(event.INTERACTABLE_TRIGGERED, this.onTriggered, this)
+                console.log("KeyInteractable onDisable -> 取消监听")
     }
     private onTriggered(result: any) {
-        if (result.id !== this.interactableId)
-            return
+        console.log("[KeyInteractable] 收到交互事件", result);
+        if (result.id !== this.interactableId){
+            console.log(`[KeyInteractable] 交互点不匹配: current=${result?.interactableId}, target=${this.interactableId}`);
+            return}
         switch (result?.code) {
             case "PICK_KEY":
+                console.log("[KeyInteractable] 触发 PICK_KEY -> 获得钥匙")
                 director.emit(event.UI_MODAL,
                     {
                         title: "钥匙",
@@ -26,10 +31,9 @@ export class KeyInteractable extends Component {
                         okText: "确定"
                     }
                 )
+                console.log("[KeyInteractable] 已完成弹窗")
                 return
         }
 
     }
-
-
 }

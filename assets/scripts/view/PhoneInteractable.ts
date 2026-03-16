@@ -13,30 +13,39 @@ export class PhoneInteract extends Component {
 
     onEnable() {
         director.on(event.INTERACTABLE_TRIGGERED, this.onTriggered, this);
+        console.log("PhoneInteract onEnable -> 注册监听");
     }
 
     onDisable() {
         director.off(event.INTERACTABLE_TRIGGERED, this.onTriggered, this);
+        console.log("PhoneInteract onDisable -> 移除监听");
     }
 
     private onTriggered(result: any) {
-        if (result?.interactableId !== this.interactableId) return;
+        console.log("[PhoneInteract] 收到交互事件", result);
+
+        if (result?.interactableId !== this.interactableId) {
+            console.log(`[PhoneInteract] 交互点不匹配: current=${result?.interactableId}, target=${this.interactableId}`);
+            return;
+        }
 
         switch (result?.code) {
             case "PHONE_LOCKED":
-                 director.emit(event.UI_TOAST, "手机还没解锁");
+                console.log("[PhoneInteract] 触发 PHONE_LOCKED -> 提示手机未解锁");
+                director.emit(event.UI_TOAST, "手机还没解锁");
+                console.log("[PhoneInteract] 已弹出提示");
                 return;
 
             case "PHONE_OPEN":
-                // 解锁后打开手机内容页
+                console.log("[PhoneInteract] 触发 PHONE_OPEN -> 打开手机内容页");
                 director.emit(event.UI_OPENED, "phoneCloseBg");
+                console.log("[PhoneInteract] 已打开手机内容页");
                 return;
 
             case "PHONE_PASSWORD":
+                console.log("[PhoneInteract] 触发 PHONE_PASSWORD -> 打开手机密码页");
                 director.emit(event.UI_OPENED, "phonePasswordBg");
-                return;
-
-            default:
+                console.log("[PhoneInteract] 已打开手机密码页");
                 return;
         }
     }
