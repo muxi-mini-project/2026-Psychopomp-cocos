@@ -66,23 +66,6 @@ export class DialogManager extends Component {
         }
     }
 
-    public selectChoice(choiceIndex: number): void {
-        if (!this._isActive || !this._currentDialogue?.choices) {
-            return;
-        }
-
-        const choice = this._currentDialogue.choices[choiceIndex];
-        if (!choice) {
-            return;
-        }
-
-        if (choice.action) {
-            this._executeAction(choice.action);
-        }
-
-        this._finishDialogue();
-    }
-
     public hideDialogue(): void {
         this._isActive = false;
         this._currentDialogue = null;
@@ -98,30 +81,15 @@ export class DialogManager extends Component {
         const line = this._currentDialogue.lines[this._currentLineIndex];
         director.emit("DIALOGUE_LINE", {
             text: line.text,
-            speaker: this._currentDialogue.speaker,
             index: this._currentLineIndex,
             total: this._currentDialogue.lines.length
         });
     }
 
     private _finishDialogue(): void {
-        if (this._currentDialogue?.onComplete) {
-            this._executeAction(this._currentDialogue.onComplete);
-        }
-
         const dialogueId = this._currentDialogue?.id;
         this.hideDialogue();
         director.emit("DIALOGUE_END", dialogueId);
-    }
-
-    private _executeAction(action: any): void {
-        if (!action) return;
-
-        switch (action.action) {
-            case "set_flag":
-                DataManager.instance.setFlag(action.flag, action.value);
-                break;
-        }
     }
 
     protected onDestroy(): void {

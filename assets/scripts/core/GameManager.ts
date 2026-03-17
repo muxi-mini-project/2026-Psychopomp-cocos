@@ -125,10 +125,9 @@ export class GameManager extends Component {
 
     private _onStartNewGame(_data: { slotId?: string }): void {
         DataManager.instance.startNewGame();
-        DataManager.instance.saveGame("auto_save", true);
-        const sceneConfig = DataManager.instance.getSceneConfig("scene_intro");
-        const startScene = sceneConfig?.startScene || "scene_intro";
-        SceneViewManager.instance.loadScene(startScene);
+        // 发出开场动画事件，由 UI 层播放动画
+        // 动画播放完毕后 UI 发出 INTRO_COMPLETE，GameManager 再加载场景
+        director.emit("INTRO_START");
     }
 
     private _onLoadGame(data: { slotId: string }): void {
