@@ -2,7 +2,11 @@
   "ver": "1.2.0",
   "importer": "directory",
   "imported": true,
+<<<<<<< HEAD
   "uuid": "9fd89a97-ea05-4ac3-abbd-b9729dbbf936",
+=======
+  "uuid": "782e9bfd-40f0-4f38-b123-f70c3c91145b",
+>>>>>>> origin/feature/art
   "files": [],
   "subMetas": {},
   "userData": {}
