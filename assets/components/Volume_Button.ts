@@ -14,6 +14,12 @@ export class Volume_Button extends Component {
     @property({ type: AudioSource, displayName: "音效音源组件" })
     sfxAudioSource: AudioSource = null
 
+    @property(Node)
+    volumeOn: Node = null
+
+    @property(Node)
+    volumeOff: Node = null
+
     //动画配置
     @property({ tooltip: "点击缩放比例" })
     clickScale: number = 0.9
@@ -45,8 +51,19 @@ export class Volume_Button extends Component {
                 director.emit("BGM_RESTORE")
                 this.isClicked = false
             }
+            this.updateVolumeIcon()
         })
 
+    }
+
+    private updateVolumeIcon() {
+        if (this.isClicked) {
+            this.volumeOn.active = false
+            this.volumeOff.active = true
+        } else {
+            this.volumeOn.active = true
+            this.volumeOff.active = false
+        }
     }
 
     //播放点击音效
