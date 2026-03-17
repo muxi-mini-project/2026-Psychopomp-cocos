@@ -1,7 +1,8 @@
-import { _decorator, Component, director } from "cc";
+import { _decorator, Component, director,Node } from "cc";
 const { ccclass, property } = _decorator;
 const event = {
     INTERACTABLE_TRIGGERED: "INTERACTABLE_TRIGGERED",
+    INTERACTABLE_CLICK: "INTERACTABLE_CLICK",
     UI_TOAST: "UI_TOAST",
     UI_OPEN: "UI_OPEN",
     SCENE_VISUAL: "SCENE_VISUAL"
@@ -10,12 +11,19 @@ const event = {
 export class RightDrawerInteractable extends Component {
     private readonly interactableId = "point_rightDrawer"
     onEnable() {
-        console.log("[RightDrawerInteractable] onEnable -> 注册监听")
-        director.on(event.INTERACTABLE_TRIGGERED, this.onTriggered, this)
+        director.on(event.INTERACTABLE_TRIGGERED, this.onTriggered, this)       
+          this.node.on(Node.EventType.TOUCH_END, this.onClick, this)
+       console.log("[RightDrawerInteractable] onEnable -> 注册监听，点击监听")
+
     }
     onDisable() {
-        console.log("[RightDrawerInteractable] onDisable -> 取消监听")
-        director.off(event.INTERACTABLE_TRIGGERED, this.onTriggered, this)
+             director.off(event.INTERACTABLE_TRIGGERED, this.onTriggered, this)
+             this.node.off(Node.EventType.TOUCH_END, this.onClick, this)
+   console.log("[RightDrawerInteractable] onDisable -> 取消监听，点击监听")
+    }
+    private onClick() {
+        console.log('[RightDrawerInteractable] 点击节点 -> emit INTERACTABLE_CLICK: ${this.interactableId}')
+        director.emit(event.INTERACTABLE_CLICK, this.interactableId)
     }
     private onTriggered(result: any) {
         if (result?.interactableId !== this.interactableId){

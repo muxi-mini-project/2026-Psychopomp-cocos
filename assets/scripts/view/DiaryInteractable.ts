@@ -1,7 +1,8 @@
-import { _decorator, Component, director } from "cc";
+import { _decorator, Component, director,Node } from "cc";
 const { ccclass, property } = _decorator;
 const event = {
     INTERACTABLE_TRIGGERED: "INTERACTABLE_TRIGGERED",
+    INTERACTABLE_CLICK: "INTERACTABLE_CLICK",
     UI_OPEN: "UI_OPEN",
     UI_TOAST: "UI_TOAST",
     UI_MODAL: "UI_MODAL"
@@ -11,11 +12,17 @@ export class DiaryInteractable extends Component {
     private readonly interactableId = "point_diary"
     onEnable() {
         director.on(event.INTERACTABLE_TRIGGERED, this.onTriggered, this)
-        console.log("DiaryInteractable onEnable -> 注册监听")
+        this.node.on(Node.EventType.TOUCH_END, this.onClick, this)
+        console.log("DiaryInteractable onEnable -> 注册监听,点击监听")
     }
     onDisable() {
         director.off(event.INTERACTABLE_TRIGGERED, this.onTriggered, this)
-        console.log("DiaryInteractable onDisable -> 注销监听")
+        this.node.off(Node.EventType.TOUCH_END, this.onClick, this)
+        console.log("DiaryInteractable onDisable -> 注销监听，点击监听")
+    }
+    private onClick() {
+           console.log('DiaryInteractable onClick -> 点击事件,emit INTERACTABLE_CLICK: ${this.interactableId}')
+           director.emit(event.INTERACTABLE_CLICK, { interactableId: this.interactableId })
     }
     private onTriggered(result: any) {
         console.log("DiaryInteractable onTriggered -> 收到交互事件", result)

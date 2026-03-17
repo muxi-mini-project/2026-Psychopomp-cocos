@@ -2,12 +2,12 @@
   "ver": "1.1.50",
   "importer": "prefab",
   "imported": true,
-  "uuid": "f2e44195-78dc-45e6-8f49-150d4ecfa607",
+  "uuid": "591e5208-e4f1-4cbb-b176-164ffe5a9c7e",
   "files": [
     ".json"
   ],
   "subMetas": {},
   "userData": {
-    "syncNodeName": "frameClose"
+    "syncNodeName": "deskMidClose"
   }
 }

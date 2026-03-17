@@ -1,10 +1,11 @@
-import { _decorator, Component, director } from "cc";
+import { _decorator, Component, director,Node } from "cc";
 const { ccclass } = _decorator;
 
 const event = {
     INTERACTABLE_TRIGGERED: "INTERACTABLE_TRIGGERED",
     UI_OPEN: "UI_OPEN",
-    SCENE_VISUAL: "SCENE_VISUAL"
+    SCENE_VISUAL: "SCENE_VISUAL",
+    INTERACTABLE_CLICK: "INTERACTABLE_CLICK",
 } as const;
 
 @ccclass("BookcaseInteractable")
@@ -13,12 +14,18 @@ export class BookcaseInteractable extends Component {
 
     onEnable() {
         director.on(event.INTERACTABLE_TRIGGERED, this.onTriggered, this);
-        console.log("BookcaseInteractable onEnable -> 注册监听");
+        this.node.on(Node.EventType.TOUCH_END,this.onclick,this)
+        console.log("BookcaseInteractable onEnable -> 注册监听 点击节点");
     }
 
     onDisable() {
         director.off(event.INTERACTABLE_TRIGGERED, this.onTriggered, this);
+        this.node.off(Node.EventType.TOUCH_END,this.onclick,this)
         console.log("BookcaseInteractable onDisable -> 移除监听");
+    }
+    private onclick(){
+        console.log('BookcaseInteractable onclick -> 点击节点,emit INTERACTABLE_CLICK: ${this.interactableId}');
+        director.emit(event.INTERACTABLE_CLICK, { interactableId: this.interactableId });
     }
 
     private onTriggered(result: any) {

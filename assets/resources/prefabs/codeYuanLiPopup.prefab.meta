@@ -2,12 +2,12 @@
   "ver": "1.1.50",
   "importer": "prefab",
   "imported": true,
-  "uuid": "e0ef41ff-35d9-411b-92de-9478bb7f9d0d",
+  "uuid": "3c3ed997-1be6-4127-ac8f-7611489e3781",
   "files": [
     ".json"
   ],
   "subMetas": {},
   "userData": {
-    "syncNodeName": "codeYuanLiArise"
+    "syncNodeName": "codeYuanLiPopup"
   }
 }

@@ -2,12 +2,12 @@
   "ver": "1.1.50",
   "importer": "prefab",
   "imported": true,
-  "uuid": "c10ee7c1-9325-4a34-9c94-8cb60e5ae0a0",
+  "uuid": "f2e44195-78dc-45e6-8f49-150d4ecfa607",
   "files": [
     ".json"
   ],
   "subMetas": {},
   "userData": {
-    "syncNodeName": "rightDrawerCloseUp"
+    "syncNodeName": "framePopup"
   }
 }

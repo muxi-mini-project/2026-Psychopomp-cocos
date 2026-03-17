@@ -1,8 +1,9 @@
-import { _decorator, Component, director } from "cc";
+import { _decorator, Component, director,Node } from "cc";
 const { ccclass } = _decorator;
 
 const event = {
     INTERACTABLE_TRIGGERED: "INTERACTABLE_TRIGGERED",
+    INTERACTABLE_CLICK: "INTERACTABLE_CLICK",
     SCENE_VISUAL: "SCENE_VISUAL"
 } as const;
 
@@ -12,12 +13,20 @@ export class BedInteractable extends Component {
 
     onEnable() {
         director.on(event.INTERACTABLE_TRIGGERED, this.onTriggered, this);
-        console.log("BedInteractable onEnable -> 注册监听");
+        this.node.on(Node.EventType.TOUCH_END,this.onClick, this)
+        console.log("BedInteractable onEnable -> 注册监听,点击节点");
     }
 
     onDisable() {
         director.off(event.INTERACTABLE_TRIGGERED, this.onTriggered, this);
-        console.log("BedInteractable onDisable -> 移除监听");
+        this.node.off(Node.EventType.TOUCH_END,this.onClick, this)
+        console.log("BedInteractable onDisable -> 移除监听，点击节点");
+    }
+
+    private onClick() {
+        console.log(`[PencilInteract] 点击节点 -> emit INTERACTABLE_CLICK: ${this.interactableId}`);
+
+        director.emit(event.INTERACTABLE_CLICK, this.interactableId);
     }
 
     private onTriggered(result: any) {

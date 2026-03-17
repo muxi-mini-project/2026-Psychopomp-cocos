@@ -1,8 +1,9 @@
-import { _decorator, Component, director } from "cc";
+import { _decorator, Component, director,Node } from "cc";
 const { ccclass } = _decorator;
 
 const event = {
     INTERACTABLE_TRIGGERED: "INTERACTABLE_TRIGGERED",
+    INTERACTABLE_CLICK: "INTERACTABLE_CLICK",
     UI_OPENED: "UI_OPENED",
     UI_TOAST: "UI_TOAST",
     UI_MODAL: "UI_MODAL",
@@ -14,14 +15,20 @@ export class XuanZhiInteract extends Component {
 
     onEnable() {
         director.on(event.INTERACTABLE_TRIGGERED, this.onTriggered, this);
-        console.log("XuanZhiInteract onEnable -> 注册监听");
+        this.node.on(Node.EventType.TOUCH_END,this.onClick,this)
+        console.log("XuanZhiInteract onEnable -> 注册监听,点击监听");
     }
 
     onDisable() {
         director.off(event.INTERACTABLE_TRIGGERED, this.onTriggered, this);
-        console.log("XuanZhiInteract onDisable -> 移除监听");
+        this.node.off(Node.EventType.TOUCH_END,this.onClick,this)
+        console.log("XuanZhiInteract onDisable -> 移除监听，点击监听");
     }
 
+    private onClick() {
+        console.log('XuanZhiInteract 点击节点 -> emit INTERACTABLE_CLICK: ${this.interactableId}');
+        director.emit(event.INTERACTABLE_CLICK, { interactableId: this.interactableId });
+    }
     private onTriggered(result: any) {
         console.log("[XuanZhiInteract]收到交互事件", result)
         if (result?.interactableId !== this.interactableId) {

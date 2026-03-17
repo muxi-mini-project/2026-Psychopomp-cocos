@@ -1,8 +1,9 @@
-import { _decorator, Component, director } from "cc";
+import { _decorator, Component, director,Node } from "cc";
 const { ccclass } = _decorator;
 
 const event = {
     INTERACTABLE_TRIGGERED: "INTERACTABLE_TRIGGERED",
+    INTERACTABLE_CLICK: "INTERACTABLE_CLICK",
     SCENE_VISUAL: "SCENE_VISUAL"
 } as const;
 
@@ -12,12 +13,19 @@ export class LeftDrawerInteractable extends Component {
 
     onEnable() {
         director.on(event.INTERACTABLE_TRIGGERED, this.onTriggered, this);
-        console.log("LeftDrawerInteractable onEnable -> 注册监听");
+        this.node.on(Node.EventType.TOUCH_END, this.onClicked, this)
+        console.log("LeftDrawerInteractable onEnable -> 注册监听,点击监听");
     }
 
     onDisable() {
         director.off(event.INTERACTABLE_TRIGGERED, this.onTriggered, this);
-        console.log("LeftDrawerInteractable onDisable -> 移除监听");
+        this.node.off(Node.EventType.TOUCH_END, this.onClicked, this)
+        console.log("LeftDrawerInteractable onDisable -> 移除监听，点击监听");
+    }
+
+    private onClicked() {
+        console.log('LeftDrawerInteractable onClicked -> 点击事件 emit INTERACTABLE_CLICK: ${this.interactableId}');
+        director.emit(event.INTERACTABLE_CLICK, this.interactableId);
     }
 
     private onTriggered(result: any) {

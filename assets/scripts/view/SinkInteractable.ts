@@ -1,7 +1,8 @@
-import { _decorator, Component, director } from "cc";
+import { _decorator, Component, director,Node } from "cc";
 const { ccclass, property } = _decorator;
 const event = {
     INTERACTABLE_TRIGGERED: "INTERACTABLE_TRIGGERED",
+    INTERACTABLE_CLICK: "INTERACTABLE_CLICK",
     SCENE_VISUAL: "SCENE_VISUAL",
     UI_OPEN: "UI_OPEN",
 }as const
@@ -10,12 +11,19 @@ export class SinkInteractable extends Component {
     private readonly interactableId = "point_sink"
 
     onEnable() {
-        console.log("[SinkInteractable] onEnable -> 注册交互监听")
-        director.on(event.INTERACTABLE_TRIGGERED, this.onTriggered, this)
+              director.on(event.INTERACTABLE_TRIGGERED, this.onTriggered, this)
+              this.node.on(Node.EventType.TOUCH_END,this.onClick,this)
+  console.log("[SinkInteractable] onEnable -> 注册交互监听,点击监听")
     }
     onDisable() {
-        console.log("[SinkInteractable] onDisable -> 注销交互监听")
-        director.off(event.INTERACTABLE_TRIGGERED, this.onTriggered, this)
+              director.off(event.INTERACTABLE_TRIGGERED, this.onTriggered, this)
+              this.node.off(Node.EventType.TOUCH_END,this.onClick,this)
+  console.log("[SinkInteractable] onDisable -> 注销交互监听，点击监听")
+    }
+    private onClick() {
+        
+        console.log('[SinkInteractable] 点击节点 -> emit INTERACTABLE_CLICK: ${this.interactableId}')
+        director.emit(event.INTERACTABLE_CLICK, { interactableId: this.interactableId })
     }
     private onTriggered(result: any) {
         console.log("[SinkInteractable] 收到交互事件:", result)

@@ -2,12 +2,12 @@
   "ver": "1.1.50",
   "importer": "prefab",
   "imported": true,
-  "uuid": "602e8f74-d010-421f-92fd-000142799496",
+  "uuid": "c10ee7c1-9325-4a34-9c94-8cb60e5ae0a0",
   "files": [
     ".json"
   ],
   "subMetas": {},
   "userData": {
-    "syncNodeName": "codeYuanLiContent"
+    "syncNodeName": "rightDrawerOpen"
   }
 }
