@@ -1,10 +1,12 @@
 import { _decorator, Component, Node } from "cc";
 const { ccclass, property } = _decorator;
 
-@ccclass("BackClick")
-export class BackClick extends Component {
+@ccclass("BackInKey")
+export class BackInKey extends Component {
     @property(Node)
-    public target: Node | null = null; // calendarClose
+    public target: Node | null = null; 
+    @property(Node)
+    public keyNode: Node | null = null; 
 
     onEnable() {
         this.node.on(Node.EventType.TOUCH_END, this.onClick, this);
@@ -15,9 +17,9 @@ export class BackClick extends Component {
     }
 
     private onClick() {
-        console.log("[CloseTargetOnClick] 点击 back -> 关闭目标节点");
+        console.log("[BackInKeyOnClick] 点击 back -> 关闭目标节点");
 
-        if (this.target) {
+        if (this.target && this.keyNode.active === false) {
             this.target.active = false;
         }
     }

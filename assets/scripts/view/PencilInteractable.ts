@@ -11,12 +11,8 @@ export class PencilInteract extends Component {
     private readonly interactableId = "point_pencil";
 
     onEnable() {
-        // 监听交互结果
         director.on(event.INTERACTABLE_TRIGGERED, this.onTriggered, this);
-
-        // 监听当前节点点击
         this.node.on(Node.EventType.TOUCH_END, this.onClick, this);
-
         console.log("[PencilInteract] onEnable -> 注册结果监听 + 点击监听");
     }
 
