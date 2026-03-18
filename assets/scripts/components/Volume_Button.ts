@@ -1,0 +1,120 @@
+import { _decorator, Component, director, Node } from 'cc';
+import { AudioSource } from 'cc';
+import { tween, Vec3 } from 'cc';
+const { ccclass, property } = _decorator;
+
+@ccclass('Volume_Button')
+export class Volume_Button extends Component {
+    @property({
+        type: AudioSource['clip'],
+        tooltip: "按钮点击音效组件"
+    })
+    clickAudio: AudioSource['clip'] = null
+
+    @property({ type: AudioSource, displayName: "音效音源组件" })
+    sfxAudioSource: AudioSource = null
+
+    @property(Node)
+    volumeOn: Node = null
+
+    @property(Node)
+    volumeOff: Node = null
+
+    //动画配置
+    @property({ tooltip: "点击缩放比例" })
+    clickScale: number = 0.9
+
+    @property({ tooltip: "动画时长（秒）" })
+    animDuration: number = 0.15
+
+    private isClicked: boolean = false
+
+    onLoad() {
+        this.node.on('mouse-move', this.onMouseMove, this)
+        this.node.on('mouse-leave', this.onMouseLeave, this)
+        this.node.on('click', this.onButtonClick, this)
+    }
+
+
+    onButtonClick() {
+        this.playClickSound()
+        this.playClickAnimation(() => {
+            console.log('已点击Volume_Button')
+            if (!this.isClicked) {
+                director.emit("SET_VOLUME_ZERO")
+                director.emit("SFX_VOLUME_ZERO")
+                director.emit("BGM_VOLUME_ZERO")
+                this.isClicked = true
+            } else {
+                director.emit("RESTORE_VOLUME")
+                director.emit("SFX_RESTORE")
+                director.emit("BGM_RESTORE")
+                this.isClicked = false
+            }
+            this.updateVolumeIcon()
+        })
+
+    }
+
+    private updateVolumeIcon() {
+        if (this.isClicked) {
+            this.volumeOn.active = false
+            this.volumeOff.active = true
+        } else {
+            this.volumeOn.active = true
+            this.volumeOff.active = false
+        }
+    }
+
+    //播放点击音效
+    private playClickSound() {
+        console.log("（播放音效）")
+        //Todo:添加从本地存储加载音量设置的逻辑
+    }
+
+    //鼠标移入播放缩放动画
+    private onMouseMove() {
+        tween(this.node)
+            .to(0.2, { scale: new Vec3(1.05, 1.05, 1.05) })
+            .start()
+    }
+
+    //鼠标移出恢复原大小
+    private onMouseLeave() {
+        tween(this.node)
+            .to(0.2, { scale: new Vec3(1, 1, 1) })
+            .start()
+    }
+
+    //播放缩放动画
+    private playClickAnimation(callback?: Function) {
+        //原始值
+        const originalScale = this.node.scale.clone()
+        //点击缩小
+        const targetScale = new Vec3(
+            originalScale.x * this.clickScale,
+            originalScale.y * this.clickScale,
+            originalScale.z * this.clickScale
+        )
+
+        //组合动画：缩小 → 恢复原大小
+        tween(this.node)
+            //快速缩小
+            .to(this.animDuration, { scale: targetScale })
+            //快速恢复
+            .to(this.animDuration, { scale: originalScale })
+            //动画结束后执行回调
+            .call(() => {
+                if (callback) callback()
+            })
+            //启动动画
+            .start()
+    }
+    onDestroy() {
+        this.node.off('mouse-move', this.onMouseMove, this)
+        this.node.off('mouse-leave', this.onMouseLeave, this)
+        this.node.off('click', this.onButtonClick, this)
+    }
+}
+
+
