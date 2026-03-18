@@ -2,6 +2,7 @@ import { _decorator, Component, director } from 'cc';
 import { DataManager } from './DataManager';
 import { SceneViewManager } from './SceneViewManager';
 import { InventoryManager } from './InventoryManager';
+import { DialogManager } from './DialogManager';
 const { ccclass } = _decorator;
 
 export interface InteractableConfig {
@@ -135,6 +136,11 @@ export class InteractableManager extends Component {
         // 切换场景
         if (result.switchScene) {
             triggerResult.switchedScene = result.switchScene;
+        }
+
+        // 自动触发对话（当 data 包含 dialogueId 时）
+        if (result.data?.dialogueId) {
+            DialogManager.instance.showDialogue(result.data.dialogueId);
         }
 
         return triggerResult;

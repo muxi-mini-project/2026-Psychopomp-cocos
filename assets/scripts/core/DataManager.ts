@@ -8,9 +8,7 @@ interface SaveData {
     currentScene: string;
     storyFlags: { [key: string]: any };
     inventory: string[];
-    // 进度状态
-    introPlayed: boolean;
-    endingPlayed: boolean;
+    // 进度状态（现使用 flag: INTRO_PLAYED, ENDING_PLAYED）
     visitedScenes: string[];
     endingCondition?: EndingCondition;
 }
@@ -216,8 +214,6 @@ export class DataManager extends Component {
             currentScene: "scene_intro",
             storyFlags: {},
             inventory: [],
-            introPlayed: false,
-            endingPlayed: false,
             visitedScenes: []
         };
 
@@ -297,6 +293,8 @@ export class DataManager extends Component {
 
     public setFlag(key: string, value: any): void {
         this.setStoryFlag(key, value);
+        // 发出 flag 变化事件，供场景脚本监听
+        director.emit("FLAG_CHANGED", { name: key, value });
     }
 
     public getBool(key: string): boolean {
@@ -309,24 +307,24 @@ export class DataManager extends Component {
 
     // ===== 进度管理方法 =====
 
+    // 使用 flag 替代独立字段
+    private static readonly FLAG_INTRO_PLAYED = "INTRO_PLAYED";
+    private static readonly FLAG_ENDING_PLAYED = "ENDING_PLAYED";
+
     public getIntroPlayed(): boolean {
-        return this._saveData?.introPlayed || false;
+        return this.getBool(DataManager.FLAG_INTRO_PLAYED);
     }
 
     public setIntroPlayed(value: boolean): void {
-        if (this._saveData) {
-            this._saveData.introPlayed = value;
-        }
+        this.setFlag(DataManager.FLAG_INTRO_PLAYED, value);
     }
 
     public getEndingPlayed(): boolean {
-        return this._saveData?.endingPlayed || false;
+        return this.getBool(DataManager.FLAG_ENDING_PLAYED);
     }
 
     public setEndingPlayed(value: boolean): void {
-        if (this._saveData) {
-            this._saveData.endingPlayed = value;
-        }
+        this.setFlag(DataManager.FLAG_ENDING_PLAYED, value);
     }
 
     public isFirstVisit(sceneId: string): boolean {
