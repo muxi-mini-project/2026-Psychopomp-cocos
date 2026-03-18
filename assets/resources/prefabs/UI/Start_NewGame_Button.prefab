@@ -167,12 +167,12 @@
       "a": 255
     },
     "_spriteFrame": {
-      "__uuid__": "974a62cd-ba1c-4abf-b4ec-87b57a297079@f9941",
+      "__uuid__": "c999a996-d265-4c31-a8c1-0ddbe6bcb6d5@f9941",
       "__expectedType__": "cc.SpriteFrame"
     },
     "_type": 1,
     "_fillType": 0,
-    "_sizeMode": 1,
+    "_sizeMode": 0,
     "_fillCenter": {
       "__type__": "cc.Vec2",
       "x": 0,
@@ -233,19 +233,19 @@
       "a": 255
     },
     "_normalSprite": {
-      "__uuid__": "974a62cd-ba1c-4abf-b4ec-87b57a297079@f9941",
+      "__uuid__": "c999a996-d265-4c31-a8c1-0ddbe6bcb6d5@f9941",
       "__expectedType__": "cc.SpriteFrame"
     },
     "_hoverSprite": {
-      "__uuid__": "974a62cd-ba1c-4abf-b4ec-87b57a297079@f9941",
+      "__uuid__": "c999a996-d265-4c31-a8c1-0ddbe6bcb6d5@f9941",
       "__expectedType__": "cc.SpriteFrame"
     },
     "_pressedSprite": {
-      "__uuid__": "974a62cd-ba1c-4abf-b4ec-87b57a297079@f9941",
+      "__uuid__": "c999a996-d265-4c31-a8c1-0ddbe6bcb6d5@f9941",
       "__expectedType__": "cc.SpriteFrame"
     },
     "_disabledSprite": {
-      "__uuid__": "974a62cd-ba1c-4abf-b4ec-87b57a297079@f9941",
+      "__uuid__": "c999a996-d265-4c31-a8c1-0ddbe6bcb6d5@f9941",
       "__expectedType__": "cc.SpriteFrame"
     },
     "_duration": 0.1,
@@ -271,7 +271,6 @@
     "__prefab": {
       "__id__": 10
     },
-    "sfxSliderComp": null,
     "clickAudio": null,
     "sfxAudioSource": null,
     "clickScale": 0.9,
