@@ -4,7 +4,6 @@ const { ccclass } = _decorator;
 const event = {
     INTERACTABLE_CLICK: "INTERACTABLE_CLICK",
     INTERACTABLE_TRIGGERED: "INTERACTABLE_TRIGGERED",
-    UI_MODAL: "UI_MODAL",
 } as const;
 
 @ccclass("PencilInteract")
@@ -31,18 +30,13 @@ export class PencilInteract extends Component {
         console.log("[PencilInteract] onDisable -> 移除结果监听 + 点击监听");
     }
 
-    /**
-     * 点击当前节点时，发给 InteractableManager 统一处理
-     */
-    private onClick() {
+        private onClick() {
         console.log(`[PencilInteract] 点击节点 -> emit INTERACTABLE_CLICK: ${this.interactableId}`);
 
         director.emit(event.INTERACTABLE_CLICK, this.interactableId);
     }
 
-    /**
-     * 接收 InteractableManager 计算后的交互结果
-     */
+    
     private onTriggered(result: any) {
         console.log("[PencilInteract] 收到交互事件", result);
 
@@ -56,17 +50,7 @@ export class PencilInteract extends Component {
         switch (result?.code) {
             case "PICK_PENCIL":
                 console.log("[PencilInteract] 触发 PICK_PENCIL -> 获得铅笔");
-
-                director.emit(event.UI_MODAL, {
-                    title: "铅笔",
-                    content: "获得铅笔",
-                    okText: "确定",
-                });
-
-                console.log("[PencilInteract] 已完成弹窗");
                 return;
-
-            default:
         }
     }
 }

@@ -38,22 +38,19 @@ export class PhoneInteract extends Component {
         }
 
         switch (result?.code) {
-            case "PHONE_LOCKED":
-                console.log("[PhoneInteract] 触发 PHONE_LOCKED -> 提示手机未解锁");
-                director.emit(event.UI_TOAST, "手机还没解锁");
-                console.log("[PhoneInteract] 已弹出提示");
-                return;
+            // case "PHONE_LOCKED":
+            //     console.log("[PhoneInteract] 触发 PHONE_LOCKED -> 提示手机未解锁");
+            //     return;
 
             case "PHONE_OPEN":
                 console.log("[PhoneInteract] 触发 PHONE_OPEN -> 打开手机内容页");
-                director.emit(event.UI_OPENED, "phoneCloseBg");
+                director.emit("SCENE_SWITCH_REQUEST", { sceneId: "phoneClose" });
+                //TODO：打开手机内容页
                 console.log("[PhoneInteract] 已打开手机内容页");
                 return;
 
-            case "PHONE_PASSWORD":
-                console.log("[PhoneInteract] 触发 PHONE_PASSWORD -> 打开手机密码页");
-                director.emit(event.UI_OPENED, "phonePasswordBg");
-                console.log("[PhoneInteract] 已打开手机密码页");
+            case "PHONE_BEIWANGLU":
+                console.log("已查看备忘录");
                 return;
         }
     }
