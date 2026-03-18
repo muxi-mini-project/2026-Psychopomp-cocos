@@ -191,12 +191,12 @@
       "a": 255
     },
     "_spriteFrame": {
-      "__uuid__": "31c615d5-2b59-4e85-a3ac-4d22c617a8ce@f9941",
+      "__uuid__": "500346d0-4516-4ca8-b433-2292d8e75193@f9941",
       "__expectedType__": "cc.SpriteFrame"
     },
     "_type": 0,
     "_fillType": 0,
-    "_sizeMode": 1,
+    "_sizeMode": 0,
     "_fillCenter": {
       "__type__": "cc.Vec2",
       "x": 0,
@@ -327,12 +327,12 @@
       "a": 255
     },
     "_spriteFrame": {
-      "__uuid__": "6af53838-6de1-4b4d-a8bc-a99a296c4d7c@f9941",
+      "__uuid__": "54df8566-86dd-4fcb-b035-b6b62556d088@f9941",
       "__expectedType__": "cc.SpriteFrame"
     },
     "_type": 0,
     "_fillType": 0,
-    "_sizeMode": 1,
+    "_sizeMode": 0,
     "_fillCenter": {
       "__type__": "cc.Vec2",
       "x": 0,
@@ -463,12 +463,12 @@
       "a": 255
     },
     "_spriteFrame": {
-      "__uuid__": "17de371e-15d8-4a00-a045-35a746359e17@f9941",
+      "__uuid__": "0c927b36-0dfb-439a-b0ec-20198fd988aa@f9941",
       "__expectedType__": "cc.SpriteFrame"
     },
     "_type": 0,
     "_fillType": 0,
-    "_sizeMode": 1,
+    "_sizeMode": 0,
     "_fillCenter": {
       "__type__": "cc.Vec2",
       "x": 0,
@@ -599,12 +599,12 @@
       "a": 255
     },
     "_spriteFrame": {
-      "__uuid__": "b4a20feb-57da-45ce-8507-0ff61d60afc2@f9941",
+      "__uuid__": "d16189a9-f810-4771-bd6a-51c4c9099c7e@f9941",
       "__expectedType__": "cc.SpriteFrame"
     },
     "_type": 0,
     "_fillType": 0,
-    "_sizeMode": 1,
+    "_sizeMode": 0,
     "_fillCenter": {
       "__type__": "cc.Vec2",
       "x": 0,
@@ -2091,7 +2091,7 @@
     },
     "_type": 1,
     "_fillType": 0,
-    "_sizeMode": 1,
+    "_sizeMode": 0,
     "_fillCenter": {
       "__type__": "cc.Vec2",
       "x": 0,
@@ -2464,7 +2464,7 @@
     },
     "_type": 1,
     "_fillType": 0,
-    "_sizeMode": 1,
+    "_sizeMode": 0,
     "_fillCenter": {
       "__type__": "cc.Vec2",
       "x": 0,
@@ -2608,7 +2608,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 1919.9999999999998,
+      "width": 1920,
       "height": 1080
     },
     "_anchorPoint": {

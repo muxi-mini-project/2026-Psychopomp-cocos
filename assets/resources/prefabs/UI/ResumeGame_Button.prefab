@@ -167,12 +167,12 @@
       "a": 255
     },
     "_spriteFrame": {
-      "__uuid__": "cf3d1f33-4e12-4d84-8b47-ffaf5d0301e8@f9941",
+      "__uuid__": "2b9c9644-79bd-4a20-914e-40a8ec364149@f9941",
       "__expectedType__": "cc.SpriteFrame"
     },
     "_type": 1,
     "_fillType": 0,
-    "_sizeMode": 1,
+    "_sizeMode": 0,
     "_fillCenter": {
       "__type__": "cc.Vec2",
       "x": 0,
@@ -233,19 +233,19 @@
       "a": 255
     },
     "_normalSprite": {
-      "__uuid__": "cf3d1f33-4e12-4d84-8b47-ffaf5d0301e8@f9941",
+      "__uuid__": "2b9c9644-79bd-4a20-914e-40a8ec364149@f9941",
       "__expectedType__": "cc.SpriteFrame"
     },
     "_hoverSprite": {
-      "__uuid__": "cf3d1f33-4e12-4d84-8b47-ffaf5d0301e8@f9941",
+      "__uuid__": "2b9c9644-79bd-4a20-914e-40a8ec364149@f9941",
       "__expectedType__": "cc.SpriteFrame"
     },
     "_pressedSprite": {
-      "__uuid__": "cf3d1f33-4e12-4d84-8b47-ffaf5d0301e8@f9941",
+      "__uuid__": "2b9c9644-79bd-4a20-914e-40a8ec364149@f9941",
       "__expectedType__": "cc.SpriteFrame"
     },
     "_disabledSprite": {
-      "__uuid__": "cf3d1f33-4e12-4d84-8b47-ffaf5d0301e8@f9941",
+      "__uuid__": "2b9c9644-79bd-4a20-914e-40a8ec364149@f9941",
       "__expectedType__": "cc.SpriteFrame"
     },
     "_duration": 0.1,
@@ -271,7 +271,6 @@
     "__prefab": {
       "__id__": 10
     },
-    "sfxSliderComp": null,
     "clickAudio": null,
     "clickScale": 0.9,
     "animDuration": 0.15,
