@@ -137,6 +137,7 @@ export class InteractableManager extends Component {
         // 切换场景
         if (result.switchScene) {
             triggerResult.switchedScene = result.switchScene;
+            SceneViewManager.instance.loadScene(result.switchScene);
         }
 
         // 自动触发对话（当 data 包含 dialogueId 时）
