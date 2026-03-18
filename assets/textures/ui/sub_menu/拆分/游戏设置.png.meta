@@ -2,11 +2,7 @@
   "ver": "1.0.27",
   "importer": "image",
   "imported": true,
-<<<<<<< HEAD
-  "uuid": "6c260b32-2cdc-41cf-8a1f-29c22cbe899e",
-=======
-  "uuid": "0c927b36-0dfb-439a-b0ec-20198fd988aa",
->>>>>>> origin/feature/art
+  "uuid": "97d72c7e-1c76-4275-9584-5b78d5fb8e4d",
   "files": [
     ".json",
     ".png"
@@ -14,22 +10,14 @@
   "subMetas": {
     "6c48a": {
       "importer": "texture",
-<<<<<<< HEAD
-      "uuid": "6c260b32-2cdc-41cf-8a1f-29c22cbe899e@6c48a",
-=======
-      "uuid": "0c927b36-0dfb-439a-b0ec-20198fd988aa@6c48a",
->>>>>>> origin/feature/art
+      "uuid": "97d72c7e-1c76-4275-9584-5b78d5fb8e4d@6c48a",
       "displayName": "游戏设置",
       "id": "6c48a",
       "name": "texture",
       "userData": {
         "wrapModeS": "clamp-to-edge",
         "wrapModeT": "clamp-to-edge",
-<<<<<<< HEAD
-        "imageUuidOrDatabaseUri": "6c260b32-2cdc-41cf-8a1f-29c22cbe899e",
-=======
-        "imageUuidOrDatabaseUri": "0c927b36-0dfb-439a-b0ec-20198fd988aa",
->>>>>>> origin/feature/art
+        "imageUuidOrDatabaseUri": "97d72c7e-1c76-4275-9584-5b78d5fb8e4d",
         "isUuid": true,
         "visible": false,
         "minfilter": "linear",
@@ -46,11 +34,7 @@
     },
     "f9941": {
       "importer": "sprite-frame",
-<<<<<<< HEAD
-      "uuid": "6c260b32-2cdc-41cf-8a1f-29c22cbe899e@f9941",
-=======
-      "uuid": "0c927b36-0dfb-439a-b0ec-20198fd988aa@f9941",
->>>>>>> origin/feature/art
+      "uuid": "97d72c7e-1c76-4275-9584-5b78d5fb8e4d@f9941",
       "displayName": "游戏设置",
       "id": "f9941",
       "name": "spriteFrame",
@@ -129,11 +113,7 @@
           ]
         },
         "isUuid": true,
-<<<<<<< HEAD
-        "imageUuidOrDatabaseUri": "6c260b32-2cdc-41cf-8a1f-29c22cbe899e@6c48a",
-=======
-        "imageUuidOrDatabaseUri": "0c927b36-0dfb-439a-b0ec-20198fd988aa@6c48a",
->>>>>>> origin/feature/art
+        "imageUuidOrDatabaseUri": "97d72c7e-1c76-4275-9584-5b78d5fb8e4d@6c48a",
         "atlasUuid": "",
         "trimType": "auto"
       },
@@ -149,10 +129,6 @@
     "type": "sprite-frame",
     "fixAlphaTransparencyArtifacts": false,
     "hasAlpha": true,
-<<<<<<< HEAD
-    "redirect": "6c260b32-2cdc-41cf-8a1f-29c22cbe899e@6c48a"
-=======
-    "redirect": "0c927b36-0dfb-439a-b0ec-20198fd988aa@6c48a"
->>>>>>> origin/feature/art
+    "redirect": "97d72c7e-1c76-4275-9584-5b78d5fb8e4d@6c48a"
   }
 }

@@ -2,11 +2,7 @@
   "ver": "1.0.27",
   "importer": "image",
   "imported": true,
-<<<<<<< HEAD
-  "uuid": "db3cef01-0a32-4462-a3ca-adeeab310432",
-=======
-  "uuid": "f593520a-f4ef-4cc1-b7a9-a63b46213dcc",
->>>>>>> origin/feature/art
+  "uuid": "9f3876b7-f3f2-498a-bfd8-4c79e4828738",
   "files": [
     ".json",
     ".png"
@@ -14,22 +10,14 @@
   "subMetas": {
     "6c48a": {
       "importer": "texture",
-<<<<<<< HEAD
-      "uuid": "db3cef01-0a32-4462-a3ca-adeeab310432@6c48a",
-=======
-      "uuid": "f593520a-f4ef-4cc1-b7a9-a63b46213dcc@6c48a",
->>>>>>> origin/feature/art
+      "uuid": "9f3876b7-f3f2-498a-bfd8-4c79e4828738@6c48a",
       "displayName": "音效",
       "id": "6c48a",
       "name": "texture",
       "userData": {
         "wrapModeS": "clamp-to-edge",
         "wrapModeT": "clamp-to-edge",
-<<<<<<< HEAD
-        "imageUuidOrDatabaseUri": "db3cef01-0a32-4462-a3ca-adeeab310432",
-=======
-        "imageUuidOrDatabaseUri": "f593520a-f4ef-4cc1-b7a9-a63b46213dcc",
->>>>>>> origin/feature/art
+        "imageUuidOrDatabaseUri": "9f3876b7-f3f2-498a-bfd8-4c79e4828738",
         "isUuid": true,
         "visible": false,
         "minfilter": "linear",
@@ -46,11 +34,7 @@
     },
     "f9941": {
       "importer": "sprite-frame",
-<<<<<<< HEAD
-      "uuid": "db3cef01-0a32-4462-a3ca-adeeab310432@f9941",
-=======
-      "uuid": "f593520a-f4ef-4cc1-b7a9-a63b46213dcc@f9941",
->>>>>>> origin/feature/art
+      "uuid": "9f3876b7-f3f2-498a-bfd8-4c79e4828738@f9941",
       "displayName": "音效",
       "id": "f9941",
       "name": "spriteFrame",
@@ -129,11 +113,7 @@
           ]
         },
         "isUuid": true,
-<<<<<<< HEAD
-        "imageUuidOrDatabaseUri": "db3cef01-0a32-4462-a3ca-adeeab310432@6c48a",
-=======
-        "imageUuidOrDatabaseUri": "f593520a-f4ef-4cc1-b7a9-a63b46213dcc@6c48a",
->>>>>>> origin/feature/art
+        "imageUuidOrDatabaseUri": "9f3876b7-f3f2-498a-bfd8-4c79e4828738@6c48a",
         "atlasUuid": "",
         "trimType": "auto"
       },
@@ -149,10 +129,6 @@
     "type": "sprite-frame",
     "fixAlphaTransparencyArtifacts": false,
     "hasAlpha": true,
-<<<<<<< HEAD
-    "redirect": "db3cef01-0a32-4462-a3ca-adeeab310432@6c48a"
-=======
-    "redirect": "f593520a-f4ef-4cc1-b7a9-a63b46213dcc@6c48a"
->>>>>>> origin/feature/art
+    "redirect": "9f3876b7-f3f2-498a-bfd8-4c79e4828738@6c48a"
   }
 }
