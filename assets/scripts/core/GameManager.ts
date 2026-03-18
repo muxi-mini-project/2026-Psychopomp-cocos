@@ -39,6 +39,7 @@ export class GameManager extends Component {
         // 监听动画完成事件
         director.on("INTRO_COMPLETE", this._onIntroComplete, this);
         director.on("ENDING_COMPLETE", this._onEndingComplete, this);
+        director.on("INTRO_CUTSCENE_COMPLETE", this._onIntroCutsceneComplete, this);
 
         // 监听 UI 事件
         director.on("START_NEW_GAME", this._onStartNewGame, this);
@@ -98,6 +99,21 @@ export class GameManager extends Component {
     }
 
     private _onIntroComplete(): void {
+        if (DataManager.instance.getBool("INTRO_CUTSCENE_NEEDED")) {
+            // 加载演出场景（全屏）
+            SceneViewManager.instance.loadScene("scene_intro_cutscene");
+        } else {
+            // 无演出，直接进入游戏
+            this._enterGame();
+        }
+    }
+
+    private _onIntroCutsceneComplete(): void {
+        // 清除演出标记，进入游戏
+        this._enterGame();
+    }
+
+    private _enterGame(): void {
         DataManager.instance.setIntroPlayed(true);
         DataManager.instance.saveGame("auto_save", true);
 
@@ -177,6 +193,7 @@ export class GameManager extends Component {
     protected onDestroy(): void {
         director.off("INTRO_COMPLETE", this._onIntroComplete, this);
         director.off("ENDING_COMPLETE", this._onEndingComplete, this);
+        director.off("INTRO_CUTSCENE_COMPLETE", this._onIntroCutsceneComplete, this);
         director.off("START_NEW_GAME", this._onStartNewGame, this);
         director.off("LOAD_GAME", this._onLoadGame, this);
         director.off("PAUSE_GAME", this._onPauseGame, this);

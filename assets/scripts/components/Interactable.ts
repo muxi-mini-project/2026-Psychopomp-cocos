@@ -1,4 +1,4 @@
-import { _decorator, Component, Node, input, Input, EventMouse, director } from 'cc';
+import { _decorator, Component, input, Input, EventMouse, director } from 'cc';
 const { ccclass, property } = _decorator;
 
 @ccclass('Interactable')
@@ -6,13 +6,7 @@ export class Interactable extends Component {
     @property
     interactableId: string = "";
 
-    @property
-    interactableType: string = "";
-
-    @property
-    hoverCursor: boolean = true;
-
-    protected _canInteract: boolean = true;
+    private _canInteract: boolean = true;
 
     protected onEnable(): void {
         input.on(Input.EventType.MOUSE_DOWN, this._onMouseDown, this);
@@ -26,7 +20,7 @@ export class Interactable extends Component {
         input.off(Input.EventType.MOUSE_DOWN, this._onMouseDown, this);
     }
 
-    private _onMouseDown(event: EventMouse) {
+    private _onMouseDown(event: EventMouse): void {
         if (!this._canInteract) return;
         if (event.getButton() !== EventMouse.BUTTON_LEFT) return;
 
@@ -36,17 +30,5 @@ export class Interactable extends Component {
     public setEnabled(enabled: boolean): void {
         this._canInteract = enabled;
         this.node.active = enabled;
-    }
-
-    public setInteractableId(id: string): void {
-        this.interactableId = id;
-    }
-
-    public getInteractableId(): string {
-        return this.interactableId;
-    }
-
-    public getInteractableType(): string {
-        return this.interactableType;
     }
 }
