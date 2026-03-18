@@ -2,7 +2,7 @@
   "ver": "1.0.27",
   "importer": "image",
   "imported": true,
-  "uuid": "7ebbac8e-61a3-4c51-b389-8d70a32b6522",
+  "uuid": "54df8566-86dd-4fcb-b035-b6b62556d088",
   "files": [
     ".json",
     ".png"
@@ -10,14 +10,14 @@
   "subMetas": {
     "6c48a": {
       "importer": "texture",
-      "uuid": "7ebbac8e-61a3-4c51-b389-8d70a32b6522@6c48a",
+      "uuid": "54df8566-86dd-4fcb-b035-b6b62556d088@6c48a",
       "displayName": "大框",
       "id": "6c48a",
       "name": "texture",
       "userData": {
         "wrapModeS": "clamp-to-edge",
         "wrapModeT": "clamp-to-edge",
-        "imageUuidOrDatabaseUri": "7ebbac8e-61a3-4c51-b389-8d70a32b6522",
+        "imageUuidOrDatabaseUri": "54df8566-86dd-4fcb-b035-b6b62556d088",
         "isUuid": true,
         "visible": false,
         "minfilter": "linear",
@@ -34,7 +34,7 @@
     },
     "f9941": {
       "importer": "sprite-frame",
-      "uuid": "7ebbac8e-61a3-4c51-b389-8d70a32b6522@f9941",
+      "uuid": "54df8566-86dd-4fcb-b035-b6b62556d088@f9941",
       "displayName": "大框",
       "id": "f9941",
       "name": "spriteFrame",
@@ -113,7 +113,7 @@
           ]
         },
         "isUuid": true,
-        "imageUuidOrDatabaseUri": "7ebbac8e-61a3-4c51-b389-8d70a32b6522@6c48a",
+        "imageUuidOrDatabaseUri": "54df8566-86dd-4fcb-b035-b6b62556d088@6c48a",
         "atlasUuid": "",
         "trimType": "auto"
       },
@@ -129,6 +129,6 @@
     "type": "sprite-frame",
     "fixAlphaTransparencyArtifacts": false,
     "hasAlpha": true,
-    "redirect": "7ebbac8e-61a3-4c51-b389-8d70a32b6522@6c48a"
+    "redirect": "54df8566-86dd-4fcb-b035-b6b62556d088@6c48a"
   }
 }

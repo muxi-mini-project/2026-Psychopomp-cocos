@@ -2,7 +2,7 @@
   "ver": "1.0.27",
   "importer": "image",
   "imported": true,
-  "uuid": "9f3876b7-f3f2-498a-bfd8-4c79e4828738",
+  "uuid": "f593520a-f4ef-4cc1-b7a9-a63b46213dcc",
   "files": [
     ".json",
     ".png"
@@ -10,14 +10,14 @@
   "subMetas": {
     "6c48a": {
       "importer": "texture",
-      "uuid": "9f3876b7-f3f2-498a-bfd8-4c79e4828738@6c48a",
+      "uuid": "f593520a-f4ef-4cc1-b7a9-a63b46213dcc@6c48a",
       "displayName": "音效",
       "id": "6c48a",
       "name": "texture",
       "userData": {
         "wrapModeS": "clamp-to-edge",
         "wrapModeT": "clamp-to-edge",
-        "imageUuidOrDatabaseUri": "9f3876b7-f3f2-498a-bfd8-4c79e4828738",
+        "imageUuidOrDatabaseUri": "f593520a-f4ef-4cc1-b7a9-a63b46213dcc",
         "isUuid": true,
         "visible": false,
         "minfilter": "linear",
@@ -34,7 +34,7 @@
     },
     "f9941": {
       "importer": "sprite-frame",
-      "uuid": "9f3876b7-f3f2-498a-bfd8-4c79e4828738@f9941",
+      "uuid": "f593520a-f4ef-4cc1-b7a9-a63b46213dcc@f9941",
       "displayName": "音效",
       "id": "f9941",
       "name": "spriteFrame",
@@ -113,7 +113,7 @@
           ]
         },
         "isUuid": true,
-        "imageUuidOrDatabaseUri": "9f3876b7-f3f2-498a-bfd8-4c79e4828738@6c48a",
+        "imageUuidOrDatabaseUri": "f593520a-f4ef-4cc1-b7a9-a63b46213dcc@6c48a",
         "atlasUuid": "",
         "trimType": "auto"
       },
@@ -129,6 +129,6 @@
     "type": "sprite-frame",
     "fixAlphaTransparencyArtifacts": false,
     "hasAlpha": true,
-    "redirect": "9f3876b7-f3f2-498a-bfd8-4c79e4828738@6c48a"
+    "redirect": "f593520a-f4ef-4cc1-b7a9-a63b46213dcc@6c48a"
   }
 }
