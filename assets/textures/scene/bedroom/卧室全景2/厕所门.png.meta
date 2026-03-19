@@ -2,7 +2,7 @@
   "ver": "1.0.27",
   "importer": "image",
   "imported": true,
-  "uuid": "b4b8da02-9824-4e10-b7de-fbd31ba7b6ea",
+  "uuid": "1dd89547-b8d9-40ae-be95-18dbfbd4ca67",
   "files": [
     ".json",
     ".png"
@@ -10,14 +10,14 @@
   "subMetas": {
     "6c48a": {
       "importer": "texture",
-      "uuid": "b4b8da02-9824-4e10-b7de-fbd31ba7b6ea@6c48a",
-      "displayName": "速写1",
+      "uuid": "1dd89547-b8d9-40ae-be95-18dbfbd4ca67@6c48a",
+      "displayName": "厕所门",
       "id": "6c48a",
       "name": "texture",
       "userData": {
         "wrapModeS": "clamp-to-edge",
         "wrapModeT": "clamp-to-edge",
-        "imageUuidOrDatabaseUri": "b4b8da02-9824-4e10-b7de-fbd31ba7b6ea",
+        "imageUuidOrDatabaseUri": "1dd89547-b8d9-40ae-be95-18dbfbd4ca67",
         "isUuid": true,
         "visible": false,
         "minfilter": "linear",
@@ -34,21 +34,21 @@
     },
     "f9941": {
       "importer": "sprite-frame",
-      "uuid": "b4b8da02-9824-4e10-b7de-fbd31ba7b6ea@f9941",
-      "displayName": "速写1",
+      "uuid": "1dd89547-b8d9-40ae-be95-18dbfbd4ca67@f9941",
+      "displayName": "厕所门",
       "id": "f9941",
       "name": "spriteFrame",
       "userData": {
         "trimThreshold": 1,
         "rotated": false,
-        "offsetX": 0,
-        "offsetY": -82.5,
-        "trimX": 0,
-        "trimY": 165,
-        "width": 539,
-        "height": 708,
-        "rawWidth": 539,
-        "rawHeight": 873,
+        "offsetX": 2,
+        "offsetY": 8.5,
+        "trimX": 25,
+        "trimY": 6,
+        "width": 272,
+        "height": 670,
+        "rawWidth": 318,
+        "rawHeight": 699,
         "borderTop": 0,
         "borderBottom": 0,
         "borderLeft": 0,
@@ -60,17 +60,17 @@
         "meshType": 0,
         "vertices": {
           "rawPosition": [
-            -269.5,
-            -354,
+            -136,
+            -335,
             0,
-            269.5,
-            -354,
+            136,
+            -335,
             0,
-            -269.5,
-            354,
+            -136,
+            335,
             0,
-            269.5,
-            354,
+            136,
+            335,
             0
           ],
           "indexes": [
@@ -82,38 +82,38 @@
             3
           ],
           "uv": [
-            0,
-            708,
-            539,
-            708,
-            0,
-            0,
-            539,
-            0
+            25,
+            693,
+            297,
+            693,
+            25,
+            23,
+            297,
+            23
           ],
           "nuv": [
-            0,
-            0,
-            1,
-            0,
-            0,
-            0.8109965635738832,
-            1,
-            0.8109965635738832
+            0.07861635220125786,
+            0.032904148783977114,
+            0.9339622641509434,
+            0.032904148783977114,
+            0.07861635220125786,
+            0.9914163090128756,
+            0.9339622641509434,
+            0.9914163090128756
           ],
           "minPos": [
-            -269.5,
-            -354,
+            -136,
+            -335,
             0
           ],
           "maxPos": [
-            269.5,
-            354,
+            136,
+            335,
             0
           ]
         },
         "isUuid": true,
-        "imageUuidOrDatabaseUri": "b4b8da02-9824-4e10-b7de-fbd31ba7b6ea@6c48a",
+        "imageUuidOrDatabaseUri": "1dd89547-b8d9-40ae-be95-18dbfbd4ca67@6c48a",
         "atlasUuid": "",
         "trimType": "auto"
       },
@@ -129,6 +129,6 @@
     "type": "sprite-frame",
     "fixAlphaTransparencyArtifacts": false,
     "hasAlpha": true,
-    "redirect": "b4b8da02-9824-4e10-b7de-fbd31ba7b6ea@6c48a"
+    "redirect": "1dd89547-b8d9-40ae-be95-18dbfbd4ca67@6c48a"
   }
 }
