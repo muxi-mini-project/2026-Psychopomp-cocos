@@ -4,8 +4,6 @@ const { ccclass } = _decorator;
 const event = {
     INTERACTABLE_TRIGGERED: "INTERACTABLE_TRIGGERED",
     INTERACTABLE_CLICK: "INTERACTABLE_CLICK",
-    UI_OPENED: "UI_OPENED",
-    UI_TOAST: "UI_TOAST",
 } as const;
 
 @ccclass("PhoneInteract")
@@ -38,9 +36,6 @@ export class PhoneInteract extends Component {
         }
 
         switch (result?.code) {
-            // case "PHONE_LOCKED":
-            //     console.log("[PhoneInteract] 触发 PHONE_LOCKED -> 提示手机未解锁");
-            //     return;
 
             case "PHONE_OPEN":
                 console.log("[PhoneInteract] 触发 PHONE_OPEN -> 打开手机内容页");
