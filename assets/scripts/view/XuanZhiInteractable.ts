@@ -7,11 +7,12 @@ import { DataManager } from "../core/DataManager";
 @ccclass("XuanZhiInteract")
 export class XuanZhiInteract extends Component {
     private readonly itemId = "xuanZhi";
-    private readonly flagId = "XUANZHI_PICKED";
+    private readonly flagPicked = "XUANZHI_PICKED";
+    private readonly flagSelected = "XUANZHI_SELECTED";
 
 
-     onLoad(){
-        if (DataManager.instance.getBool(this.flagId)){
+    onLoad() {
+        if (DataManager.instance.getBool(this.flagPicked)) {
             this.node.active = false;
         }
     }
@@ -20,7 +21,7 @@ export class XuanZhiInteract extends Component {
         this.node.on(Node.EventType.TOUCH_END, this.onClick, this)
         console.log("XuanZhiInteract onEnable -> 注册监听,点击监听");
     }
-   
+
     onDisable() {
         //director.off(event.INTERACTABLE_TRIGGERED, this.onTriggered, this);
         this.node.off(Node.EventType.TOUCH_END, this.onClick, this)
@@ -28,12 +29,14 @@ export class XuanZhiInteract extends Component {
     }
 
     private onClick() {
-        console.log(`XuanZhiInteract 点击节点 -> emit INTERACTABLE_CLICK: ${this.itemId}`);
+        console.log(`XuanZhiInteract 点击宣纸 -> emit INTERACTABLE_CLICK: ${this.itemId}`);
         director.emit("ADD_ITEM_REQUEST", { itemId: this.itemId });
         //TODO:发送setflag事件说明已经捡走宣纸
+        DataManager.instance.setFlag(this.flagPicked, true);
+        DataManager.instance.setFlag(this.flagSelected, true);
         this.node.active = false;
 
     }
-   
+
 }
 
