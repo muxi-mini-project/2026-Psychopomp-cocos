@@ -24,17 +24,17 @@ export class WaterInteractable extends Component {
     private onClick() {
         console.log("[WaterInteractable] 点击水池");
 
-        const isSelected = DataManager.instance.getBool(this.flagSelected);
+        //const isSelected = DataManager.instance.getBool(this.flagSelected);
 
-        if (!isSelected) {
-            console.log("[WaterInteractable] 没选宣纸 -> 无反应");
-            return;
-        }
+        // if (!isSelected) {
+        //     console.log("[WaterInteractable] 没选宣纸 -> 无反应");
+        //     return;
+        // }
 
-        if (DataManager.instance.getBool(this.flagWet)) {
-            console.log("[WaterInteractable] 宣纸已经湿过");
-            return;
-        }
+        // if (DataManager.instance.getBool(this.flagWet)) {
+        //     console.log("[WaterInteractable] 宣纸已经湿过");
+        //     return;
+        // }
 
         this.playWetAnimation();
     }

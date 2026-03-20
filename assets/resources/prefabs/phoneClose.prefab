@@ -806,7 +806,7 @@
     "fileId": "50QmwPUs9IMoWE4UeFw2ER"
   },
   {
-    "__type__": "c073fkPPBBIurK6y0+snDKX",
+    "__type__": "e6f76Hb6kNCTZf5QFTnt6cK",
     "_name": "",
     "_objFlags": 0,
     "__editorExtras__": {},
@@ -817,11 +817,14 @@
     "__prefab": {
       "__id__": 38
     },
+    "target": {
+      "__id__": 1
+    },
     "_id": ""
   },
   {
     "__type__": "cc.CompPrefabInfo",
-    "fileId": "81EjrUsS1D+K8cOqa6xirn"
+    "fileId": "78Mu9dInxAuKE/4IuS9F+W"
   },
   {
     "__type__": "cc.PrefabInfo",

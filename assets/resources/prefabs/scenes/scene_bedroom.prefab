@@ -25,7 +25,7 @@
         "__id__": 79
       },
       {
-        "__id__": 95
+        "__id__": 99
       },
       {
         "__id__": 62
@@ -34,7 +34,7 @@
     "_active": true,
     "_components": [],
     "_prefab": {
-      "__id__": 112
+      "__id__": 116
     },
     "_lpos": {
       "__type__": "cc.Vec3",
@@ -1649,11 +1649,11 @@
     "_active": true,
     "_components": [
       {
-        "__id__": 92
+        "__id__": 96
       }
     ],
     "_prefab": {
-      "__id__": 94
+      "__id__": 98
     },
     "_lpos": {
       "__type__": "cc.Vec3",
@@ -1836,10 +1836,16 @@
       },
       {
         "__id__": 89
+      },
+      {
+        "__id__": 91
+      },
+      {
+        "__id__": 93
       }
     ],
     "_prefab": {
-      "__id__": 91
+      "__id__": 95
     },
     "_lpos": {
       "__type__": "cc.Vec3",
@@ -1944,6 +1950,45 @@
     "fileId": "fbYgcSwrBKoJ9kORBPa+bP"
   },
   {
+    "__type__": "e7f66MZ789M2Yep4xuANxl4",
+    "_name": "",
+    "_objFlags": 0,
+    "__editorExtras__": {},
+    "node": {
+      "__id__": 86
+    },
+    "_enabled": true,
+    "__prefab": {
+      "__id__": 92
+    },
+    "interactableId": "bedroom_to_bathroomDoor",
+    "interactableType": "switch_scene",
+    "hoverCursor": true,
+    "_id": ""
+  },
+  {
+    "__type__": "cc.CompPrefabInfo",
+    "fileId": "ecA18wgY1MQ5O39k6vdM7d"
+  },
+  {
+    "__type__": "c073fkPPBBIurK6y0+snDKX",
+    "_name": "",
+    "_objFlags": 0,
+    "__editorExtras__": {},
+    "node": {
+      "__id__": 86
+    },
+    "_enabled": true,
+    "__prefab": {
+      "__id__": 94
+    },
+    "_id": ""
+  },
+  {
+    "__type__": "cc.CompPrefabInfo",
+    "fileId": "a08IhHPvdOtq9gwOwjXs9q"
+  },
+  {
     "__type__": "cc.PrefabInfo",
     "root": {
       "__id__": 1
@@ -1966,7 +2011,7 @@
     },
     "_enabled": true,
     "__prefab": {
-      "__id__": 93
+      "__id__": 97
     },
     "_contentSize": {
       "__type__": "cc.Size",
@@ -2004,14 +2049,14 @@
       "__id__": 1
     },
     "_prefab": {
-      "__id__": 96
+      "__id__": 100
     },
     "__editorExtras__": {}
   },
   {
     "__type__": "cc.PrefabInfo",
     "root": {
-      "__id__": 95
+      "__id__": 99
     },
     "asset": {
       "__uuid__": "8f11be33-ad0c-4065-82c0-88ec3cb5f158",
@@ -2019,14 +2064,14 @@
     },
     "fileId": "dbGyUYgYZFcJMQZJnyyxlu",
     "instance": {
-      "__id__": 97
+      "__id__": 101
     },
     "targetOverrides": [
       {
-        "__id__": 106
+        "__id__": 110
       },
       {
-        "__id__": 109
+        "__id__": 113
       }
     ]
   },
@@ -2040,34 +2085,34 @@
     "mountedComponents": [],
     "propertyOverrides": [
       {
-        "__id__": 98
-      },
-      {
-        "__id__": 100
-      },
-      {
-        "__id__": 101
-      },
-      {
         "__id__": 102
       },
-      {
-        "__id__": 103
-      }
-    ],
-    "removedComponents": [
       {
         "__id__": 104
       },
       {
         "__id__": 105
+      },
+      {
+        "__id__": 106
+      },
+      {
+        "__id__": 107
+      }
+    ],
+    "removedComponents": [
+      {
+        "__id__": 108
+      },
+      {
+        "__id__": 109
       }
     ]
   },
   {
     "__type__": "CCPropertyOverrideInfo",
     "targetInfo": {
-      "__id__": 99
+      "__id__": 103
     },
     "propertyPath": [
       "_name"
@@ -2083,7 +2128,7 @@
   {
     "__type__": "CCPropertyOverrideInfo",
     "targetInfo": {
-      "__id__": 99
+      "__id__": 103
     },
     "propertyPath": [
       "_lpos"
@@ -2098,7 +2143,7 @@
   {
     "__type__": "CCPropertyOverrideInfo",
     "targetInfo": {
-      "__id__": 99
+      "__id__": 103
     },
     "propertyPath": [
       "_lrot"
@@ -2114,7 +2159,7 @@
   {
     "__type__": "CCPropertyOverrideInfo",
     "targetInfo": {
-      "__id__": 99
+      "__id__": 103
     },
     "propertyPath": [
       "_euler"
@@ -2129,7 +2174,7 @@
   {
     "__type__": "CCPropertyOverrideInfo",
     "targetInfo": {
-      "__id__": 99
+      "__id__": 103
     },
     "propertyPath": [
       "_active"
@@ -2156,10 +2201,10 @@
       "btnRenJianBack"
     ],
     "target": {
-      "__id__": 107
+      "__id__": 111
     },
     "targetInfo": {
-      "__id__": 108
+      "__id__": 112
     }
   },
   {
@@ -2180,10 +2225,10 @@
       "btnEYuBack"
     ],
     "target": {
-      "__id__": 110
+      "__id__": 114
     },
     "targetInfo": {
-      "__id__": 111
+      "__id__": 115
     }
   },
   {
@@ -2208,7 +2253,7 @@
     "instance": null,
     "targetOverrides": [
       {
-        "__id__": 113
+        "__id__": 117
       }
     ],
     "nestedPrefabInstanceRoots": [
@@ -2216,7 +2261,7 @@
         "__id__": 62
       },
       {
-        "__id__": 95
+        "__id__": 99
       }
     ]
   },
@@ -2230,10 +2275,10 @@
       "popupController"
     ],
     "target": {
-      "__id__": 95
+      "__id__": 99
     },
     "targetInfo": {
-      "__id__": 114
+      "__id__": 118
     }
   },
   {
