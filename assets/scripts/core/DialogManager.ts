@@ -42,6 +42,11 @@ export class DialogManager extends Component {
             return;
         }
 
+        if (!dialogue.lines || !Array.isArray(dialogue.lines) || dialogue.lines.length === 0) {
+            console.warn(`[DialogManager] 对话没有有效内容: ${dialogueId}`);
+            return;
+        }
+
         this._currentDialogue = dialogue;
         this._currentLineIndex = 0;
         this._isActive = true;
@@ -53,7 +58,7 @@ export class DialogManager extends Component {
     }
 
     public nextLine(): void {
-        if (!this._isActive || !this._currentDialogue) {
+        if (!this._isActive || !this._currentDialogue || !this._currentDialogue.lines) {
             return;
         }
 
@@ -78,6 +83,11 @@ export class DialogManager extends Component {
     }
 
     private _displayLine(): void {
+        if (!this._currentDialogue?.lines || !this._currentDialogue.lines[this._currentLineIndex]) {
+            console.warn("[DialogManager] 对话内容无效");
+            this._finishDialogue();
+            return;
+        }
         const line = this._currentDialogue.lines[this._currentLineIndex];
         director.emit("DIALOGUE_LINE", {
             text: line.text,

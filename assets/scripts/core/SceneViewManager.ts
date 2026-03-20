@@ -49,6 +49,18 @@ export class SceneViewManager extends Component {
         }
     }
 
+    private _ensureSceneNodes(): void {
+        if (!this.currentSceneNode) {
+            this.currentSceneNode = new Node("CurrentScene");
+            this.node.addChild(this.currentSceneNode);
+        }
+        if (!this.preloadedScenesNode) {
+            this.preloadedScenesNode = new Node("PreloadedScenes");
+            this.preloadedScenesNode.active = false;
+            this.node.addChild(this.preloadedScenesNode);
+        }
+    }
+
     public initializeFromSave(): void {
         const currentScene = DataManager.instance.getCurrentScene();
         this.loadScene(currentScene);
@@ -56,6 +68,7 @@ export class SceneViewManager extends Component {
     }
 
     public loadScene(sceneId: string, onComplete?: () => void): void {
+        this._ensureSceneNodes();
         this.clearCurrentScene();
         this.clearAllPreloadedScenes();
 
@@ -90,6 +103,7 @@ export class SceneViewManager extends Component {
         }
 
         return ResourceManager.instance.loadScene(sceneId).then((prefab) => {
+            this._ensureSceneNodes();
             const node = instantiate(prefab);
             node.name = sceneId;
             node.active = false;
@@ -113,6 +127,7 @@ export class SceneViewManager extends Component {
     public switchToScene(sceneId: string): void {
         if (this._transitioning) return;
         if (this._currentSceneId === sceneId) return;
+        this._ensureSceneNodes();
 
         this._transitioning = true;
         director.emit("SCENE_SWITCH_START", sceneId);
@@ -147,13 +162,17 @@ export class SceneViewManager extends Component {
     }
 
     private clearCurrentScene(): void {
-        this.currentSceneNode.removeAllChildren();
+        if (this.currentSceneNode) {
+            this.currentSceneNode.removeAllChildren();
+        }
     }
 
     private clearAllPreloadedScenes(): void {
         this._preloadedScenes.forEach((node: Node) => node.destroy());
         this._preloadedScenes.clear();
-        this.preloadedScenesNode.removeAllChildren();
+        if (this.preloadedScenesNode) {
+            this.preloadedScenesNode.removeAllChildren();
+        }
     }
 
     private clearAllScenes(): void {
