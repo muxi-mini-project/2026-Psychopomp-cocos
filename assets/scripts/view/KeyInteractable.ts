@@ -5,7 +5,7 @@ const { ccclass, property } = _decorator;
 @ccclass('KeyInteractable')
 export class KeyInteractable extends Component {
     private readonly itemId = "key"
-    private readonly flagId = "PICK_KEY"
+    private readonly flagId = "KEY_PICKED"
     //TODO:接入datamanager
     // onLoad() {
     //     if (DataManager.instance.getBool(this.flagId)) {
@@ -27,6 +27,7 @@ export class KeyInteractable extends Component {
         //TODO:接入datamanager
         console.log(`[KeyInteractable] 收到点击事件emit INTERACTABLE_CLICK: ${this.itemId}`)
         director.emit("ADD_ITEM_REQUEST", { itemId: this.itemId })
+        director.emit("SET_FLAG_REQUEST", { name: this.flagId, value: true })
         this.node.active = false
     }
 
