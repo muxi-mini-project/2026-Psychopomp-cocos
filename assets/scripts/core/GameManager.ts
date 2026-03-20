@@ -2,6 +2,7 @@ import { _decorator, Component, director } from 'cc';
 import { ResourceManager } from './ResourceManager';
 import { DataManager } from './DataManager';
 import { SceneViewManager } from './SceneViewManager';
+import { UIManager } from './UIManager';
 const { ccclass } = _decorator;
 
 export enum GameState {
@@ -39,6 +40,7 @@ export class GameManager extends Component {
         // 监听动画完成事件
         director.on("INTRO_COMPLETE", this._onIntroComplete, this);
         director.on("ENDING_COMPLETE", this._onEndingComplete, this);
+        director.on("INTRO_CUTSCENE_COMPLETE", this._onIntroCutsceneComplete, this);
 
         // 监听 UI 事件
         director.on("START_NEW_GAME", this._onStartNewGame, this);
@@ -98,12 +100,15 @@ export class GameManager extends Component {
     }
 
     private _onIntroComplete(): void {
-        DataManager.instance.setIntroPlayed(true);
-        DataManager.instance.saveGame("auto_save", true);
+        const hasCutscene = DataManager.instance.getBool("HAS_INTRO_CUTSCENE");
 
-        // 进入游戏
-        SceneViewManager.instance.initializeFromSave();
-        this.setState(GameState.GAMEPLAY);
+        if (hasCutscene) {
+            UIManager.instance.showIntroCutscene();
+        } else {
+            DataManager.instance.setIntroPlayed(true);
+            DataManager.instance.saveGame("auto_save", true);
+            this._enterGame();
+        }
     }
 
     private _onEndingComplete(): void {
@@ -112,6 +117,20 @@ export class GameManager extends Component {
 
         // 结局动画播放完成，回主菜单
         director.emit("SHOW_MAIN_MENU");
+    }
+
+    private _enterGame(): void {
+        SceneViewManager.instance.initializeFromSave();
+        this.setState(GameState.GAMEPLAY);
+    }
+
+    private _onIntroCutsceneComplete(): void {
+        DataManager.instance.setIntroPlayed(true);
+        DataManager.instance.setFlag("INTRO_CUTSCENE_PLAYED", true);
+        DataManager.instance.saveGame("auto_save", true);
+
+        UIManager.instance.hideIntroCutscene();
+        this._enterGame();
     }
 
     public setState(newState: GameState): void {

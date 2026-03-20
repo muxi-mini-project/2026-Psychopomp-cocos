@@ -33,6 +33,9 @@ export class UIManager extends Component {
     videoPlayer: Node = null;
 
     @property(Node)
+    introCutscene: Node = null;
+
+    @property(Node)
     sceneContainer: Node = null;
 
     public static get instance(): UIManager {
@@ -139,6 +142,27 @@ export class UIManager extends Component {
     public hideGameOver(): void {
         if (this.gameOverScreen) {
             this.gameOverScreen.active = false;
+        }
+    }
+
+    public showIntroCutscene(): void {
+        if (this.fullscreenLayer) {
+            this.fullscreenLayer.active = true;
+        }
+        if (this.introCutscene) {
+            this.introCutscene.active = true;
+        }
+        if (this.gameLayer) {
+            this.gameLayer.active = false;
+        }
+    }
+
+    public hideIntroCutscene(): void {
+        if (this.introCutscene) {
+            this.introCutscene.active = false;
+        }
+        if (this.fullscreenLayer) {
+            this.fullscreenLayer.active = false;
         }
     }
 
