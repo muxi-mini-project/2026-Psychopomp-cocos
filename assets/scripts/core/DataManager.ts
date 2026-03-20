@@ -305,8 +305,6 @@ export class DataManager extends Component {
         return this._saveData?.storyFlags || {};
     }
 
-    // ===== 进度管理方法 =====
-
     // 使用 flag 替代独立字段
     private static readonly FLAG_INTRO_PLAYED = "INTRO_PLAYED";
     private static readonly FLAG_ENDING_PLAYED = "ENDING_PLAYED";

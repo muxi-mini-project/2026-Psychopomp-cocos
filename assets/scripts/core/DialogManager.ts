@@ -1,5 +1,6 @@
 import { _decorator, Component, director } from 'cc';
 import { DataManager } from './DataManager';
+import { GameManager, GameState } from './GameManager';
 const { ccclass } = _decorator;
 
 @ccclass('DialogManager')
@@ -46,6 +47,7 @@ export class DialogManager extends Component {
         this._isActive = true;
 
         director.emit("DIALOGUE_START", dialogueId);
+        GameManager.instance.setState(GameState.DIALOGUE);
 
         this._displayLine();
     }
