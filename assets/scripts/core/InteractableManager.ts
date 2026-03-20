@@ -58,7 +58,6 @@ export class InteractableManager extends Component {
 
         director.on("INTERACTABLE_CLICK", this._onInteractableClick, this);
         director.on("SET_FLAG_REQUEST", this._onSetFlagRequest, this);
-        director.on("ADD_ITEM_REQUEST", this._onAddItemRequest, this);
     }
 
     public handleClick(interactableId: string): void {
@@ -137,7 +136,6 @@ export class InteractableManager extends Component {
         // 切换场景
         if (result.switchScene) {
             triggerResult.switchedScene = result.switchScene;
-            SceneViewManager.instance.loadScene(result.switchScene);
         }
 
         // 自动触发对话（当 data 包含 dialogueId 时）
@@ -162,12 +160,6 @@ export class InteractableManager extends Component {
         }
     }
 
-    private _onAddItemRequest(data: { itemId: string }): void {
-        if (data && data.itemId) {
-            DataManager.instance.addItem(data.itemId);
-        }
-    }
-
 
     private _getInteractableConfig(interactableId: string): InteractableConfig | null {
         const sceneConfig = DataManager.instance.getSceneConfig(
@@ -181,6 +173,5 @@ export class InteractableManager extends Component {
     protected onDestroy(): void {
         director.off("INTERACTABLE_CLICK", this._onInteractableClick, this);
         director.off("SET_FLAG_REQUEST", this._onSetFlagRequest, this);
-        director.off("ADD_ITEM_REQUEST", this._onAddItemRequest, this);
     }
 }
