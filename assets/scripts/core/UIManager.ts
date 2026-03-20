@@ -15,9 +15,6 @@ export class UIManager extends Component {
     mainMenu: Node = null;
 
     @property(Node)
-    pauseMenu: Node = null;
-
-    @property(Node)
     gameOverScreen: Node = null;
 
     @property(Node)
@@ -120,14 +117,14 @@ export class UIManager extends Component {
     }
 
     public showPauseMenu(): void {
-        if (this.pauseMenu) {
-            this.pauseMenu.active = true;
+        if (this.menuPanel) {
+            this.menuPanel.active = true;
         }
     }
 
     public hidePauseMenu(): void {
-        if (this.pauseMenu) {
-            this.pauseMenu.active = false;
+        if (this.menuPanel) {
+            this.menuPanel.active = false;
         }
     }
 
@@ -149,18 +146,12 @@ export class UIManager extends Component {
         if (this.fullscreenLayer) {
             this.fullscreenLayer.active = true;
         }
-        if (this.introCutscene) {
-            this.introCutscene.active = true;
-        }
         if (this.gameLayer) {
             this.gameLayer.active = false;
         }
     }
 
     public hideIntroCutscene(): void {
-        if (this.introCutscene) {
-            this.introCutscene.active = false;
-        }
         if (this.fullscreenLayer) {
             this.fullscreenLayer.active = false;
         }
@@ -181,7 +172,7 @@ export class UIManager extends Component {
     public updateInventoryUI(): void {
         if (this.inventoryPanel) {
             this.inventoryPanel.active = true;
-            director.emit("INVENTORY_REFRESH");
+            director.emit("INVENTORY_UPDATE");
         }
     }
 
@@ -206,12 +197,6 @@ export class UIManager extends Component {
     public hideDialogUI(): void {
         if (this.dialogPanel) {
             this.dialogPanel.active = false;
-        }
-    }
-
-    public showToast(message: string): void {
-        if (this.gameLayer) {
-            director.emit("TOAST_SHOW", message);
         }
     }
 
