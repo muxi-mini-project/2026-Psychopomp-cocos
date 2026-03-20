@@ -10,7 +10,9 @@ export class FrameCloseup extends Component {
     @property({ type: Sprite, tooltip: "打开状态贴图（子节点）" })
     private readonly openSprite: Sprite | null = null;
 
-    private readonly flagId = "FRAME_KEY_PICKED";
+    @property({ type : Node, tooltip: "开启目标节点"})
+    private readonly target: Node | null = null
+
     private _opened = false;
 
     protected onLoad(): void {
@@ -41,9 +43,9 @@ export class FrameCloseup extends Component {
         if (this.openSprite) {
             this.openSprite.node.active = true;
         }
-
-        director.emit("ADD_ITEM_REQUEST", { itemId: "frame_key" });
-        director.emit("SET_FLAG_REQUEST", { name: this.flagId, value: true });
+        if (this.target) {
+            this.target.active = true
+        } 
     }
 
     public resetFrame(): void {

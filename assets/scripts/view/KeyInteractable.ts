@@ -1,34 +1,32 @@
 import { _decorator, Component, director, Node } from "cc";
 const { ccclass, property } = _decorator;
-//import { DataManager } from "../core/DataManager"
 
 @ccclass('KeyInteractable')
 export class KeyInteractable extends Component {
-    private readonly itemId = "key"
-    private readonly flagId = "KEY_PICKED"
-    //TODO:接入datamanager
-    // onLoad() {
-    //     if (DataManager.instance.getBool(this.flagId)) {
-    //         this.node.active = false
-    //     }
-    // }
+    @property
+    private readonly itemId: string = "key";
 
-    onEnable() {
-        this.node.on(Node.EventType.TOUCH_END, this.onClick, this)
-        console.log("KeyInteractable onEnable -> 注册监听,点击监听")
-    }
-    onDisable() {
-        this.node.off(Node.EventType.TOUCH_END, this.onClick, this)
-        console.log("KeyInteractable onDisable -> 取消监听，点击监听")
+    @property
+    private readonly flagId: string = "KEY_PICKED";
+
+    @property ({type : Node, tooltip: "启动目标节点"})
+    private readonly target : Node | null = null
+
+    protected onEnable(): void {
+        this.node.on(Node.EventType.TOUCH_END, this.onClick, this);
+        console.log("KeyInteractable onEnable -> 注册监听,点击监听");
     }
 
-    private onClick() {
-        //DataManager.instance.setBool(this.flagId, true)
-        //TODO:接入datamanager
-        console.log(`[KeyInteractable] 收到点击事件emit INTERACTABLE_CLICK: ${this.itemId}`)
-        director.emit("ADD_ITEM_REQUEST", { itemId: this.itemId })
-        director.emit("SET_FLAG_REQUEST", { name: this.flagId, value: true })
-        this.node.active = false
+    protected onDisable(): void {
+        this.node.off(Node.EventType.TOUCH_END, this.onClick, this);
+        console.log("KeyInteractable onDisable -> 取消监听，点击监听");
     }
 
+    private onClick(): void {
+        console.log(`[KeyInteractable] 收到点击事件emit INTERACTABLE_CLICK: ${this.itemId}`);
+        director.emit("ADD_ITEM_REQUEST", { itemId: this.itemId });
+        director.emit("SET_FLAG_REQUEST", { name: this.flagId, value: true });
+        this.node.active = false;
+        this.target.active = true
+    }
 }

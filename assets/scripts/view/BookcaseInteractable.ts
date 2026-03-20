@@ -1,36 +1,38 @@
-import { _decorator, Component, director, Node, EventTouch } from "cc";
+import { _decorator, Component, Node } from "cc";
 const { ccclass, property } = _decorator;
-import { TwoBooksPopController } from "./TwoBooksPopController";
 
+@ccclass("TwoBooksPopController")
+export class TwoBooksPopController extends Component {
 
-@ccclass("BookcaseInteractable")
-export class BookcaseInteractable extends Component {
+    @property({ type: Node, tooltip: "选项面板" })
+    private readonly optionPanel: Node | null = null;
 
-    @property(TwoBooksPopController)
-    public popupController: TwoBooksPopController | null = null;
-    private readonly interactableId = "point_bookcase";
-
-
-    onEnable() {
-        //director.on(event.INTERACTABLE_TRIGGERED, this.onTriggered, this);
-        this.node.on(Node.EventType.TOUCH_END, this.onclick, this)
-        console.log("BookcaseInteractable onEnable -> 注册监听 点击节点");
+    protected onEnable(): void {
+        this.node.on(Node.EventType.TOUCH_END, this.onClickOpen, this);
     }
 
-    onDisable() {
-        //director.off(event.INTERACTABLE_TRIGGERED, this.onTriggered, this);
-        this.node.off(Node.EventType.TOUCH_END, this.onclick, this)
-        console.log("BookcaseInteractable onDisable -> 移除监听");
+    protected onDisable(): void {
+        this.node.off(Node.EventType.TOUCH_END, this.onClickOpen, this);
     }
-    private onclick() {
-        // director.emit(event.INTERACTABLE_CLICK, { interactableId: this.interactableId });
-        if (!this.popupController) {
-            console.error("[BookcaseInteractable] popupController 没有绑定");
-            return;
+
+    protected start(): void {
+        this.hidePopup();
+    }
+
+    public openOptions(): void {
+        console.log("[TwoBooksPopController] 打开选项面板");
+        if (this.optionPanel) {
+            this.optionPanel.active = true;
         }
-        this.popupController.openOptions();
-        console.log(`BookcaseInteractable onclick -> 点击节点: ${this.interactableId}`)
     }
 
-    
+    private hidePopup(): void {
+        if (this.optionPanel) {
+            this.optionPanel.active = false;
+        }
+    }
+
+    private onClickOpen(): void {
+        this.openOptions();
+    }
 }

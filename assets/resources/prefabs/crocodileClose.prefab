@@ -507,6 +507,8 @@
     "__prefab": {
       "__id__": 21
     },
+    "itemId": "xuanZhi",
+    "flagPicked": "XUANZHI_PICKED",
     "_id": ""
   },
   {

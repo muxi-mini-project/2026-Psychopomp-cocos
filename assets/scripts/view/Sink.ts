@@ -1,5 +1,4 @@
-import { _decorator, Component, Node, Vec3, tween, UIOpacity } from "cc";
-import { DataManager } from "../core/DataManager";
+import { _decorator, Component, Node, tween, UIOpacity, director } from "cc";
 const { ccclass, property } = _decorator;
 
 @ccclass("WaterInteractable")
@@ -10,8 +9,7 @@ export class WaterInteractable extends Component {
     @property(Node)
     public paperWet: Node | null = null;
 
-    private readonly flagSelected = "XUANZHI_SELECTED";
-    private readonly flagWet = "XUANZHI_WET";
+    private readonly flagId = "XUANZHI_WET";
 
     onEnable() {
         this.node.on(Node.EventType.TOUCH_END, this.onClick, this);
@@ -24,62 +22,46 @@ export class WaterInteractable extends Component {
     private onClick() {
         console.log("[WaterInteractable] 点击水池");
 
-        //const isSelected = DataManager.instance.getBool(this.flagSelected);
-
-        // if (!isSelected) {
-        //     console.log("[WaterInteractable] 没选宣纸 -> 无反应");
-        //     return;
-        // }
-
-        // if (DataManager.instance.getBool(this.flagWet)) {
-        //     console.log("[WaterInteractable] 宣纸已经湿过");
-        //     return;
-        // }
-
         this.playWetAnimation();
     }
 
-    private playWetAnimation() {
+    private playWetAnimation(): void {
         if (!this.paperDry || !this.paperWet) {
             console.warn("[WaterInteractable] paperDry 或 paperWet 未绑定");
             return;
         }
 
-        this.paperDry.active = true;
-        this.paperWet.active = false;
-
-        // 起始状态：稍微靠上、略小、半透明
-        this.paperDry.setPosition(0, 40, 0);
-        this.paperDry.setScale(new Vec3(0.85, 0.85, 1));
-
-        let opacity = this.paperDry.getComponent(UIOpacity);
-        if (!opacity) {
-            opacity = this.paperDry.addComponent(UIOpacity);
+        let dryOpacity = this.paperDry.getComponent(UIOpacity);
+        if (!dryOpacity) {
+            dryOpacity = this.paperDry.addComponent(UIOpacity);
         }
-        opacity.opacity = 180;
+        dryOpacity.opacity = 0;
+        this.paperDry.active = true;
 
-        tween(this.paperDry)
-            .to(
-                0.9,
-                {
-                    position: new Vec3(0, 0, 0),
-                    scale: new Vec3(1, 1, 1),
-                },
-                { easing: "sineOut" }
-            )
+        let wetOpacity = this.paperWet.getComponent(UIOpacity);
+        if (!wetOpacity) {
+            wetOpacity = this.paperWet.addComponent(UIOpacity);
+        }
+        wetOpacity.opacity = 0;
+        this.paperWet.active = true;
+
+
+        tween(dryOpacity)
+            .to(0.5, { opacity: 255 })
             .call(() => {
-                this.paperDry!.active = false;
-                this.paperWet!.active = true;
+                tween(dryOpacity)
+                    .to(0.5, { opacity: 0 })
+                    .call(() => {
+                        this.paperDry!.active = false;
+                        director.emit("SET_FLAG_REQUEST", { name: this.flagId, value: true });
+                        console.log("[WaterInteractable] 宣纸已打湿");
+                    })
+                    .start();
 
-                DataManager.instance.setFlag(this.flagWet, true);
-                DataManager.instance.setFlag(this.flagSelected, false);
-
-                console.log("[WaterInteractable] 宣纸已打湿");
+                tween(wetOpacity)
+                    .to(0.5, { opacity: 255 })
+                    .start();
             })
-            .start();
-
-        tween(opacity)
-            .to(0.9, { opacity: 255 })
             .start();
     }
 }

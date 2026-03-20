@@ -4,7 +4,7 @@ const { ccclass, property } = _decorator;
 @ccclass("BackClick")
 export class BackClick extends Component {
     @property(Node)
-    public target: Node | null = null; // calendarClose
+    public target: Node | null = null; 
 
     onEnable() {
         this.node.on(Node.EventType.TOUCH_END, this.onClick, this);
