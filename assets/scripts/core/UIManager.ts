@@ -101,6 +101,7 @@ export class UIManager extends Component {
     }
 
     public showMainMenu(): void {
+        console.log("[UIManager] showMainMenu called, fullscreenLayer:", this.fullscreenLayer, "mainMenu:", this.mainMenu);
         this.showFullscreenUI();
         if (this.mainMenu) {
             this.mainMenu.active = true;
@@ -114,6 +115,7 @@ export class UIManager extends Component {
     }
 
     public showPauseMenu(): void {
+        console.log("[UIManager] showPauseMenu called, gameLayer:", this.gameLayer, "pauseMenu:", this.pauseMenu);
         if (this.gameLayer) {
             this.gameLayer.active = true;
         }

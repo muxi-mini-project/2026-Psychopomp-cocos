@@ -51,8 +51,12 @@ export class GameManager extends Component {
     }
 
     public initializeGame(): void {
+        console.log("[GameManager] initializeGame called");
         const loaded = DataManager.instance.loadGame("auto_save");
+        console.log("[GameManager] auto_save loaded:", loaded);
         if (!loaded) {
+            console.log("[GameManager] No save found, emitting SHOW_MAIN_MENU");
+            director.emit("SHOW_MAIN_MENU");
             return;
         }
         this._resumeGame();
