@@ -114,6 +114,9 @@ export class UIManager extends Component {
     }
 
     public showPauseMenu(): void {
+        if (this.gameLayer) {
+            this.gameLayer.active = true;
+        }
         if (this.pauseMenu) {
             this.pauseMenu.active = true;
         }
