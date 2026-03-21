@@ -5,28 +5,13 @@ import { SceneViewManager } from './SceneViewManager';
 import { UIManager } from './UIManager';
 const { ccclass } = _decorator;
 
-export enum GameState {
-    GAMEPLAY = "GAMEPLAY",
-    PAUSED = "PAUSED",
-    DIALOGUE = "DIALOGUE"
-}
-
-export const GameEvent = {
-    STATE_CHANGED: 'GAME_STATE_CHANGED'
-};
-
 @ccclass('GameManager')
 export class GameManager extends Component {
     private static _instance: GameManager = null;
-    private _currentState: GameState = GameState.GAMEPLAY;
     private _initialized: boolean = false;
 
     public static get instance(): GameManager {
         return this._instance;
-    }
-
-    public get currentState(): GameState {
-        return this._currentState;
     }
 
     onLoad() {
@@ -67,19 +52,10 @@ export class GameManager extends Component {
 
     public initializeGame(): void {
         const loaded = DataManager.instance.loadGame("auto_save");
-
         if (!loaded) {
-            // 无存档 → 新游戏
-            this._startNewGame();
-        } else {
-            // 有存档 → 检查动画状态
-            this._resumeGame();
+            return;
         }
-    }
-
-    private _startNewGame(): void {
-        DataManager.instance.startNewGame();
-        director.emit("INTRO_START");
+        this._resumeGame();
     }
 
     private _resumeGame(): void {
@@ -87,15 +63,11 @@ export class GameManager extends Component {
         const endingPlayed = DataManager.instance.getEndingPlayed();
 
         if (!introPlayed) {
-            // 开场动画未完整播放，重新播放
             director.emit("INTRO_START");
         } else if (endingPlayed) {
-            // 结局已播放，回主菜单
             director.emit("SHOW_MAIN_MENU");
         } else {
-            // 正常恢复游戏
-            SceneViewManager.instance.initializeFromSave();
-            this.setState(GameState.GAMEPLAY);
+            this._enterGame();
         }
     }
 
@@ -121,7 +93,6 @@ export class GameManager extends Component {
 
     private _enterGame(): void {
         SceneViewManager.instance.initializeFromSave();
-        this.setState(GameState.GAMEPLAY);
     }
 
     private _onIntroCutsceneComplete(): void {
@@ -133,15 +104,6 @@ export class GameManager extends Component {
         this._enterGame();
     }
 
-    public setState(newState: GameState): void {
-        if (this._currentState === newState) return;
-
-        const oldState = this._currentState;
-        this._currentState = newState;
-
-        director.emit(GameEvent.STATE_CHANGED, newState, oldState);
-    }
-
     private _onStartNewGame(_data: { slotId?: string }): void {
         DataManager.instance.startNewGame();
         // 发出开场动画事件，由 UI 层播放动画
@@ -151,16 +113,16 @@ export class GameManager extends Component {
 
     private _onLoadGame(data: { slotId: string }): void {
         if (data?.slotId && DataManager.instance.loadGame(data.slotId)) {
-            SceneViewManager.instance.initializeFromSave();
+            this._resumeGame();
         }
     }
 
     private _onPauseGame(): void {
-        this.setState(GameState.PAUSED);
+        // 游戏暂停逻辑
     }
 
     private _onResumeGame(): void {
-        this.setState(GameState.GAMEPLAY);
+        // 游戏恢复逻辑
     }
 
     private _onQuitToMenu(): void {
@@ -196,6 +158,7 @@ export class GameManager extends Component {
     protected onDestroy(): void {
         director.off("INTRO_COMPLETE", this._onIntroComplete, this);
         director.off("ENDING_COMPLETE", this._onEndingComplete, this);
+        director.off("INTRO_CUTSCENE_COMPLETE", this._onIntroCutsceneComplete, this);
         director.off("START_NEW_GAME", this._onStartNewGame, this);
         director.off("LOAD_GAME", this._onLoadGame, this);
         director.off("PAUSE_GAME", this._onPauseGame, this);

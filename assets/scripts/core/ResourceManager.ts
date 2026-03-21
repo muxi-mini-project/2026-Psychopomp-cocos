@@ -1,12 +1,10 @@
-import { _decorator, Component, director, Prefab, SpriteFrame, resources, assetManager, JsonAsset } from 'cc';
+import { _decorator, Component, director, Prefab, SpriteFrame, resources, assetManager } from 'cc';
 const { ccclass, property } = _decorator;
 
 @ccclass('ResourceManager')
 export class ResourceManager extends Component {
     private static _instance: ResourceManager = null;
 
-    private _loadProgress: number = 0;
-    private _isLoading: boolean = false;
     private _loadedScenes: Set<string> = new Set();
     private _loadedVideos: Set<string> = new Set();
 
@@ -24,24 +22,10 @@ export class ResourceManager extends Component {
     }
 
     public init(onComplete: () => void): void {
-        this._loadProgress = 0;
-        this._isLoading = true;
-
-        resources.loadDir('data', (err, assets) => {
-            if (err) {
-                console.error("[ResourceManager] 核心配置加载失败", err);
-                this._isLoading = false;
-                return;
-            }
-
-            this._loadProgress = 1;
-            this._isLoading = false;
-            console.log("[ResourceManager] 核心配置加载完成");
-
-            if (onComplete) {
-                onComplete();
-            }
-        });
+        console.log("[ResourceManager] 初始化完成");
+        if (onComplete) {
+            onComplete();
+        }
     }
 
     public preloadScene(sceneId: string, onComplete: () => void): void {
@@ -53,19 +37,13 @@ export class ResourceManager extends Component {
             return;
         }
 
-        this._loadProgress = 0;
-        this._isLoading = true;
-
         resources.load(`prefabs/scenes/${sceneId}`, Prefab, (err, asset) => {
             if (err) {
                 console.error(`[ResourceManager] 场景预加载失败: ${sceneId}`, err);
-                this._isLoading = false;
                 return;
             }
 
             this._loadedScenes.add(sceneId);
-            this._loadProgress = 1;
-            this._isLoading = false;
             console.log(`[ResourceManager] 场景预加载完成: ${sceneId}`);
 
             if (onComplete) {
@@ -120,19 +98,13 @@ export class ResourceManager extends Component {
             return;
         }
 
-        this._loadProgress = 0;
-        this._isLoading = true;
-
-        resources.load(`videos/${videoId}`, (err, asset) => {
+        resources.load(`videos/${videoId}`, (err) => {
             if (err) {
                 console.error(`[ResourceManager] 视频加载失败: ${videoId}`, err);
-                this._isLoading = false;
                 return;
             }
 
             this._loadedVideos.add(videoId);
-            this._loadProgress = 1;
-            this._isLoading = false;
             console.log(`[ResourceManager] 视频加载完成: ${videoId}`);
 
             if (onComplete) {
@@ -148,24 +120,6 @@ export class ResourceManager extends Component {
             this._loadedVideos.delete(videoId);
             console.log(`[ResourceManager] 视频资源已释放: ${videoId}`);
         }
-    }
-
-    public getLoadProgress(): number {
-        return this._loadProgress;
-    }
-
-    public loadConfig<T>(path: string, onComplete: (data: T) => void): void {
-        resources.load(`data/${path}`, JsonAsset, (err, asset) => {
-            if (err) {
-                console.error(`[ResourceManager] 配置加载失败: ${path}`, err);
-                return;
-            }
-            onComplete(asset.json as T);
-        });
-    }
-
-    public isLoading(): boolean {
-        return this._isLoading;
     }
 
     public isSceneLoaded(sceneId: string): boolean {

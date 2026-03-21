@@ -211,14 +211,13 @@ export class DataManager extends Component {
             saveId: "new_game",
             saveTime: Date.now(),
             gameVersion: GAME_VERSION,
-            currentScene: "scene_intro",
+            currentScene: "",
             storyFlags: {},
             inventory: [],
             visitedScenes: []
         };
 
         console.log("[DataManager] 新游戏已初始化");
-        this.saveGame(AUTO_SAVE_SLOT, true);
     }
 
     public hasSave(slotId: string): boolean {
