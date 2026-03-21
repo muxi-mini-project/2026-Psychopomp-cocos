@@ -95,9 +95,6 @@ export class UIManager extends Component {
         if (this.fullscreenLayer) {
             this.fullscreenLayer.active = false;
         }
-
-        this._showInventoryPanel();
-        this._showMenuPanel();
     }
 
     public hideGameUI(): void {
@@ -175,25 +172,12 @@ export class UIManager extends Component {
     }
 
     public onVideoEnded(): void {
-        director.emit("CUTSCENE_END");
+        director.emit("INTRO_COMPLETE");
     }
 
     public updateInventoryUI(): void {
         if (this.inventoryPanel) {
-            this.inventoryPanel.active = true;
-            director.emit("INVENTORY_REFRESH");
-        }
-    }
-
-    private _showInventoryPanel(): void {
-        if (this.inventoryPanel) {
-            this.inventoryPanel.active = true;
-        }
-    }
-
-    private _showMenuPanel(): void {
-        if (this.menuPanel) {
-            this.menuPanel.active = true;
+            director.emit("INVENTORY_UPDATE");
         }
     }
 
