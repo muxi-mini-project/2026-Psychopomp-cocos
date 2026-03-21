@@ -63,10 +63,10 @@ export class DataManager extends Component {
                 console.error("[DataManager] 物品配置加载失败", err);
                 return;
             }
-            const itemsData = asset.json.items || {};
-            Object.values(itemsData).forEach((item: any) => {
-                this._itemConfig.set(item.id, item);
-            });
+            const items = asset.json.items || {};
+            for (const [id, item] of Object.entries(items)) {
+                this._itemConfig.set(id, item);
+            }
         });
 
         resources.load('data/scenes', JsonAsset, (err, asset) => {
