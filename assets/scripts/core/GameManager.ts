@@ -51,15 +51,8 @@ export class GameManager extends Component {
     }
 
     public initializeGame(): void {
-        console.log("[GameManager] initializeGame called");
-        const loaded = DataManager.instance.loadGame("auto_save");
-        console.log("[GameManager] auto_save loaded:", loaded);
-        if (!loaded) {
-            console.log("[GameManager] No save found, emitting SHOW_MAIN_MENU");
-            director.emit("SHOW_MAIN_MENU");
-            return;
-        }
-        this._resumeGame();
+        // 初始化时永远先显示主菜单
+        director.emit("SHOW_MAIN_MENU");
     }
 
     private _resumeGame(): void {
@@ -109,6 +102,7 @@ export class GameManager extends Component {
     }
 
     private _onStartNewGame(_data: { slotId?: string }): void {
+        director.emit("HIDE_MAIN_MENU");
         DataManager.instance.startNewGame();
         // 发出开场动画事件，由 UI 层播放动画
         // 动画播放完毕后 UI 发出 INTRO_COMPLETE，GameManager 再加载场景
@@ -116,6 +110,7 @@ export class GameManager extends Component {
     }
 
     private _onLoadGame(data: { slotId: string }): void {
+        director.emit("HIDE_MAIN_MENU");
         if (data?.slotId && DataManager.instance.loadGame(data.slotId)) {
             this._resumeGame();
         }
