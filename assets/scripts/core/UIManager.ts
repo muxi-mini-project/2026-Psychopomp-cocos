@@ -24,9 +24,6 @@ export class UIManager extends Component {
     inventoryPanel: Node = null;
 
     @property(Node)
-    menuPanel: Node = null;
-
-    @property(Node)
     dialogPanel: Node = null;
 
     @property(Node)
@@ -190,12 +187,6 @@ export class UIManager extends Component {
     public hideDialogUI(): void {
         if (this.dialogPanel) {
             this.dialogPanel.active = false;
-        }
-    }
-
-    public showToast(message: string): void {
-        if (this.gameLayer) {
-            director.emit("TOAST_SHOW", message);
         }
     }
 
