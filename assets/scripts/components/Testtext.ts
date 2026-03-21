@@ -59,7 +59,7 @@ export class TestText extends Component {
     //接收对话每段文本数据
     private _onDialogueLine(data: {
         text: string
-        speaker: string
+        speaker?: string
         index: number
         total: number
     }) {

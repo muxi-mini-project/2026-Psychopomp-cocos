@@ -25,7 +25,9 @@ export class StopGame_Button extends Component {
     onStopClick() {
         this.playClickSound()
         this.playClickAnimation(() => {
-            director.emit("SHOW_MAIN_MENU")//显示主菜单
+            director.emit("HIDE_PAUSE_MENU");
+            director.emit("HIDE_GAME_UI");
+            director.emit("QUIT_TO_MENU");
             console.log('已点击StopGame_Button')
         })
     }

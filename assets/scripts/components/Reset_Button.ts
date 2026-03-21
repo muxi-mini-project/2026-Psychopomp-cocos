@@ -1,4 +1,4 @@
-import { _decorator, Component, Node } from 'cc';
+import { _decorator, Component, Slider } from 'cc';
 import { AudioSource, director, tween, Vec3 } from 'cc';
 const { ccclass, property } = _decorator;
 
@@ -13,6 +13,31 @@ export class Reset_Button extends Component {
 
     @property({ type: AudioSource, displayName: "音效音源组件" })
     sfxAudioSource: AudioSource = null
+
+    @property({ type: Slider, displayName: "总音量滑动条" })
+    totalVolumeSlider: Slider = null;
+
+    @property({ type: Slider, displayName: "BGM音量滑动条" })
+    bgmVolumeSlider: Slider = null;
+
+    @property({ type: Slider, displayName: "SFX音量滑动条" })
+    sfxVolumeSlider: Slider = null;
+
+    @property({ type: Slider, displayName: "亮度滑动条" })
+    brightnessSlider: Slider = null;
+
+    // 进度条默认值
+    @property({ displayName: "总音量默认值" })
+    defaultTotalVolume: number = 0.5;
+
+    @property({ displayName: "BGM音量默认值" })
+    defaultBgmVolume: number = 0.5;
+
+    @property({ displayName: "SFX音量默认值" })
+    defaultSfxVolume: number = 0.5;
+
+    @property({ displayName: "亮度默认值" })
+    defaultBrightness: number = 0.5;
 
     //动画配置
     @property({ tooltip: "点击缩放比例" })
@@ -30,13 +55,26 @@ export class Reset_Button extends Component {
     onResetClick() {
         this.playClickSound()
         this.playClickAnimation(() => {
-            this.resetVolumeToDefault()
+            this.resetAllToDefault()
             console.log('已点击Reset_Button')
         })
     }
 
-    //重置音量到默认值
-    private resetVolumeToDefault() {
+    //重置所有进度条到默认值
+    private resetAllToDefault() {
+        if (this.totalVolumeSlider) {
+            this.totalVolumeSlider.progress = this.defaultTotalVolume;
+        }
+        if (this.bgmVolumeSlider) {
+            this.bgmVolumeSlider.progress = this.defaultBgmVolume;
+        }
+        if (this.sfxVolumeSlider) {
+            this.sfxVolumeSlider.progress = this.defaultSfxVolume;
+        }
+        if (this.brightnessSlider) {
+            this.brightnessSlider.progress = this.defaultBrightness;
+        }
+        console.log('设置已重置为默认值');
     }
 
     //播放点击音效
