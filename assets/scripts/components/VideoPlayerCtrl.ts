@@ -30,7 +30,7 @@ export class VideoPlayerCtrl extends Component {
     private _onVideoFinished(): void {
         this._videoPlayer?.node.off('finished', this._onVideoFinished, this);
         this.videoPlayerNode.active = false;
-        director.emit("INTRO_COMPLETE");
+        director.emit("INTRO_VIDEO_COMPLETE");
     }
 
     public stopVideo(): void {
@@ -38,7 +38,7 @@ export class VideoPlayerCtrl extends Component {
             this._videoPlayer.stop();
             this._videoPlayer.node.off('finished', this._onVideoFinished, this);
             this.videoPlayerNode.active = false;
-            director.emit("INTRO_COMPLETE");
+            director.emit("INTRO_VIDEO_COMPLETE");
         }
     }
 

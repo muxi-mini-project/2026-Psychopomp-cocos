@@ -23,9 +23,9 @@ export class GameManager extends Component {
         director.addPersistRootNode(this.node);
 
         // 监听动画完成事件
-        director.on("INTRO_COMPLETE", this._onIntroComplete, this);
+        director.on("INTRO_VIDEO_COMPLETE", this._onIntroVideoComplete, this);
         director.on("ENDING_COMPLETE", this._onEndingComplete, this);
-        director.on("INTRO_CUTSCENE_COMPLETE", this._onIntroCutsceneComplete, this);
+        director.on("INTRO_COMPLETE", this._onIntroComplete, this);
 
         // 监听 UI 事件
         director.on("START_NEW_GAME", this._onStartNewGame, this);
@@ -68,16 +68,25 @@ export class GameManager extends Component {
         }
     }
 
-    private _onIntroComplete(): void {
+    private _onIntroVideoComplete(): void {
         const hasCutscene = DataManager.instance.getBool("HAS_INTRO_CUTSCENE");
 
         if (hasCutscene) {
             UIManager.instance.showIntroCutscene();
         } else {
+            // 无开场对话，视频结束后直接进入游戏
             DataManager.instance.setIntroPlayed(true);
             DataManager.instance.saveGame("auto_save", true);
             this._enterGame();
         }
+    }
+
+    private _onIntroComplete(): void {
+        // 整个开场（视频+对话）结束，进入游戏
+        DataManager.instance.setIntroPlayed(true);
+        DataManager.instance.saveGame("auto_save", true);
+        UIManager.instance.hideIntroCutscene();
+        this._enterGame();
     }
 
     private _onEndingComplete(): void {
@@ -92,20 +101,11 @@ export class GameManager extends Component {
         SceneViewManager.instance.initializeFromSave();
     }
 
-    private _onIntroCutsceneComplete(): void {
-        DataManager.instance.setIntroPlayed(true);
-        DataManager.instance.setFlag("INTRO_CUTSCENE_PLAYED", true);
-        DataManager.instance.saveGame("auto_save", true);
-
-        UIManager.instance.hideIntroCutscene();
-        this._enterGame();
-    }
-
     private _onStartNewGame(_data: { slotId?: string }): void {
         director.emit("HIDE_MAIN_MENU");
         DataManager.instance.startNewGame();
-        // 发出开场动画事件，由 UI 层播放动画
-        // 动画播放完毕后 UI 发出 INTRO_COMPLETE，GameManager 再加载场景
+        // 发出开场动画事件，由 UI 层播放视频
+        // 视频播放完毕后发出 INTRO_VIDEO_COMPLETE，对话完毕后发出 INTRO_COMPLETE
         director.emit("INTRO_START");
     }
 
@@ -155,9 +155,9 @@ export class GameManager extends Component {
     }
 
     protected onDestroy(): void {
-        director.off("INTRO_COMPLETE", this._onIntroComplete, this);
+        director.off("INTRO_VIDEO_COMPLETE", this._onIntroVideoComplete, this);
         director.off("ENDING_COMPLETE", this._onEndingComplete, this);
-        director.off("INTRO_CUTSCENE_COMPLETE", this._onIntroCutsceneComplete, this);
+        director.off("INTRO_COMPLETE", this._onIntroComplete, this);
         director.off("START_NEW_GAME", this._onStartNewGame, this);
         director.off("LOAD_GAME", this._onLoadGame, this);
         director.off("PAUSE_GAME", this._onPauseGame, this);
