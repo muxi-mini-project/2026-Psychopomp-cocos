@@ -21,12 +21,20 @@ export class VolumeSlider extends Component {
     @property(Sprite)
     public barSprite: Sprite = null;
 
+    @property({ tooltip: "默认音量值" })
+    public defaultVolume: number = 0.5;
+
     onLoad() {
         const initVol = this.getVolumeByType();
         this.updateVisual(initVol);
 
         this.slider.node.on('slide', this.onValueChange, this);
         this.slider.node.on('slider-changed', this.onValueChange, this);
+    }
+
+    public resetToDefault(): void {
+        this.updateVisual(this.defaultVolume);
+        this.setVolumeByType(this.defaultVolume);
     }
 
     private onValueChange() {

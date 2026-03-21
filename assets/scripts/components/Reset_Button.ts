@@ -1,5 +1,6 @@
-import { _decorator, Component, Slider } from 'cc';
-import { AudioSource, director, tween, Vec3 } from 'cc';
+import { _decorator, Component } from 'cc';
+import { AudioSource, tween, Vec3 } from 'cc';
+import { VolumeSlider } from './Volume_Control_Slider';
 const { ccclass, property } = _decorator;
 
 @ccclass('Reset_Button')
@@ -14,30 +15,17 @@ export class Reset_Button extends Component {
     @property({ type: AudioSource, displayName: "音效音源组件" })
     sfxAudioSource: AudioSource = null
 
-    @property({ type: Slider, displayName: "总音量滑动条" })
-    totalVolumeSlider: Slider = null;
+    @property({ type: VolumeSlider, displayName: "总音量控制组件" })
+    totalVolumeSlider: VolumeSlider = null;
 
-    @property({ type: Slider, displayName: "BGM音量滑动条" })
-    bgmVolumeSlider: Slider = null;
+    @property({ type: VolumeSlider, displayName: "BGM音量控制组件" })
+    bgmVolumeSlider: VolumeSlider = null;
 
-    @property({ type: Slider, displayName: "SFX音量滑动条" })
-    sfxVolumeSlider: Slider = null;
+    @property({ type: VolumeSlider, displayName: "SFX音量控制组件" })
+    sfxVolumeSlider: VolumeSlider = null;
 
-    @property({ type: Slider, displayName: "亮度滑动条" })
-    brightnessSlider: Slider = null;
-
-    // 进度条默认值
-    @property({ displayName: "总音量默认值" })
-    defaultTotalVolume: number = 0.5;
-
-    @property({ displayName: "BGM音量默认值" })
-    defaultBgmVolume: number = 0.5;
-
-    @property({ displayName: "SFX音量默认值" })
-    defaultSfxVolume: number = 0.5;
-
-    @property({ displayName: "亮度默认值" })
-    defaultBrightness: number = 0.5;
+    @property({ type: VolumeSlider, displayName: "亮度控制组件" })
+    brightnessSlider: VolumeSlider = null;
 
     //动画配置
     @property({ tooltip: "点击缩放比例" })
@@ -63,16 +51,16 @@ export class Reset_Button extends Component {
     //重置所有进度条到默认值
     private resetAllToDefault() {
         if (this.totalVolumeSlider) {
-            this.totalVolumeSlider.progress = this.defaultTotalVolume;
+            this.totalVolumeSlider.resetToDefault();
         }
         if (this.bgmVolumeSlider) {
-            this.bgmVolumeSlider.progress = this.defaultBgmVolume;
+            this.bgmVolumeSlider.resetToDefault();
         }
         if (this.sfxVolumeSlider) {
-            this.sfxVolumeSlider.progress = this.defaultSfxVolume;
+            this.sfxVolumeSlider.resetToDefault();
         }
         if (this.brightnessSlider) {
-            this.brightnessSlider.progress = this.defaultBrightness;
+            this.brightnessSlider.resetToDefault();
         }
         console.log('设置已重置为默认值');
     }
