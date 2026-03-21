@@ -15,6 +15,9 @@ export class UIManager extends Component {
     mainMenu: Node = null;
 
     @property(Node)
+    pauseMenu: Node = null;
+
+    @property(Node)
     gameOverScreen: Node = null;
 
     @property(Node)
@@ -92,9 +95,6 @@ export class UIManager extends Component {
         if (this.fullscreenLayer) {
             this.fullscreenLayer.active = false;
         }
-
-        this._showInventoryPanel();
-        this._showMenuPanel();
     }
 
     public hideGameUI(): void {
@@ -117,14 +117,14 @@ export class UIManager extends Component {
     }
 
     public showPauseMenu(): void {
-        if (this.menuPanel) {
-            this.menuPanel.active = true;
+        if (this.pauseMenu) {
+            this.pauseMenu.active = true;
         }
     }
 
     public hidePauseMenu(): void {
-        if (this.menuPanel) {
-            this.menuPanel.active = false;
+        if (this.pauseMenu) {
+            this.pauseMenu.active = false;
         }
     }
 
@@ -146,12 +146,18 @@ export class UIManager extends Component {
         if (this.fullscreenLayer) {
             this.fullscreenLayer.active = true;
         }
+        if (this.introCutscene) {
+            this.introCutscene.active = true;
+        }
         if (this.gameLayer) {
             this.gameLayer.active = false;
         }
     }
 
     public hideIntroCutscene(): void {
+        if (this.introCutscene) {
+            this.introCutscene.active = false;
+        }
         if (this.fullscreenLayer) {
             this.fullscreenLayer.active = false;
         }
@@ -166,25 +172,12 @@ export class UIManager extends Component {
     }
 
     public onVideoEnded(): void {
-        director.emit("CUTSCENE_END");
+        director.emit("INTRO_COMPLETE");
     }
 
     public updateInventoryUI(): void {
         if (this.inventoryPanel) {
-            this.inventoryPanel.active = true;
             director.emit("INVENTORY_UPDATE");
-        }
-    }
-
-    private _showInventoryPanel(): void {
-        if (this.inventoryPanel) {
-            this.inventoryPanel.active = true;
-        }
-    }
-
-    private _showMenuPanel(): void {
-        if (this.menuPanel) {
-            this.menuPanel.active = true;
         }
     }
 
@@ -197,6 +190,12 @@ export class UIManager extends Component {
     public hideDialogUI(): void {
         if (this.dialogPanel) {
             this.dialogPanel.active = false;
+        }
+    }
+
+    public showToast(message: string): void {
+        if (this.gameLayer) {
+            director.emit("TOAST_SHOW", message);
         }
     }
 

@@ -1,0 +1,102 @@
+{
+    "dialogues": {
+        "dialogue_test": {
+            "id": "dialogue_test",
+            "lines": [
+                { "text": "测试开始：这是第一行文本。", "expression": null },
+                { "text": "现在是第二行，正在测试连续播放效果。", "expression": null },
+                { "text": "第三行：点击屏幕可以跳过打字或进入下一行。", "expression": null },
+                { "text": "最后一行：测试结束，对话框将自动关闭。", "expression": null }
+            ]
+        },
+        "dialogue_intro": {
+            "id": "dialogue_intro",
+            "lines": [
+                { "text": "追随蝴蝶的指引...", "expression": null }
+            ]
+        },
+        "dialogue_note": {
+            "id": "dialogue_note",
+            "lines": [
+                { "text": "纸条: 彼岸花开，指引迷途之魂。", "expression": null },
+                { "text": "纸条: 寻找红门的钥匙...", "expression": null }
+            ]
+        },
+        "dialogue_ch01_door": {
+            "id": "dialogue_ch01_door",
+            "lines": [
+                { "text": "神秘声音: 门是锁着的。", "expression": "normal" },
+                { "text": "神秘声音: 你需要找到正确的钥匙。", "expression": "normal" }
+            ]
+        },
+        "dialogue_door_unlocked": {
+            "id": "dialogue_door_unlocked",
+            "lines": [
+                { "text": "门开了。", "expression": null }
+            ]
+        },
+        "dialogue_game_over": {
+            "id": "dialogue_game_over",
+            "lines": [
+                { "text": "彼岸花已开，迷途之魂找到了归途。", "expression": null }
+            ]
+        },
+        "toast_door_locked": {
+            "id": "toast_door_locked",
+            "lines": [
+                { "text": "门锁住了，需要找到钥匙。", "expression": null }
+            ]
+        },
+        "toast_need_key_pad": {
+            "id": "toast_need_key_pad",
+            "lines": [
+                { "text": "需要密码钥匙才能打开。", "expression": null }
+            ]
+        },
+        "dialogue_cabinet": {
+            "id": "dialogue_cabinet",
+            "lines": [
+                { "text": "一个古老的柜子，里面空无一物。", "expression": null }
+            ]
+        },
+        "dialogue_chandelier": {
+            "id": "dialogue_chandelier",
+            "lines": [
+                { "text": "吊灯突然摇晃起来...", "expression": null },
+                { "text": "危险！快跑！", "expression": null }
+            ]
+        },
+        "dialogue_picture": {
+            "id": "dialogue_picture",
+            "lines": [
+                { "text": "画中是一位神秘女子的肖像。", "expression": null },
+                { "text": "她的眼神似乎在注视着你...", "expression": null }
+            ]
+        },
+        "dialogue_picture_again": {
+            "id": "dialogue_picture_again",
+            "lines": [
+                { "text": "画中的女子依然静静地看着你。", "expression": null }
+            ]
+        },
+        "dialogue_sleep": {
+            "id": "dialogue_sleep",
+            "lines": [
+                { "text": "你感到一阵倦意袭来...", "expression": null },
+                { "text": "闭上眼睛，仿佛做了一个很长的梦。", "expression": null }
+            ]
+        },
+        "dialogue_sleep_again": {
+            "id": "dialogue_sleep_again",
+            "lines": [
+                { "text": "你已经休息够了。", "expression": null }
+            ]
+        },
+        "dialogue_fridge": {
+            "id": "dialogue_fridge",
+            "lines": [
+                { "text": "冰箱里只剩下过期的牛奶。", "expression": null }
+            ]
+        }
+    }
+}

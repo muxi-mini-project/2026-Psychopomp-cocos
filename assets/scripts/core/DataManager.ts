@@ -63,10 +63,8 @@ export class DataManager extends Component {
                 console.error("[DataManager] 物品配置加载失败", err);
                 return;
             }
-            const itemsData = asset.json.items || {};
-            Object.values(itemsData).forEach((item: any) => {
-                this._itemConfig.set(item.id, item);
-            });
+            const items = asset.json as any[];
+            items.forEach(item => this._itemConfig.set(item.id, item));
         });
 
         resources.load('data/scenes', JsonAsset, (err, asset) => {
@@ -213,14 +211,13 @@ export class DataManager extends Component {
             saveId: "new_game",
             saveTime: Date.now(),
             gameVersion: GAME_VERSION,
-            currentScene: "scene_intro",
+            currentScene: "",
             storyFlags: {},
             inventory: [],
             visitedScenes: []
         };
 
         console.log("[DataManager] 新游戏已初始化");
-        this.saveGame(AUTO_SAVE_SLOT, true);
     }
 
     public hasSave(slotId: string): boolean {
