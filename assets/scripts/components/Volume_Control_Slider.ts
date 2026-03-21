@@ -24,8 +24,9 @@ export class VolumeSlider extends Component {
     onLoad() {
         const initVol = this.getVolumeByType();
         this.updateVisual(initVol);
-        
+
         this.slider.node.on('slide', this.onValueChange, this);
+        this.slider.node.on('slider-changed', this.onValueChange, this);
     }
 
     private onValueChange() {

@@ -19,7 +19,6 @@ export class BgmControl_Slider extends Component {
     onLoad() {
         this.initBgmConfig()
         this.volumeSlider.node.on('slide', this.onSlide, this)
-        this.volumeSlider.node.on('slider-changed', this.onSlide, this)
         director.on("BGM_VOLUME_ZERO", this.setBgmVolumeZero, this)
         director.on("BGM_RESTORE", this.initBgmConfig, this)
     }
@@ -50,7 +49,6 @@ export class BgmControl_Slider extends Component {
 
     onDestroy() {
         this.volumeSlider.node.off('slide', this.onSlide, this)
-        this.volumeSlider.node.off('slider-changed', this.onSlide, this)
         director.off("BGM_VOLUME_ZERO", this.setBgmVolumeZero, this)
         director.off("BGM_RESTORE", this.initBgmConfig, this)
     }
