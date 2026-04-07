@@ -1,35 +1,33 @@
 import { _decorator, Component, director, Node } from "cc";
 const { ccclass, property } = _decorator;
 
-// const event = {
-//     INTERACTABLE_TRIGGERED: "INTERACTABLE_TRIGGERED",
-//     INTERACTABLE_CLICK: "INTERACTABLE_CLICK",
-// } as const;
+ const event = {
+    INTERACTABLE_TRIGGERED: "INTERACTABLE_TRIGGERED",
+    INTERACTABLE_CLICK: "INTERACTABLE_CLICK",
+ } as const;
 
 @ccclass("FrameInteractable")
 export class FrameInteractable extends Component {
     private readonly interactableId = "point_frame";
-    @property(Node)
-    public ENTER_FRAME_NODE: Node | null = null;
+    
+    @property({type : Node , tooltip : "相框节点"})
+    public frame_node: Node | null = null;
 
     onEnable() {
-        //director.on(event.INTERACTABLE_TRIGGERED, this.onTriggered, this);
         this.node.on(Node.EventType.TOUCH_END, this.onClick, this)
-        console.log("FrameInteractable onEnable -> 注册监听,点击监听");
+        director.on(event.INTERACTABLE_TRIGGERED, this.onTriggered, this)
+        console.log("FrameInteractable onEnable -> 注册监听,点击监听")
     }
 
     onDisable() {
-        //director.off(event.INTERACTABLE_TRIGGERED, this.onTriggered, this);
         this.node.off(Node.EventType.TOUCH_END, this.onClick, this)
-        console.log("FrameInteractable onDisable -> 移除监听，点击监听");
+        director.off(event.INTERACTABLE_TRIGGERED, this.onTriggered, this)
+        console.log("FrameInteractable onDisable -> 移除监听，点击监听")
     }
 
     private onClick() {
         console.log('DeskInteractable onClick -> 点击事件,emit INTERACTABLE_CLICK: ${this.interactableId}');
-        if (this.ENTER_FRAME_NODE) {
-            this.ENTER_FRAME_NODE.active = true;
-        }
-        // director.emit(event.INTERACTABLE_CLICK, { interactableId: this.interactableId });
+        director.emit(event.INTERACTABLE_CLICK, { interactableId: this.interactableId });
     }
 
     private onTriggered(result: any) {
@@ -43,8 +41,15 @@ export class FrameInteractable extends Component {
         switch (result?.code) {
             case "ENTER_FRAMECLOSE":
                 console.log("[FrameInteractable] 触发 ENTER_FRAME -> 打开相框特写");
-                console.log("[DeskInteractable] 已切换相框特写");
-                return;
+                if (this.frame_node) {
+                    this.frame_node.active = true
+                }
+                console.log("[FrameInteractable] 已切换相框特写");
+                return
+            case "NORMAL_HINT":
+                console.log("[FrameInteractable] 触发 NORMAL_HINT -> 发送显示提示事件")
+                director.emit("DIALOGUE_REQUEST", { dialogueId: result.data.dialogueId })
+                return
         }
     }
 }

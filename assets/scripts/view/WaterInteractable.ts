@@ -1,5 +1,9 @@
 import { _decorator, Component, Node, tween, UIOpacity, director } from "cc";
 const { ccclass, property } = _decorator;
+const event = {
+    INTERACTABLE_TRIGGERED: "INTERACTABLE_TRIGGERED",
+    INTERACTABLE_CLICK: "INTERACTABLE_CLICK",
+} as const;
 
 @ccclass("WaterInteractable")
 export class WaterInteractable extends Component {
@@ -9,23 +13,42 @@ export class WaterInteractable extends Component {
     @property(Node)
     public paperWet: Node | null = null;
 
-    private readonly flagId = "XUANZHI_WET";
+    private readonly interactableId = "point_water";
 
     onEnable() {
+        director.on(event.INTERACTABLE_TRIGGERED, this.onTriggered, this);
         this.node.on(Node.EventType.TOUCH_END, this.onClick, this);
-        console.log("点击水池近景 开启监听");
+        console.log("[WaterInteractable] onEnable -> 注册监听，点击监听");
         
     }
 
     onDisable() {
+        director.off(event.INTERACTABLE_TRIGGERED, this.onTriggered, this);
         this.node.off(Node.EventType.TOUCH_END, this.onClick, this);
-        console.log("点击水池近景 关闭监听");
+        console.log("[WaterInteractable] onDisable -> 注册监听，点击监听");
     }
 
     private onClick() {
-        console.log("[WaterInteractable] 点击水池");
+        director.emit(event.INTERACTABLE_CLICK, { interactableId: this.interactableId });
+         console.log(`[WaterInteractable] onClick -> 点击事件,emit INTERACTABLE_CLICK: ${this.interactableId}`);       
+    }
 
-        this.playWetAnimation();
+    private onTriggered(result: any) {
+        console.log("[WaterInteractable] 收到交互事件", result);
+
+        if (result?.interactableId !== this.interactableId) {
+            console.log(`[WaterInteractable] 交互点不匹配: current=${result?.interactableId}, target=${this.interactableId}`);
+            return;
+        }
+
+        switch (result?.code) {
+            case "XUANZHI_WET":
+                console.log("[WaterInteractable] 触发 XUANZHI_WET -> 播放动画");
+                this.playWetAnimation();
+                return;
+            case "NORMAL_HINT":
+                console.log("[WaterInteractable] 触发 NORMAL_HINT -> 播放提示")
+        }
     }
 
     private playWetAnimation(): void {
@@ -48,7 +71,6 @@ export class WaterInteractable extends Component {
         wetOpacity.opacity = 0;
         this.paperWet.active = true;
 
-
         tween(dryOpacity)
             .to(0.5, { opacity: 255 })
             .call(() => {
@@ -56,7 +78,6 @@ export class WaterInteractable extends Component {
                     .to(0.5, { opacity: 0 })
                     .call(() => {
                         this.paperDry!.active = false;
-                        director.emit("SET_FLAG_REQUEST", { name: this.flagId, value: true });
                         console.log("[WaterInteractable] 宣纸已打湿");
                     })
                     .start();

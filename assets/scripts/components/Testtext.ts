@@ -1,116 +1,98 @@
-import { _decorator, Component, Node, find, Prefab, instantiate, Canvas, Label, UITransform, Color, Vec2, Input, EventTouch, director } from 'cc'
+import { _decorator, Component, Node, Input, EventTouch, director } from 'cc'
 import { Typewriter } from '../components/TypeWriter'
-const { ccclass, property } = _decorator
 
+const { ccclass, property } = _decorator
 
 @ccclass('TestText')
 export class TestText extends Component {
-    @property({ type: Prefab, tooltip: "对话面板预制体" })
-    public panelPrefab: Prefab = null
+    @property({type: Node , tooltip: "全屏遮罩节点" })
+    public maskNode: Node | null = null
 
     private typewriter: Typewriter | null = null
-    private currentLineIndex: number = 0
-    private totalLines: number = 0
-    private canvas: Node | null = null
     private panelNode: Node | null = null
+    private _pendingDialogueData: { text: string; speaker?: string; index: number; total: number } | null = null
 
-    onLoad() {
-        this.canvas = find("Canvas");
-        if (!this.canvas) {
-            console.error("[TestText] 找不到Canvas节点，请检查场景是否有Canvas");
-            return;
-        }
-        // 监听对话事件
-        director.on("DIALOGUE_START", this._onDialogueStart, this)
-        director.on("DIALOGUE_LINE", this._onDialogueLine, this)
-        director.on("DIALOGUE_END", this._onDialogueEnd, this)
+    protected onLoad(): void {
+        director.on('DIALOGUE_START', this._onDialogueStart, this)
+        director.on('DIALOGUE_LINE', this._onDialogueLine, this)
+        director.on('DIALOGUE_END', this._onDialogueEnd, this)
     }
 
-
-    //Todo:人物立绘显示逻辑
-
-    //初始化对话面板
-    private initPanel() {
-        if (this.panelNode) return; // 避免重复实例化
-
-        // 实例化预制体
-        this.panelNode = instantiate(this.panelPrefab);
-        this.panelNode.parent = this.canvas;
-        this.panelNode.active = false // 默认隐藏
-        const labelNode = this.panelNode.getChildByName("Label");
-        if (!labelNode) {
-            console.error("[TestText] 预制体中找不到名为Label的子节点，请检查预制体结构");
-            return;
-        }
-        this.typewriter = labelNode.getComponent(Typewriter) || labelNode.addComponent(Typewriter)
-        this.panelNode.on(Input.EventType.TOUCH_START, this.onPanelClick, this)
-    }
-
-    //对话开始
-    private _onDialogueStart(dialogueId: string) {
-        console.log(`[TestText] 对话开始: ${dialogueId}`)
+    protected start(): void {
         this.initPanel()
-        //重置段落索引
-        this.currentLineIndex = 0
-        this.totalLines = 0
+    }
+
+    private initPanel(): void {
+        if (this.typewriter) return
+        this.panelNode = this.node
+        this.typewriter = this.panelNode.getComponent(Typewriter)
+        if (!this.typewriter) {
+            console.error('[TestText] Typewriter component not found')
+            return
+        }
+        this.maskNode.on(Input.EventType.TOUCH_START, this._onMaskClick, this)
+
+        if (this._pendingDialogueData) {
+            this.panelNode.parent.active = true
+            this.panelNode.active = true
+            this._onDialogueLine(this._pendingDialogueData)
+            this._pendingDialogueData = null
+        }
+    }
+
+    private _onDialogueStart(_dialogueId: string): void {
+        this.initPanel()
+        if (!this.typewriter) return
+        this.panelNode.parent.active = true
         this.panelNode.active = true
+        if (this.maskNode) {
+            this.maskNode.active = true
+        }
     }
 
-    //接收对话每段文本数据
-    private _onDialogueLine(data: {
-        text: string
-        speaker?: string
-        index: number
-        total: number
-    }) {
-        //当前段落信息
-        this.currentLineIndex = data.index
-        this.totalLines = data.total
-        //启动打字机播放
+    private _onDialogueLine(data: { text: string; speaker?: string; index: number; total: number }): void {
+        if (!this.typewriter) {
+            this._pendingDialogueData = data
+            return
+        }
         this.typewriter.startTypewriter(data.text)
-        console.log(`[TestText] 播放第${data.index + 1}段: ${data.text}`)
     }
 
-    //对话结束
-    private _onDialogueEnd() {
-        //隐藏文本框节点
+    private _onDialogueEnd(): void {
         if (this.panelNode) {
             this.panelNode.active = false
         }
-        console.log("[TestText] 对话结束")
+        if (this.maskNode) {
+            this.maskNode.active = false
+        }
     }
 
-    //点击文本框切换下一句
-    private onPanelClick(event: EventTouch) {
+    private _onMaskClick(event: EventTouch): void {
         if (!this.typewriter) return
         event.preventSwallow = true
-        //打字中跳过打字
         if (this.typewriter.isTyping) {
             this.typewriter.skipTyping()
-            event.preventSwallow = true
             return
         }
-
-        //打字完成通知管理器切下一段
         if (this.typewriter.isCompleted) {
-            director.emit("DIALOG_NEXT")
-            event.preventSwallow = true
-            return
+            director.emit('DIALOG_NEXT')
         }
     }
 
-    onDestroy() {
-        //移除面板点击事件
-        if (this.panelNode) {
-            this.panelNode.off(Input.EventType.TOUCH_START, this.onPanelClick, this)
+    protected onDestroy(): void {
+        if (this.maskNode) {
+            this.maskNode.off(Input.EventType.TOUCH_START, this._onMaskClick, this)
         }
         this.typewriter = null
         this.panelNode = null
     }
 
-    onDisable() {
+    protected onDisable(): void {
         if (this.panelNode) {
-            this.panelNode.active = false;
+            this.panelNode.active = false
+        }
+        if (this.maskNode) {
+            this.maskNode.active = false
         }
     }
 }

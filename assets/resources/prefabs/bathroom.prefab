@@ -28,20 +28,20 @@
         "__id__": 14
       },
       {
-        "__id__": 30
+        "__id__": 32
       }
     ],
     "_active": true,
     "_components": [
       {
-        "__id__": 40
+        "__id__": 42
       },
       {
-        "__id__": 42
+        "__id__": 44
       }
     ],
     "_prefab": {
-      "__id__": 44
+      "__id__": 46
     },
     "_lpos": {
       "__type__": "cc.Vec3",
@@ -360,11 +360,11 @@
     "_active": true,
     "_components": [
       {
-        "__id__": 27
+        "__id__": 29
       }
     ],
     "_prefab": {
-      "__id__": 29
+      "__id__": 31
     },
     "_lpos": {
       "__type__": "cc.Vec3",
@@ -415,10 +415,13 @@
       },
       {
         "__id__": 24
+      },
+      {
+        "__id__": 26
       }
     ],
     "_prefab": {
-      "__id__": 26
+      "__id__": 28
     },
     "_lpos": {
       "__type__": "cc.Vec3",
@@ -632,6 +635,25 @@
     "fileId": "f5PtFNI3FPt6FPxWjopISD"
   },
   {
+    "__type__": "70e4fqLXEFOmZEnwlvYdfYb",
+    "_name": "",
+    "_objFlags": 0,
+    "__editorExtras__": {},
+    "node": {
+      "__id__": 15
+    },
+    "_enabled": true,
+    "__prefab": {
+      "__id__": 27
+    },
+    "interactableId": "point_sink",
+    "_id": ""
+  },
+  {
+    "__type__": "cc.CompPrefabInfo",
+    "fileId": "94g1JGsIpL1LkCcK8xU8PM"
+  },
+  {
     "__type__": "cc.PrefabInfo",
     "root": {
       "__id__": 1
@@ -654,7 +676,7 @@
     },
     "_enabled": true,
     "__prefab": {
-      "__id__": 28
+      "__id__": 30
     },
     "_contentSize": {
       "__type__": "cc.Size",
@@ -687,7 +709,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "bathroom_to_bedroomByRight",
+    "_name": "bathroom_to_bedroom",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
@@ -697,9 +719,6 @@
     "_active": true,
     "_components": [
       {
-        "__id__": 31
-      },
-      {
         "__id__": 33
       },
       {
@@ -707,10 +726,13 @@
       },
       {
         "__id__": 37
+      },
+      {
+        "__id__": 39
       }
     ],
     "_prefab": {
-      "__id__": 39
+      "__id__": 41
     },
     "_lpos": {
       "__type__": "cc.Vec3",
@@ -747,11 +769,11 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 30
+      "__id__": 32
     },
     "_enabled": true,
     "__prefab": {
-      "__id__": 32
+      "__id__": 34
     },
     "_contentSize": {
       "__type__": "cc.Size",
@@ -775,11 +797,11 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 30
+      "__id__": 32
     },
     "_enabled": true,
     "__prefab": {
-      "__id__": 34
+      "__id__": 36
     },
     "_customMaterial": null,
     "_srcBlendFactor": 2,
@@ -815,43 +837,41 @@
     "fileId": "7ceLO3BMpCsp8pN+1H/7Ue"
   },
   {
-    "__type__": "e7f66MZ789M2Yep4xuANxl4",
+    "__type__": "70e4fqLXEFOmZEnwlvYdfYb",
     "_name": "",
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 30
-    },
-    "_enabled": true,
-    "__prefab": {
-      "__id__": 36
-    },
-    "interactableId": "bathroom_to_bedroom",
-    "interactableType": "switvh_scene",
-    "hoverCursor": true,
-    "_id": ""
-  },
-  {
-    "__type__": "cc.CompPrefabInfo",
-    "fileId": "01zzn1b/ZFmKq8Awvol9Ix"
-  },
-  {
-    "__type__": "c073fkPPBBIurK6y0+snDKX",
-    "_name": "",
-    "_objFlags": 0,
-    "__editorExtras__": {},
-    "node": {
-      "__id__": 30
+      "__id__": 32
     },
     "_enabled": true,
     "__prefab": {
       "__id__": 38
     },
+    "interactableId": "point_bathroom_to_bedroom",
     "_id": ""
   },
   {
     "__type__": "cc.CompPrefabInfo",
-    "fileId": "37y0imwilMa7N0p7Mjxftr"
+    "fileId": "5d5JIT8lxLb7IkJV3L24G8"
+  },
+  {
+    "__type__": "75398NsOkRCg7h3KotcBIAC",
+    "_name": "",
+    "_objFlags": 0,
+    "__editorExtras__": {},
+    "node": {
+      "__id__": 32
+    },
+    "_enabled": true,
+    "__prefab": {
+      "__id__": 40
+    },
+    "_id": ""
+  },
+  {
+    "__type__": "cc.CompPrefabInfo",
+    "fileId": "03OjsN3rFEVos3OAdjuo3S"
   },
   {
     "__type__": "cc.PrefabInfo",
@@ -876,7 +896,7 @@
     },
     "_enabled": true,
     "__prefab": {
-      "__id__": 41
+      "__id__": 43
     },
     "_contentSize": {
       "__type__": "cc.Size",
@@ -904,7 +924,7 @@
     },
     "_enabled": true,
     "__prefab": {
-      "__id__": 43
+      "__id__": 45
     },
     "_id": ""
   },

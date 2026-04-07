@@ -3,7 +3,7 @@ const { ccclass } = _decorator;
 
 const event = {
     INTERACTABLE_TRIGGERED: "INTERACTABLE_TRIGGERED",
-   // INTERACTABLE_CLICK: "INTERACTABLE_CLICK",
+    INTERACTABLE_CLICK: "INTERACTABLE_CLICK",
 } as const;
 
 @ccclass("BedInteractable")
@@ -25,7 +25,7 @@ export class BedInteractable extends Component {
     private onClick() {
         console.log(`[BedInteract] 点击节点 -> emit INTERACTABLE_CLICK: ${this.interactableId}`);
 
-       // director.emit(event.INTERACTABLE_CLICK, this.interactableId);
+        director.emit(event.INTERACTABLE_CLICK, this.interactableId);
     }
 
     private onTriggered(result: any) {
@@ -39,7 +39,6 @@ export class BedInteractable extends Component {
         switch (result?.code) {
             case "ENTER_BED":
                 console.log("[BedInteractable] 触发 ENTER_BED -> 打开床特写");
-                console.log("[BedInteractable] 已切换床特写");
                 return;
         }
     }

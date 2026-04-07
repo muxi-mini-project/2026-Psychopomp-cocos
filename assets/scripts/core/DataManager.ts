@@ -214,7 +214,9 @@ export class DataManager extends Component {
             saveTime: Date.now(),
             gameVersion: GAME_VERSION,
             currentScene: "",
-            storyFlags: {},
+            storyFlags: {
+                HAS_INTRO_CUTSCENE: true
+            },
             inventory: [],
             visitedScenes: []
         };

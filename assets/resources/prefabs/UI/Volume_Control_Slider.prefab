@@ -704,6 +704,7 @@
     "barSprite": {
       "__id__": 11
     },
+    "defaultVolume": 0.5,
     "_id": ""
   },
   {

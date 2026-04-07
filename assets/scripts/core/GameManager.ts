@@ -69,9 +69,12 @@ export class GameManager extends Component {
     }
 
     private _onIntroVideoComplete(): void {
+        console.log("[GameManager] INTRO_VIDEO_COMPLETE received");
         const hasCutscene = DataManager.instance.getBool("HAS_INTRO_CUTSCENE");
+        console.log("[GameManager] hasCutscene:", hasCutscene);
 
         if (hasCutscene) {
+            UIManager.instance.hideVideoPlayer();
             UIManager.instance.showIntroCutscene();
         } else {
             // 无开场对话，视频结束后直接进入游戏

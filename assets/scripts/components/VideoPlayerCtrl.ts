@@ -8,12 +8,23 @@ export class VideoPlayerCtrl extends Component {
     public videoPlayerNode: Node = null;
 
     private _videoPlayer: VideoPlayer | null = null;
+    private _wasPlaying: boolean = false;
 
     onLoad() {
         if (this.videoPlayerNode) {
             this._videoPlayer = this.videoPlayerNode.getComponent(VideoPlayer);
         }
         director.on("VIDEO_PLAY", this._onVideoPlay, this);
+    }
+
+    update(_dt: number): void {
+        if (!this._videoPlayer) return;
+        const isPlaying = this._videoPlayer.isPlaying;
+        if (this._wasPlaying && !isPlaying) {
+            console.log("[VideoPlayerCtrl] video stopped detected via update");
+            this._onVideoFinished();
+        }
+        this._wasPlaying = isPlaying;
     }
 
     private _onVideoPlay(_videoId: string): void {
@@ -23,12 +34,14 @@ export class VideoPlayerCtrl extends Component {
         }
 
         this.videoPlayerNode.active = true;
-        this._videoPlayer.node.on('finished', this._onVideoFinished, this);
+        this._wasPlaying = false;
+        this._videoPlayer.node.on('COMPLETED', this._onVideoFinished, this);
         this._videoPlayer.play();
+        console.log("[VideoPlayerCtrl] video started, isPlaying:", this._videoPlayer.isPlaying);
     }
 
     private _onVideoFinished(): void {
-        this._videoPlayer?.node.off('finished', this._onVideoFinished, this);
+        this._videoPlayer?.node.off('COMPLETED', this._onVideoFinished, this);
         this.videoPlayerNode.active = false;
         director.emit("INTRO_VIDEO_COMPLETE");
     }
@@ -36,7 +49,7 @@ export class VideoPlayerCtrl extends Component {
     public stopVideo(): void {
         if (this._videoPlayer && this._videoPlayer.isPlaying) {
             this._videoPlayer.stop();
-            this._videoPlayer.node.off('finished', this._onVideoFinished, this);
+            this._videoPlayer.node.off('COMPLETED', this._onVideoFinished, this);
             this.videoPlayerNode.active = false;
             director.emit("INTRO_VIDEO_COMPLETE");
         }

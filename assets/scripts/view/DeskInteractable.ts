@@ -1,4 +1,4 @@
-import { _decorator, Component, director,Node, TiledObjectGroup } from "cc";
+import { _decorator, Component, director,Node} from "cc";
 const { ccclass } = _decorator;
 
 const event = {
@@ -38,10 +38,6 @@ export class DeskInteractable extends Component {
         switch (result?.code) {
             case "ENTER_DESK":
                 console.log("[DeskInteractable] 触发 ENTER_DESK -> 打开书桌特写");
-              //  director.emit(event.SCENE_VISUAL, "deskCloseBg");
-              //TODO:切换场景的字段
-                director.emit("SCENE_SWITCH_REQUEST", { sceneId: "deskClose" });
-                console.log("[DeskInteractable] 已切换书桌特写");
                 return;
         }
     }
