@@ -1,4 +1,4 @@
-import { _decorator, Component, Label, Button, tween, Vec3, director, Node } from 'cc'
+import { _decorator, Component, Label, Button, tween, Vec3, director, Node, input } from 'cc'
 const { ccclass, property } = _decorator
 
 @ccclass('PhonePwd')
@@ -112,6 +112,10 @@ export class PhonePwd extends Component {
         const c = chars[this.currentIndex]
         this.inputStr += c
 
+        if (this.inputStr.length > 10) {
+            this.inputStr = this.inputStr.slice(0, 10)
+        }
+
         this.lastKey = name
         this.updateDisplay()
     }
@@ -130,13 +134,13 @@ export class PhonePwd extends Component {
     checkPassword() {
         if (this.inputStr.toUpperCase() === this.correctPwd) {
             console.log("密码正确")
-            director.emit("SUCCESS")
+            director.emit("PHONE_PWD_SUCCESS")
             //密码正确
             //触发后续
         } else {
             //密码错误，震动并清空输入
             console.log("密码错误")
-            director.emit("FAIL")
+            director.emit("PHONE_PWD_FAIL")
             setTimeout(() => this.clearInput(), 500)
             this.shake()
         }

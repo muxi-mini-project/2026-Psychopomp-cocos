@@ -1,10 +1,10 @@
-import { Component,_decorator,Node } from "cc";
+import { Component, _decorator, Node, director } from "cc";
 const { ccclass, property } = _decorator;
 
 @ccclass('DiaryPanel')
 export class DiaryPanel extends Component {
-    @property({type:Node,tooltip:"日记密码面板"})
-    public diaryPswPanel:Node | null = null;
+    @property({ type: Node, tooltip: "日记密码面板" })
+    public diaryPswPanel: Node | null = null;
 
     protected onEnable(): void {
         this.node.on(Node.EventType.TOUCH_END, this.onClickOpen, this);
@@ -18,20 +18,20 @@ export class DiaryPanel extends Component {
         this.hidePanel();
     }
 
-    protected openPanel():void{
+    protected openPanel(): void {
         console.log("打开日记密码面板");
-        if(this.diaryPswPanel){
+        if (this.diaryPswPanel) {
             this.diaryPswPanel.active = true;
-        }   
+        }
     }
 
-    protected hidePanel():void{
-        if(this.diaryPswPanel){
+    protected hidePanel(): void {
+        if (this.diaryPswPanel) {
             this.diaryPswPanel.active = false;
         }
     }
 
-    protected onClickOpen():void{
+    protected onClickOpen(): void {
         this.openPanel();
     }
 

@@ -5,14 +5,12 @@ const { ccclass, property } = _decorator
 export class PhoneLock extends Component {
 
     onLoad() {
-        director.on("FAIL", this.LabelActive, this)
+        director.on("PHONE_PWD_FAIL", this.LabelActive, this)
         director.on("CLEAR_FAIL", this.LabelDeactive, this)
-        console.log("PhoneLock onLoad,监听FAIL事件")
         this.node.active = false
     }
 
     LabelActive() {
-        console.log("收到FAIL事件，显示提示")
         this.node.active = true
     }
 
@@ -22,7 +20,7 @@ export class PhoneLock extends Component {
     }
 
     onDestroy() {
-        director.off("FAIL", this.LabelActive, this)
+        director.off("PHONE_PWD_FAIL", this.LabelActive, this)
         director.off("CLEAR_FAIL", this.LabelDeactive, this)
     }
 }
