@@ -11,7 +11,7 @@
   },
   {
     "__type__": "cc.Scene",
-    "_name": "scene-2d",
+    "_name": "scene",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": null,
@@ -23,7 +23,7 @@
     "_active": true,
     "_components": [],
     "_prefab": {
-      "__id__": 31
+      "__id__": 32
     },
     "_lpos": {
       "__type__": "cc.Vec3",
@@ -54,7 +54,7 @@
     },
     "autoReleaseAssets": false,
     "_globals": {
-      "__id__": 32
+      "__id__": 33
     },
     "_id": "fef2e597-b489-44d7-9ef9-51184020976f"
   },
@@ -80,13 +80,13 @@
     "_active": true,
     "_components": [
       {
-        "__id__": 28
-      },
-      {
         "__id__": 29
       },
       {
         "__id__": 30
+      },
+      {
+        "__id__": 31
       }
     ],
     "_prefab": null,
@@ -439,6 +439,9 @@
       },
       {
         "__id__": 27
+      },
+      {
+        "__id__": 28
       }
     ],
     "removedComponents": []
@@ -504,6 +507,16 @@
       "y": 0,
       "z": 0
     }
+  },
+  {
+    "__type__": "CCPropertyOverrideInfo",
+    "targetInfo": {
+      "__id__": 24
+    },
+    "propertyPath": [
+      "_active"
+    ],
+    "value": false
   },
   {
     "__type__": "cc.UITransform",
@@ -592,28 +605,28 @@
   {
     "__type__": "cc.SceneGlobals",
     "ambient": {
-      "__id__": 33
-    },
-    "shadows": {
       "__id__": 34
     },
-    "_skybox": {
+    "shadows": {
       "__id__": 35
     },
-    "fog": {
+    "_skybox": {
       "__id__": 36
     },
-    "octree": {
+    "fog": {
       "__id__": 37
     },
-    "skin": {
+    "octree": {
       "__id__": 38
     },
-    "lightProbeInfo": {
+    "skin": {
       "__id__": 39
     },
-    "postSettings": {
+    "lightProbeInfo": {
       "__id__": 40
+    },
+    "postSettings": {
+      "__id__": 41
     },
     "bakedWithStationaryMainLight": false,
     "bakedWithHighpLightmap": false
