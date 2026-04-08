@@ -33,6 +33,9 @@ export class UIManager extends Component {
     videoPlayer: Node = null;
 
     @property(Node)
+    introCutscene: Node = null;
+
+    @property(Node)
     sceneContainer: Node = null;
 
     public static get instance(): UIManager {
@@ -92,9 +95,6 @@ export class UIManager extends Component {
         if (this.fullscreenLayer) {
             this.fullscreenLayer.active = false;
         }
-
-        this._showInventoryPanel();
-        this._showMenuPanel();
     }
 
     public hideGameUI(): void {
@@ -142,6 +142,27 @@ export class UIManager extends Component {
         }
     }
 
+    public showIntroCutscene(): void {
+        if (this.fullscreenLayer) {
+            this.fullscreenLayer.active = true;
+        }
+        if (this.introCutscene) {
+            this.introCutscene.active = true;
+        }
+        if (this.gameLayer) {
+            this.gameLayer.active = false;
+        }
+    }
+
+    public hideIntroCutscene(): void {
+        if (this.introCutscene) {
+            this.introCutscene.active = false;
+        }
+        if (this.fullscreenLayer) {
+            this.fullscreenLayer.active = false;
+        }
+    }
+
     public playVideo(videoId: string): void {
         this.showFullscreenUI();
         if (this.videoPlayer) {
@@ -151,25 +172,12 @@ export class UIManager extends Component {
     }
 
     public onVideoEnded(): void {
-        director.emit("CUTSCENE_END");
+        director.emit("INTRO_COMPLETE");
     }
 
     public updateInventoryUI(): void {
         if (this.inventoryPanel) {
-            this.inventoryPanel.active = true;
-            director.emit("INVENTORY_REFRESH");
-        }
-    }
-
-    private _showInventoryPanel(): void {
-        if (this.inventoryPanel) {
-            this.inventoryPanel.active = true;
-        }
-    }
-
-    private _showMenuPanel(): void {
-        if (this.menuPanel) {
-            this.menuPanel.active = true;
+            director.emit("INVENTORY_UPDATE");
         }
     }
 

@@ -2,6 +2,7 @@ import { _decorator, Component, director } from 'cc';
 import { DataManager } from './DataManager';
 import { SceneViewManager } from './SceneViewManager';
 import { InventoryManager } from './InventoryManager';
+import { DialogManager } from './DialogManager';
 const { ccclass } = _decorator;
 
 export interface InteractableConfig {
@@ -57,6 +58,7 @@ export class InteractableManager extends Component {
 
         director.on("INTERACTABLE_CLICK", this._onInteractableClick, this);
         director.on("SET_FLAG_REQUEST", this._onSetFlagRequest, this);
+        director.on("ADD_ITEM_REQUEST", this._onAddItemRequest, this);
     }
 
     public handleClick(interactableId: string): void {
@@ -135,6 +137,12 @@ export class InteractableManager extends Component {
         // 切换场景
         if (result.switchScene) {
             triggerResult.switchedScene = result.switchScene;
+            SceneViewManager.instance.switchToScene(result.switchScene);
+        }
+
+        // 自动触发对话（当 data 包含 dialogueId 时）
+        if (result.data?.dialogueId) {
+            DialogManager.instance.showDialogue(result.data.dialogueId);
         }
 
         return triggerResult;
@@ -154,6 +162,12 @@ export class InteractableManager extends Component {
         }
     }
 
+    private _onAddItemRequest(data: { itemId: string }): void {
+        if (data?.itemId) {
+            DataManager.instance.addItem(data.itemId);
+        }
+    }
+
 
     private _getInteractableConfig(interactableId: string): InteractableConfig | null {
         const sceneConfig = DataManager.instance.getSceneConfig(
@@ -167,5 +181,6 @@ export class InteractableManager extends Component {
     protected onDestroy(): void {
         director.off("INTERACTABLE_CLICK", this._onInteractableClick, this);
         director.off("SET_FLAG_REQUEST", this._onSetFlagRequest, this);
+        director.off("ADD_ITEM_REQUEST", this._onAddItemRequest, this);
     }
 }

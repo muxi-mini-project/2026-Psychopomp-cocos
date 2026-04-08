@@ -2,23 +2,15 @@ import { _decorator, Component, director, Node, instantiate } from 'cc';
 import { DataManager } from './DataManager';
 import { ResourceManager } from './ResourceManager';
 import { UIManager } from './UIManager';
-const { ccclass, property } = _decorator;
+const { ccclass } = _decorator;
 
 @ccclass('SceneViewManager')
 export class SceneViewManager extends Component {
     private static _instance: SceneViewManager = null;
 
-    @property(Node)
-    currentSceneNode: Node = null;
-
-    @property(Node)
-    nextSceneNode: Node = null;
-
-    @property(Node)
-    transitionNode: Node = null;
-
+    private _currentSceneNode: Node = null;
     private _currentSceneId: string | null = null;
-    private _preloadedSceneId: string | null = null;
+    private _preloadedSceneMap: Map<string, Node> = new Map();
     private _transitioning: boolean = false;
 
     public static get instance(): SceneViewManager {
@@ -41,19 +33,9 @@ export class SceneViewManager extends Component {
     private initializeSceneNodes(): void {
         const container = UIManager.instance?.sceneContainer ?? this.node;
 
-        if (!this.currentSceneNode) {
-            this.currentSceneNode = new Node("CurrentScene");
-            container.addChild(this.currentSceneNode);
-        }
-        if (!this.nextSceneNode) {
-            this.nextSceneNode = new Node("NextScene");
-            this.nextSceneNode.active = false;
-            container.addChild(this.nextSceneNode);
-        }
-        if (!this.transitionNode) {
-            this.transitionNode = new Node("Transition");
-            this.transitionNode.active = false;
-            this.node.addChild(this.transitionNode);
+        if (!this._currentSceneNode) {
+            this._currentSceneNode = new Node("CurrentScene");
+            container.addChild(this._currentSceneNode);
         }
     }
 
@@ -62,6 +44,10 @@ export class SceneViewManager extends Component {
      */
     public initializeFromSave(): void {
         const currentScene = DataManager.instance.getCurrentScene();
+        if (!currentScene || currentScene === "") {
+            console.log("[SceneViewManager] 当前无场景（开场阶段）");
+            return;
+        }
         this.loadScene(currentScene);
 
         // 预加载相邻场景（不阻塞）
@@ -78,11 +64,12 @@ export class SceneViewManager extends Component {
         }
 
         this._currentSceneId = sceneId;
+        DataManager.instance.setCurrentScene(sceneId);
 
         ResourceManager.instance.loadScene(sceneId).then((prefab) => {
             const node = instantiate(prefab);
             node.name = sceneId;
-            this.currentSceneNode.addChild(node);
+            this._currentSceneNode.addChild(node);
 
             // 发送 SCENE_READY 事件，包含当前 flag
             this._emitSceneReady();
@@ -105,69 +92,51 @@ export class SceneViewManager extends Component {
     }
 
     public preloadSceneForSwitch(sceneId: string): void {
-        if (this._preloadedSceneId === sceneId) return;
+        if (this._preloadedSceneMap.has(sceneId)) return;
 
         ResourceManager.instance.loadScene(sceneId).then((prefab) => {
-            this._clearNextScene();
             const node = instantiate(prefab);
             node.name = sceneId;
-            this.nextSceneNode.addChild(node);
-            this.nextSceneNode.active = false;
-            this._preloadedSceneId = sceneId;
+            this._preloadedSceneMap.set(sceneId, node);
         });
     }
 
-    public switchToScene(sceneId: string, transitionType: string = "fade"): void {
+    public switchToScene(sceneId: string): void {
         if (this._transitioning) return;
-
-        const currentId = this._currentSceneId;
-        if (currentId === sceneId) return;
+        if (this._currentSceneId === sceneId) return;
 
         this._transitioning = true;
         director.emit("SCENE_SWITCH_START", sceneId);
 
-        if (this._preloadedSceneId !== sceneId) {
-            this.preloadSceneForSwitch(sceneId);
+        let node: Node | null = null;
+
+        if (this._preloadedSceneMap.has(sceneId)) {
+            node = this._preloadedSceneMap.get(sceneId);
+        } else {
+            ResourceManager.instance.loadScene(sceneId).then((prefab) => {
+                node = instantiate(prefab);
+                node.name = sceneId;
+                this._doSwitch(sceneId, node);
+            });
+            return;
         }
 
-        director.emit("TRANSITION_OUT_START");
-        this._doTransitionOut(() => {
-            this._completeSwitch(sceneId, transitionType);
-        });
+        this._doSwitch(sceneId, node);
     }
 
-    private _completeSwitch(sceneId: string, transitionType: string): void {
+    private _doSwitch(sceneId: string, node: Node): void {
         this._clearCurrentScene();
-
-        this.nextSceneNode.children.forEach(child => {
-            child.parent = this.currentSceneNode;
-            child.active = true;
-        });
-        this.nextSceneNode.active = false;
+        node.parent = this._currentSceneNode;
+        node.active = true;
 
         this._currentSceneId = sceneId;
-        this._preloadedSceneId = null;
+        this._preloadedSceneMap.delete(sceneId);
 
         director.emit("SCENE_SWITCH_COMPLETE", sceneId);
-
-        // 发送 SCENE_READY 事件
         this._emitSceneReady();
 
-        director.emit("TRANSITION_IN_START");
-        this._doTransitionIn(() => {
-            this._transitioning = false;
-            this.preloadNextScenes();
-        });
-    }
-
-    private _doTransitionOut(onComplete: () => void): void {
-        this.transitionNode.active = true;
-        director.emit("TRANSITION_OUT", onComplete);
-    }
-
-    private _doTransitionIn(onComplete: () => void): void {
-        this.transitionNode.active = true;
-        director.emit("TRANSITION_IN", onComplete);
+        this._transitioning = false;
+        this.preloadNextScenes();
     }
 
     public getCurrentSceneId(): string {
@@ -178,24 +147,19 @@ export class SceneViewManager extends Component {
         const config = DataManager.instance.getSceneConfig(this._currentSceneId);
         const preloadList = config?.preloadNext || [];
 
+        this._preloadedSceneMap.clear();
+
         preloadList.forEach((sceneId: string) => {
-            if (sceneId !== this._preloadedSceneId) {
-                this.preloadSceneForSwitch(sceneId);
-            }
+            this.preloadSceneForSwitch(sceneId);
         });
     }
 
     private _clearCurrentScene(): void {
-        this.currentSceneNode.removeAllChildren();
-    }
-
-    private _clearNextScene(): void {
-        this.nextSceneNode.removeAllChildren();
+        this._currentSceneNode.removeAllChildren();
     }
 
     private _clearAllScenes(): void {
         this._clearCurrentScene();
-        this._clearNextScene();
     }
 
     onDestroy() {

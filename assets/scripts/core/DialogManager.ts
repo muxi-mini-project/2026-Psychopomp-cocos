@@ -1,6 +1,5 @@
 import { _decorator, Component, director } from 'cc';
 import { DataManager } from './DataManager';
-import { GameManager, GameState } from './GameManager';
 const { ccclass } = _decorator;
 
 @ccclass('DialogManager')
@@ -24,6 +23,7 @@ export class DialogManager extends Component {
 
         // 监听场景脚本发送的 DIALOGUE_REQUEST 请求
         director.on("DIALOGUE_REQUEST", this._onDialogueRequest, this);
+        director.on("DIALOG_NEXT", this._onDialogNext, this);
     }
 
     /**
@@ -33,6 +33,10 @@ export class DialogManager extends Component {
         if (data && data.dialogueId) {
             this.showDialogue(data.dialogueId);
         }
+    }
+
+    private _onDialogNext(): void {
+        this.nextLine();
     }
 
     public showDialogue(dialogueId: string): void {
@@ -47,7 +51,6 @@ export class DialogManager extends Component {
         this._isActive = true;
 
         director.emit("DIALOGUE_START", dialogueId);
-        GameManager.instance.setState(GameState.DIALOGUE);
 
         this._displayLine();
     }
@@ -66,23 +69,6 @@ export class DialogManager extends Component {
         }
     }
 
-    public selectChoice(choiceIndex: number): void {
-        if (!this._isActive || !this._currentDialogue?.choices) {
-            return;
-        }
-
-        const choice = this._currentDialogue.choices[choiceIndex];
-        if (!choice) {
-            return;
-        }
-
-        if (choice.action) {
-            this._executeAction(choice.action);
-        }
-
-        this._finishDialogue();
-    }
-
     public hideDialogue(): void {
         this._isActive = false;
         this._currentDialogue = null;
@@ -95,37 +81,28 @@ export class DialogManager extends Component {
     }
 
     private _displayLine(): void {
+        if (!this._currentDialogue?.lines?.[this._currentLineIndex]) {
+            console.warn("[DialogManager] 对话行不存在");
+            this._finishDialogue();
+            return;
+        }
         const line = this._currentDialogue.lines[this._currentLineIndex];
         director.emit("DIALOGUE_LINE", {
             text: line.text,
-            speaker: this._currentDialogue.speaker,
             index: this._currentLineIndex,
             total: this._currentDialogue.lines.length
         });
     }
 
     private _finishDialogue(): void {
-        if (this._currentDialogue?.onComplete) {
-            this._executeAction(this._currentDialogue.onComplete);
-        }
-
         const dialogueId = this._currentDialogue?.id;
         this.hideDialogue();
         director.emit("DIALOGUE_END", dialogueId);
     }
 
-    private _executeAction(action: any): void {
-        if (!action) return;
-
-        switch (action.action) {
-            case "set_flag":
-                DataManager.instance.setFlag(action.flag, action.value);
-                break;
-        }
-    }
-
     protected onDestroy(): void {
         director.off("DIALOGUE_REQUEST", this._onDialogueRequest, this);
+        director.off("DIALOG_NEXT", this._onDialogNext, this);
         this._isActive = false;
         this._currentDialogue = null;
     }

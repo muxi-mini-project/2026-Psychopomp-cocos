@@ -1,29 +1,32 @@
-import { _decorator,Component,director } from "cc";
-const { ccclass, property } = _decorator;
-const event = {
-    INTERACTABLE_TRIGGERED:"INTERACTABLE_TRIGGERED",
-    SCENE_VISUAL:"SCENE_VISUAL"
-}as const
-@ccclass('LeftDrawerInteractable')
+import { _decorator, Component, director,Node } from "cc";
+const { ccclass, property} = _decorator;
+
+
+@ccclass("LeftDrawerInteractable")
 export class LeftDrawerInteractable extends Component {
-    private readonly interactableId = "point_leftDrawer"
+    @property(Node)
+    public leftDrawerCloseNode:Node|null = null;
+    private readonly interactableId = "point_leftDrawer";
 
     onEnable() {
-        director.on(event.INTERACTABLE_TRIGGERED, this.onTriggered, this)
+        //director.on(event.INTERACTABLE_TRIGGERED, this.onTriggered, this);
+        this.node.on(Node.EventType.TOUCH_END, this.onClicked, this)
+        console.log("LeftDrawerInteractable onEnable -> 注册监听,点击监听");
     }
+
     onDisable() {
-        director.off(event.INTERACTABLE_TRIGGERED, this.onTriggered, this)
+        //director.off(event.INTERACTABLE_TRIGGERED, this.onTriggered, this);
+        this.node.off(Node.EventType.TOUCH_END, this.onClicked, this)
+        console.log("LeftDrawerInteractable onDisable -> 移除监听，点击监听");
     }
-    private onTriggered(result:any) {
-        if(result.id !== this.interactableId) 
-            return
-        switch(result?.code){
-            case "ENTER_LEFTDRAWER":
-                director.emit(event.SCENE_VISUAL,"leftDrawerCloseBg")
-                return
+
+    private onClicked() {
+        console.log('LeftDrawerInteractable onClicked -> 点击事件 emit INTERACTABLE_CLICK: ${this.interactableId}');
+        if (this.leftDrawerCloseNode) {
+            this.leftDrawerCloseNode.active =  true
         }
-
+        //director.emit(event.INTERACTABLE_CLICK, this.interactableId);
     }
 
-
+    
 }

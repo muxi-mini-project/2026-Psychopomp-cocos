@@ -1,35 +1,32 @@
-import { _decorator, Component, director } from "cc";
+import { _decorator, Component, director, Node } from "cc";
 const { ccclass, property } = _decorator;
-const event = {
-    INTERACTABLE_TRIGGERED: "INTERACTABLE_TRIGGERED",
-    UI_MODAL: "UI_MODAL"
-}as const
+
 @ccclass('KeyInteractable')
 export class KeyInteractable extends Component {
-    private readonly interactableId = "point_key"
+    @property
+    private readonly itemId: string = "key";
 
-    onEnable() {
-        director.on(event.INTERACTABLE_TRIGGERED, this.onTriggered, this)
-    }
-    onDisable() {
-        director.off(event.INTERACTABLE_TRIGGERED, this.onTriggered, this)
-    }
-    private onTriggered(result: any) {
-        if (result.id !== this.interactableId)
-            return
-        switch (result?.code) {
-            case "PICK_KEY":
-                director.emit(event.UI_MODAL,
-                    {
-                        title: "钥匙",
-                        content: "你找到了一把钥匙",
-                        okText: "确定"
-                    }
-                )
-                return
-        }
+    @property
+    private readonly flagId: string = "KEY_PICKED";
 
+    @property ({type : Node, tooltip: "启动目标节点"})
+    private readonly target : Node | null = null
+
+    protected onEnable(): void {
+        this.node.on(Node.EventType.TOUCH_END, this.onClick, this);
+        console.log("KeyInteractable onEnable -> 注册监听,点击监听");
     }
 
+    protected onDisable(): void {
+        this.node.off(Node.EventType.TOUCH_END, this.onClick, this);
+        console.log("KeyInteractable onDisable -> 取消监听，点击监听");
+    }
 
+    private onClick(): void {
+        console.log(`[KeyInteractable] 收到点击事件emit INTERACTABLE_CLICK: ${this.itemId}`);
+        director.emit("ADD_ITEM_REQUEST", { itemId: this.itemId });
+        director.emit("SET_FLAG_REQUEST", { name: this.flagId, value: true });
+        this.node.active = false;
+        this.target.active = true
+    }
 }

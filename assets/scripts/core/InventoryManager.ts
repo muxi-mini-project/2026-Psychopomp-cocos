@@ -18,6 +18,8 @@ export class InventoryManager extends Component {
         }
         InventoryManager._instance = this;
         director.addPersistRootNode(this.node);
+
+        director.on("ITEM_REMOVED", this._onItemRemoved, this);
     }
 
     public selectItem(itemId: string | null): void {
@@ -45,7 +47,15 @@ export class InventoryManager extends Component {
         return DataManager.instance.getItemConfig(itemId);
     }
 
+    private _onItemRemoved(itemId: string): void {
+        if (this._selectedItem === itemId) {
+            this._selectedItem = null;
+            director.emit("ITEM_DESELECTED");
+        }
+    }
+
     onDestroy() {
+        director.off("ITEM_REMOVED", this._onItemRemoved, this);
         this._selectedItem = null;
     }
 }
