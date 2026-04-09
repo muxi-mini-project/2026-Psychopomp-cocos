@@ -396,10 +396,20 @@
     "container": {
       "__id__": 2
     },
-    "shakeIntensity": 10,
-    "zoomScale": 1.2,
-    "animDuration": 2,
+    "shakeIntensityRatio": 0.07,
+    "zoomScale": 2,
+    "animDuration": 3,
     "dialogueId": "intro_cutscene",
+    "switchBgAtLines": [
+      1,
+      4,
+      7,
+      8,
+      10,
+      15
+    ],
+    "bgAfterAnim": 0,
+    "bgOnClick": 1,
     "_id": ""
   },
   {

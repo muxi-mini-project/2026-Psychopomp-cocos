@@ -481,27 +481,6 @@
     "fileId": "06Q5/UxRJGeZIHh/ZgAPWd"
   },
   {
-    "__type__": "e7f66MZ789M2Yep4xuANxl4",
-    "_name": "",
-    "_objFlags": 0,
-    "__editorExtras__": {},
-    "node": {
-      "__id__": 9
-    },
-    "_enabled": true,
-    "__prefab": {
-      "__id__": 19
-    },
-    "interactableId": "point_door",
-    "interactableType": "switch_scene",
-    "hoverCursor": true,
-    "_id": ""
-  },
-  {
-    "__type__": "cc.CompPrefabInfo",
-    "fileId": "f4E012z+VGdrRrQdzfZmRZ"
-  },
-  {
     "__type__": "aca50JfKLdPXY7XJPJCLiza",
     "_name": "",
     "_objFlags": 0,
@@ -511,7 +490,7 @@
     },
     "_enabled": true,
     "__prefab": {
-      "__id__": 21
+      "__id__": 19
     },
     "_id": ""
   },
@@ -529,13 +508,32 @@
     },
     "_enabled": true,
     "__prefab": {
-      "__id__": 23
+      "__id__": 21
     },
     "_id": ""
   },
   {
     "__type__": "cc.CompPrefabInfo",
     "fileId": "ccGwjx0mZJQrlFmsnNDY6B"
+  },
+  {
+    "__type__": "70e4fqLXEFOmZEnwlvYdfYb",
+    "_name": "",
+    "_objFlags": 0,
+    "__editorExtras__": {},
+    "node": {
+      "__id__": 9
+    },
+    "_enabled": true,
+    "__prefab": {
+      "__id__": 23
+    },
+    "interactableId": "point_door",
+    "_id": ""
+  },
+  {
+    "__type__": "cc.CompPrefabInfo",
+    "fileId": "f0cb88U89CW7UW6eApqTCI"
   },
   {
     "__type__": "cc.PrefabInfo",
@@ -724,7 +722,7 @@
     "fileId": "7a8AMfKwBCN5dMGt3Ccsz4"
   },
   {
-    "__type__": "e7f66MZ789M2Yep4xuANxl4",
+    "__type__": "cc.BlockInputEvents",
     "_name": "",
     "_objFlags": 0,
     "__editorExtras__": {},
@@ -735,17 +733,14 @@
     "__prefab": {
       "__id__": 34
     },
-    "interactableId": "bathroom_to_bedroom",
-    "interactableType": "switch_scene",
-    "hoverCursor": true,
     "_id": ""
   },
   {
     "__type__": "cc.CompPrefabInfo",
-    "fileId": "61blwr9qpEOog5vvtKd/JZ"
+    "fileId": "98dVFolDVORrU5pGrX1ubN"
   },
   {
-    "__type__": "c073fkPPBBIurK6y0+snDKX",
+    "__type__": "70e4fqLXEFOmZEnwlvYdfYb",
     "_name": "",
     "_objFlags": 0,
     "__editorExtras__": {},
@@ -756,14 +751,15 @@
     "__prefab": {
       "__id__": 36
     },
+    "interactableId": "point_leftArrow_bedroom_to_bathroom",
     "_id": ""
   },
   {
     "__type__": "cc.CompPrefabInfo",
-    "fileId": "6b0lHtffdA1plIqN57tCCS"
+    "fileId": "7fMiua56JA/YUQlMgT0Kri"
   },
   {
-    "__type__": "cc.BlockInputEvents",
+    "__type__": "ee4e97RY9VNppkkpIltpLC5",
     "_name": "",
     "_objFlags": 0,
     "__editorExtras__": {},
@@ -778,7 +774,7 @@
   },
   {
     "__type__": "cc.CompPrefabInfo",
-    "fileId": "98dVFolDVORrU5pGrX1ubN"
+    "fileId": "33mBbriuVPKpQnd1lNSt8o"
   },
   {
     "__type__": "cc.PrefabInfo",

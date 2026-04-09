@@ -40,6 +40,7 @@ export class DialogManager extends Component {
     }
 
     public showDialogue(dialogueId: string): void {
+        console.log("[DialogManager] showDialogue called:", dialogueId);
         const dialogue = DataManager.instance.getDialogueConfig(dialogueId);
         if (!dialogue) {
             console.warn(`[DialogManager] 对话不存在: ${dialogueId}`);
@@ -50,6 +51,7 @@ export class DialogManager extends Component {
         this._currentLineIndex = 0;
         this._isActive = true;
 
+        console.log("[DialogManager] 发出 DIALOGUE_START:", dialogueId);
         director.emit("DIALOGUE_START", dialogueId);
 
         this._displayLine();
@@ -81,12 +83,14 @@ export class DialogManager extends Component {
     }
 
     private _displayLine(): void {
+        console.log("[DialogManager] _displayLine called, index:", this._currentLineIndex);
         if (!this._currentDialogue?.lines?.[this._currentLineIndex]) {
             console.warn("[DialogManager] 对话行不存在");
             this._finishDialogue();
             return;
         }
         const line = this._currentDialogue.lines[this._currentLineIndex];
+        console.log("[DialogManager] 发出 DIALOGUE_LINE:", line.text.substring(0, 20));
         director.emit("DIALOGUE_LINE", {
             text: line.text,
             index: this._currentLineIndex,

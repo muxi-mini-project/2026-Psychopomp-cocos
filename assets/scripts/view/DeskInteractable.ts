@@ -1,4 +1,4 @@
-import { _decorator, Component, director,Node, TiledObjectGroup } from "cc";
+import { _decorator, Component, director,Node} from "cc";
 const { ccclass } = _decorator;
 
 const event = {
@@ -13,17 +13,17 @@ export class DeskInteractable extends Component {
     onEnable() {
         director.on(event.INTERACTABLE_TRIGGERED, this.onTriggered, this);
         this.node.on(Node.EventType.TOUCH_END,this.onClick, this)
-        console.log("DeskInteractable onEnable -> 注册监听,点击监听");
+        console.log("[DeskInteractable] onEnable -> 注册监听,点击监听");
     }
 
     onDisable() {
         director.off(event.INTERACTABLE_TRIGGERED, this.onTriggered, this);
         this.node.off(Node.EventType.TOUCH_END,this.onClick, this)
-        console.log("DeskInteractable onDisable -> 移除监听，点击监听");
+        console.log("[DeskInteractable] onDisable -> 移除监听，点击监听");
     }
 
     private onClick() {
-        console.log('DeskInteractable onClick -> 点击事件,emit INTERACTABLE_CLICK: ${this.interactableId}');
+        console.log(`[DeskInteractable] onClick -> 点击事件,emit INTERACTABLE_CLICK: ${this.interactableId}`);
         director.emit(event.INTERACTABLE_CLICK, { interactableId: this.interactableId });
     }
 
@@ -38,10 +38,6 @@ export class DeskInteractable extends Component {
         switch (result?.code) {
             case "ENTER_DESK":
                 console.log("[DeskInteractable] 触发 ENTER_DESK -> 打开书桌特写");
-              //  director.emit(event.SCENE_VISUAL, "deskCloseBg");
-              //TODO:切换场景的字段
-                director.emit("SCENE_SWITCH_REQUEST", { sceneId: "deskClose" });
-                console.log("[DeskInteractable] 已切换书桌特写");
                 return;
         }
     }

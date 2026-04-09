@@ -1,32 +1,26 @@
-import { _decorator, Component, director,Node } from "cc";
+import { _decorator, Component, Node } from "cc";
 const { ccclass, property} = _decorator;
 
 
 @ccclass("LeftDrawerInteractable")
 export class LeftDrawerInteractable extends Component {
-    @property(Node)
-    public leftDrawerCloseNode:Node|null = null;
-    private readonly interactableId = "point_leftDrawer";
+    @property({ type : Node , tooltip : "左抽屉" })
+    public leftDrawerCloseNode:Node | null = null;
 
     onEnable() {
-        //director.on(event.INTERACTABLE_TRIGGERED, this.onTriggered, this);
-        this.node.on(Node.EventType.TOUCH_END, this.onClicked, this)
-        console.log("LeftDrawerInteractable onEnable -> 注册监听,点击监听");
+        this.node.on(Node.EventType.TOUCH_END, this.onClick, this)
+        console.log("[LeftDrawerInteractable] onEnable -> 注册监听,点击监听");
     }
 
     onDisable() {
-        //director.off(event.INTERACTABLE_TRIGGERED, this.onTriggered, this);
-        this.node.off(Node.EventType.TOUCH_END, this.onClicked, this)
-        console.log("LeftDrawerInteractable onDisable -> 移除监听，点击监听");
+        this.node.off(Node.EventType.TOUCH_END, this.onClick, this)
+        console.log("[LeftDrawerInteractable] onDisable -> 移除监听，点击监听");
     }
 
-    private onClicked() {
-        console.log('LeftDrawerInteractable onClicked -> 点击事件 emit INTERACTABLE_CLICK: ${this.interactableId}');
+    private onClick() {
+        console.log("[LeftDrawerInteractable] 打开做抽屉特写");
         if (this.leftDrawerCloseNode) {
-            this.leftDrawerCloseNode.active =  true
+            this.leftDrawerCloseNode.active = true
         }
-        //director.emit(event.INTERACTABLE_CLICK, this.interactableId);
     }
-
-    
 }

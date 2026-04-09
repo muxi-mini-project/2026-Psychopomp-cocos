@@ -556,27 +556,6 @@
     "nestedPrefabInstanceRoots": null
   },
   {
-    "__type__": "e7f66MZ789M2Yep4xuANxl4",
-    "_name": "",
-    "_objFlags": 0,
-    "__editorExtras__": {},
-    "node": {
-      "__id__": 11
-    },
-    "_enabled": true,
-    "__prefab": {
-      "__id__": 19
-    },
-    "interactableId": "point_bed",
-    "interactableType": "subscene",
-    "hoverCursor": true,
-    "_id": ""
-  },
-  {
-    "__type__": "cc.CompPrefabInfo",
-    "fileId": "41OcYwnatP/pSo7zbQvDQk"
-  },
-  {
     "__type__": "0c2e0aHYpdNhJ1RNFbz9jPJ",
     "_name": "",
     "_objFlags": 0,
@@ -586,7 +565,7 @@
     },
     "_enabled": true,
     "__prefab": {
-      "__id__": 21
+      "__id__": 19
     },
     "_id": ""
   },
@@ -604,7 +583,7 @@
     },
     "_enabled": true,
     "__prefab": {
-      "__id__": 23
+      "__id__": 21
     },
     "_contentSize": {
       "__type__": "cc.Size",
@@ -621,6 +600,25 @@
   {
     "__type__": "cc.CompPrefabInfo",
     "fileId": "6fgAWCf7ZIwZv4SO3yfJ5L"
+  },
+  {
+    "__type__": "70e4fqLXEFOmZEnwlvYdfYb",
+    "_name": "",
+    "_objFlags": 0,
+    "__editorExtras__": {},
+    "node": {
+      "__id__": 11
+    },
+    "_enabled": true,
+    "__prefab": {
+      "__id__": 23
+    },
+    "interactableId": "point_bed",
+    "_id": ""
+  },
+  {
+    "__type__": "cc.CompPrefabInfo",
+    "fileId": "f1hmkYrWdJDr/zdxkuVjJA"
   },
   {
     "__type__": "cc.PrefabInfo",
@@ -829,27 +827,6 @@
     "nestedPrefabInstanceRoots": null
   },
   {
-    "__type__": "e7f66MZ789M2Yep4xuANxl4",
-    "_name": "",
-    "_objFlags": 0,
-    "__editorExtras__": {},
-    "node": {
-      "__id__": 25
-    },
-    "_enabled": true,
-    "__prefab": {
-      "__id__": 33
-    },
-    "interactableId": "point_desk",
-    "interactableType": "subscene",
-    "hoverCursor": true,
-    "_id": ""
-  },
-  {
-    "__type__": "cc.CompPrefabInfo",
-    "fileId": "e4lrVDt4NDNLa4/cALlBOJ"
-  },
-  {
     "__type__": "898bcDYTpxPH6wNVsPrOGS1",
     "_name": "",
     "_objFlags": 0,
@@ -859,7 +836,7 @@
     },
     "_enabled": true,
     "__prefab": {
-      "__id__": 35
+      "__id__": 33
     },
     "_id": ""
   },
@@ -877,7 +854,7 @@
     },
     "_enabled": true,
     "__prefab": {
-      "__id__": 37
+      "__id__": 35
     },
     "_contentSize": {
       "__type__": "cc.Size",
@@ -894,6 +871,25 @@
   {
     "__type__": "cc.CompPrefabInfo",
     "fileId": "00moOO5lNJZasbbIoJxb+Q"
+  },
+  {
+    "__type__": "70e4fqLXEFOmZEnwlvYdfYb",
+    "_name": "",
+    "_objFlags": 0,
+    "__editorExtras__": {},
+    "node": {
+      "__id__": 25
+    },
+    "_enabled": true,
+    "__prefab": {
+      "__id__": 37
+    },
+    "interactableId": "point_desk",
+    "_id": ""
+  },
+  {
+    "__type__": "cc.CompPrefabInfo",
+    "fileId": "382s4QQVFOX4aVfIzjZREf"
   },
   {
     "__type__": "cc.PrefabInfo",
@@ -1138,7 +1134,7 @@
     "__prefab": {
       "__id__": 49
     },
-    "optionPanel": {
+    "target": {
       "__id__": 50
     },
     "_id": ""
@@ -1534,7 +1530,7 @@
     "__prefab": {
       "__id__": 72
     },
-    "calendarCloseNode": {
+    "target": {
       "__id__": 73
     },
     "_id": ""
@@ -1800,7 +1796,7 @@
     },
     "_lpos": {
       "__type__": "cc.Vec3",
-      "x": 0,
+      "x": 725.5,
       "y": 0,
       "z": 0
     },
@@ -1856,8 +1852,8 @@
     },
     "_lpos": {
       "__type__": "cc.Vec3",
-      "x": 744.187,
-      "y": 0.781,
+      "x": 0,
+      "y": 0,
       "z": 0
     },
     "_lrot": {
@@ -1957,7 +1953,7 @@
     "fileId": "fbYgcSwrBKoJ9kORBPa+bP"
   },
   {
-    "__type__": "e7f66MZ789M2Yep4xuANxl4",
+    "__type__": "c073fkPPBBIurK6y0+snDKX",
     "_name": "",
     "_objFlags": 0,
     "__editorExtras__": {},
@@ -1968,17 +1964,14 @@
     "__prefab": {
       "__id__": 97
     },
-    "interactableId": "bedroom_to_bathroomDoor",
-    "interactableType": "switch_scene",
-    "hoverCursor": true,
     "_id": ""
   },
   {
     "__type__": "cc.CompPrefabInfo",
-    "fileId": "ecA18wgY1MQ5O39k6vdM7d"
+    "fileId": "a08IhHPvdOtq9gwOwjXs9q"
   },
   {
-    "__type__": "c073fkPPBBIurK6y0+snDKX",
+    "__type__": "70e4fqLXEFOmZEnwlvYdfYb",
     "_name": "",
     "_objFlags": 0,
     "__editorExtras__": {},
@@ -1989,11 +1982,12 @@
     "__prefab": {
       "__id__": 99
     },
+    "interactableId": "point_rightArrow_bedroom",
     "_id": ""
   },
   {
     "__type__": "cc.CompPrefabInfo",
-    "fileId": "a08IhHPvdOtq9gwOwjXs9q"
+    "fileId": "4fIHGyQCRP66QBmo4Dctf4"
   },
   {
     "__type__": "cc.PrefabInfo",

@@ -1,38 +1,32 @@
 import { _decorator, Component, Node } from "cc";
 const { ccclass, property } = _decorator;
 
-@ccclass("TwoBooksPopController")
-export class TwoBooksPopController extends Component {
+@ccclass("BookcaseInteractable")
+export class BookcaseInteractable extends Component {
 
-    @property({ type: Node, tooltip: "选项面板" })
-    private readonly optionPanel: Node | null = null;
+    @property({ type: Node, tooltip: "书架特写节点" })
+    private readonly target: Node | null = null;
 
     protected onEnable(): void {
         this.node.on(Node.EventType.TOUCH_END, this.onClickOpen, this);
+        console.log("[BookcaseInteractable] onEnable -> 注册监听,点击监听");
     }
 
     protected onDisable(): void {
         this.node.off(Node.EventType.TOUCH_END, this.onClickOpen, this);
+        console.log("[BookcaseInteractable] onEnable -> 移除监听");
     }
 
     protected start(): void {
-        this.hidePopup();
-    }
-
-    public openOptions(): void {
-        console.log("[TwoBooksPopController] 打开选项面板");
-        if (this.optionPanel) {
-            this.optionPanel.active = true;
-        }
-    }
-
-    private hidePopup(): void {
-        if (this.optionPanel) {
-            this.optionPanel.active = false;
+        if (this.target) {
+            this.target.active = false;
         }
     }
 
     private onClickOpen(): void {
-        this.openOptions();
+        if (this.target) {
+            this.target.active = true;
+        }
+        console.log("[BookcaseInteractable] 打开书架特写");
     }
 }

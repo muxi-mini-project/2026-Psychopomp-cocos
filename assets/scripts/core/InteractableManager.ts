@@ -17,8 +17,9 @@ export interface InteractableState {
 }
 
 export interface InteractableCondition {
-    flag?: string;
-    flagValue?: boolean;
+    /** flag检查列表（AND逻辑） */
+    flags?: { name: string; value: boolean }[];
+    /** 需要的物品 */
     requireItem?: string;
 }
 
@@ -91,12 +92,13 @@ export class InteractableManager extends Component {
     private _checkCondition(condition?: InteractableCondition): boolean {
         if (!condition) return true;
 
-        // 检查 flag 条件
-        if (condition.flag !== undefined) {
-            const currentValue = DataManager.instance.getBool(condition.flag);
-            const expectedValue = condition.flagValue ?? true;
-            if (currentValue !== expectedValue) {
-                return false;
+        // 检查 flags 条件列表（AND逻辑）
+        if (condition.flags && condition.flags.length > 0) {
+            for (const flagCheck of condition.flags) {
+                const currentValue = DataManager.instance.getBool(flagCheck.name);
+                if (currentValue !== flagCheck.value) {
+                    return false;
+                }
             }
         }
 

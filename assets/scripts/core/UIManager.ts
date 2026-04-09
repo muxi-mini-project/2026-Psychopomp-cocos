@@ -24,9 +24,6 @@ export class UIManager extends Component {
     inventoryPanel: Node = null;
 
     @property(Node)
-    menuPanel: Node = null;
-
-    @property(Node)
     dialogPanel: Node = null;
 
     @property(Node)
@@ -66,6 +63,10 @@ export class UIManager extends Component {
         director.on("SHOW_GAME_OVER", this.showGameOver, this);
         director.on("HIDE_GAME_OVER", this.hideGameOver, this);
         director.on("INVENTORY_UPDATE", this.updateInventoryUI, this);
+        director.on("INTRO_START", this.playVideo, this);
+        director.on("DIALOGUE_START", this.showDialogUI, this);
+        director.on("DIALOGUE_END", this.hideDialogUI, this);
+        director.on("DIALOGUE_HIDE", this.hideDialogUI, this);
     }
 
     private _initUI(): void {
@@ -104,6 +105,7 @@ export class UIManager extends Component {
     }
 
     public showMainMenu(): void {
+        console.log("[UIManager] showMainMenu called, fullscreenLayer:", this.fullscreenLayer, "mainMenu:", this.mainMenu);
         this.showFullscreenUI();
         if (this.mainMenu) {
             this.mainMenu.active = true;
@@ -117,6 +119,10 @@ export class UIManager extends Component {
     }
 
     public showPauseMenu(): void {
+        console.log("[UIManager] showPauseMenu called, gameLayer:", this.gameLayer, "pauseMenu:", this.pauseMenu);
+        if (this.gameLayer) {
+            this.gameLayer.active = true;
+        }
         if (this.pauseMenu) {
             this.pauseMenu.active = true;
         }
@@ -171,6 +177,12 @@ export class UIManager extends Component {
         }
     }
 
+    public hideVideoPlayer(): void {
+        if (this.videoPlayer) {
+            this.videoPlayer.active = false;
+        }
+    }
+
     public onVideoEnded(): void {
         director.emit("INTRO_COMPLETE");
     }
@@ -182,6 +194,9 @@ export class UIManager extends Component {
     }
 
     public showDialogUI(): void {
+        if (this.gameLayer) {
+            this.gameLayer.active = true;
+        }
         if (this.dialogPanel) {
             this.dialogPanel.active = true;
         }
@@ -190,12 +205,6 @@ export class UIManager extends Component {
     public hideDialogUI(): void {
         if (this.dialogPanel) {
             this.dialogPanel.active = false;
-        }
-    }
-
-    public showToast(message: string): void {
-        if (this.gameLayer) {
-            director.emit("TOAST_SHOW", message);
         }
     }
 
@@ -211,5 +220,9 @@ export class UIManager extends Component {
         director.off("SHOW_GAME_OVER", this.showGameOver, this);
         director.off("HIDE_GAME_OVER", this.hideGameOver, this);
         director.off("INVENTORY_UPDATE", this.updateInventoryUI, this);
+        director.off("INTRO_START", this.playVideo, this);
+        director.off("DIALOGUE_START", this.showDialogUI, this);
+        director.off("DIALOGUE_END", this.hideDialogUI, this);
+        director.off("DIALOGUE_HIDE", this.hideDialogUI, this);
     }
 }
