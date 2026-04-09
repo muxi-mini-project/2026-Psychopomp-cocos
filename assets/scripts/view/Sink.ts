@@ -14,7 +14,6 @@ export class WaterInteractable extends Component {
     onEnable() {
         this.node.on(Node.EventType.TOUCH_END, this.onClick, this);
         console.log("点击水池近景 开启监听");
-        
     }
 
     onDisable() {
