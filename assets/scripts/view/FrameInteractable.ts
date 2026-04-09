@@ -16,17 +16,17 @@ export class FrameInteractable extends Component {
     onEnable() {
         this.node.on(Node.EventType.TOUCH_END, this.onClick, this)
         director.on(event.INTERACTABLE_TRIGGERED, this.onTriggered, this)
-        console.log("FrameInteractable onEnable -> 注册监听,点击监听")
+        console.log("[FrameInteractable] onEnable -> 注册监听,点击监听")
     }
 
     onDisable() {
         this.node.off(Node.EventType.TOUCH_END, this.onClick, this)
         director.off(event.INTERACTABLE_TRIGGERED, this.onTriggered, this)
-        console.log("FrameInteractable onDisable -> 移除监听，点击监听")
+        console.log("[FrameInteractable] onDisable -> 移除监听，点击监听")
     }
 
     private onClick() {
-        console.log('DeskInteractable onClick -> 点击事件,emit INTERACTABLE_CLICK: ${this.interactableId}');
+        console.log('[FrameInteractable] onClick -> 点击事件,emit INTERACTABLE_CLICK: ${this.interactableId}');
         director.emit(event.INTERACTABLE_CLICK, { interactableId: this.interactableId });
     }
 
@@ -40,7 +40,7 @@ export class FrameInteractable extends Component {
 
         switch (result?.code) {
             case "ENTER_FRAMECLOSE":
-                console.log("[FrameInteractable] 触发 ENTER_FRAME -> 打开相框特写");
+                console.log("[FrameInteractable] 触发 ENTER_FRAMECLOSE -> 打开相框特写");
                 if (this.frame_node) {
                     this.frame_node.active = true
                 }

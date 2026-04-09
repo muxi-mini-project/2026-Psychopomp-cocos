@@ -33,12 +33,14 @@ export class RightDrawerInteractable extends Component {
         }
 
         switch (result?.code) {
-            case "LOCKED_RIGHTDRAWER":
-                console.log("[RightDrawerInteractable] 未解锁 ")
-                director.emit("DIALOGUE_REQUEST", { dialogueId: result.data.dialogueId })
+            case "UNLOCKED":
+                console.log("[RightDrawerInteractable] 解锁右抽屉，并打开右抽屉特写")
                 return
-            case "OPEN_RIGHTDRAWER":
+            case "OPEN":
                 console.log("[RightDrawerInteractable] 打开右抽屉特写")
+                return
+            case "LOCKED":
+                console.log("[RightDrawerInteractable] 播放文字提示")
                 return
         }
     }

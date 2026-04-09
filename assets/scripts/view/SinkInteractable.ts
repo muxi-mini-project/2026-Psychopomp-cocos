@@ -12,13 +12,13 @@ export class SinkInteractable extends Component {
     onEnable() {
         director.on(event.INTERACTABLE_TRIGGERED, this.onTriggered, this)
         this.node.on(Node.EventType.TOUCH_END, this.onClick, this)
-        console.log("SinkInteractable onEnable -> 注册交互监听,点击监听")
+        console.log("[SinkInteractable] onEnable -> 注册交互监听,点击监听")
 
     }
     onDisable() {
         director.off(event.INTERACTABLE_TRIGGERED, this.onTriggered, this)
         this.node.off(Node.EventType.TOUCH_END, this.onClick, this)
-        console.log("SinkInteractable onDisable -> 注销交互监听，点击监听")
+        console.log("[SinkInteractable] onDisable -> 注销交互监听，点击监听")
     }
 
     private onClick() {

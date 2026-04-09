@@ -32,11 +32,10 @@ export class DiaryInteractable extends Component {
         }
         
         switch (result?.code) {
-            case "DIARY_LOCKED":
+            case "LOCKED":
                 console.log("[DiaryInteractable] 触发 DIARY_LOCKED -> 提示请找到密码")
-                director.emit("DIALOGUE_REQUEST", { dialogueId : result.data.dialogueId })
                 return
-            case "DIARY_OPEN":
+            case "UNLOCKED":
                 console.log("[DiaryInteractable] 触发 DIARY_OPEN -> 打开日记")
                 console.log("[DiaryInteractable] 已打开日记")
                 return

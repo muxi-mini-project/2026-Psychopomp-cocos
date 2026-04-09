@@ -4,7 +4,7 @@ const { ccclass,property } = _decorator;
 
 @ccclass("WetPaperInteract")
 export class WetPaperInteract extends Component {
-    @property(Node)
+    @property({ type : Node , tooltip : "打湿的宣纸"})
     wetPaper: Node = null;
 
     onEnable() {        

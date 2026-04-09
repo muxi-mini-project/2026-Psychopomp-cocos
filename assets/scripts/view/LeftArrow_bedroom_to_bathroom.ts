@@ -12,17 +12,17 @@ export class RightArrow extends Component {
     onEnable() {
         director.on(event.INTERACTABLE_TRIGGERED, this.onTriggered, this);
         this.node.on(Node.EventType.TOUCH_END,this.onClick, this)
-        console.log("LeftArrow onEnable -> 注册监听,点击监听");
+        console.log("[LeftArrow] onEnable -> 注册监听,点击监听");
     }
 
     onDisable() {
         director.off(event.INTERACTABLE_TRIGGERED, this.onTriggered, this);
         this.node.off(Node.EventType.TOUCH_END,this.onClick, this)
-        console.log("LeftArrow onDisable -> 移除监听，点击监听");
+        console.log("[LeftArrow] onDisable -> 移除监听，点击监听");
     }
 
     private onClick() {
-        console.log(`LeftArrow onClick -> 点击事件,emit INTERACTABLE_CLICK: ${this.interactableId}`);
+        console.log(`[LeftArrow] onClick -> 点击事件,emit INTERACTABLE_CLICK: ${this.interactableId}`);
         director.emit(event.INTERACTABLE_CLICK, { interactableId: this.interactableId });
     }
 
@@ -35,8 +35,8 @@ export class RightArrow extends Component {
         }
 
         switch (result?.code) {
-            case "ENTER_BATHROOM":
-                console.log("[LeftArrow] 触发 ENTER_BATHROOM -> 进入卫生间");
+            case "ENTER_BEDROOM_ALL":
+                console.log("[LeftArrow] 触发 ENTER_BEDROOM_ALL -> 进入卧室全景");
                 return;
         }
     }

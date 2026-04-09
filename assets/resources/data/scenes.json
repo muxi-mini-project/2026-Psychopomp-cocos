@@ -1,302 +1,417 @@
 {
     "scenes": {
-        "scene_intro": {
-            "name": "序幕",
-            "prefab": "prefabs/scenes/scene_intro",
+        "scene_bedroom": {
+            "name": "卧室",
+            "prefab": "prefabs/scenes/scene_bedroom",
+            "preloadNext": ["bedClose", "deskClose", "bedroom_to_bathroom"],
             "interactables": [
                 {
-                    "id": "point_butterfly",
-                    "description": "点击蝴蝶触发对话并切换场景",
+                    "id": "point_bed",
+                    "description": "床 - 点击切换到床近景",
                     "states": [
                         {
                             "id": "default",
                             "result": {
-                                "code": "INTRO_COMPLETE",
-                                "data": { "dialogueId": "dialogue_intro" },
-                                "switchScene": "scene_main_hall"
+                                "code": "ENTER_BED"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "id": "point_desk",
+                    "description": "书桌 - 点击切换到书桌近景",
+                    "states": [
+                        {
+                            "id": "default",
+                            "result": {
+                                "code": "ENTER_DESK"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "id": "point_rightArrow_bedroom",
+                    "description": "右侧箭头 - 点击切换到卫生间门口视角",
+                    "states": [
+                        {
+                            "id": "default",
+                            "result": {
+                                "code": "ENTER_BEDROOM_TO_BATHROOM"
                             }
                         }
                     ]
                 }
             ]
         },
-        "scene_main_hall": {
-            "name": "大厅",
-            "prefab": "prefabs/scenes/scene_main_hall",
-            "preloadNext": ["scene_bedroom", "scene_kitchen"],
+        "rightDrawerOpen": {
+            "name": "右抽屉内特写",
+            "prefab": "prefabs/rightDrawerOpen",
+            "preloadNext": ["deskMidClose"],
             "interactables": [
                 {
-                    "id": "point_door_bedroom",
-                    "description": "卧室门 - 根据 flag 显示不同状态",
+                    "id": "point_leftArrow_deskMid_to_deskClose",
+                    "description": "左侧箭头 - 点击进入抽屉特写",
+                    "states": [
+                        {
+                            "id": "default",
+                            "result": {
+                                "code": "ENTER_DESKCLOSE"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "id": "point_diary",
+                    "description": "日记本 - 根据状态触发场景逻辑",
                     "states": [
                         {
                             "id": "locked",
                             "condition": {
-                                "flag": "BEDROOM_UNLOCKED",
-                                "flagValue": false
+                                "flags": [
+                                    { "name": "DIARY_UNLOCKED", "value": false }
+                                ]
                             },
                             "result": {
-                                "code": "DOOR_LOCKED",
-                                "data": { "dialogueId": "toast_door_locked" }
+                                "code": "LOCKED"
                             }
                         },
                         {
                             "id": "unlocked",
                             "condition": {
-                                "flag": "BEDROOM_UNLOCKED",
-                                "flagValue": true
-                            },
-                            "result": {
-                                "code": "SCENE_SWITCH",
-                                "switchScene": "scene_bedroom"
-                            }
-                        }
-                    ]
-                },
-                {
-                    "id": "point_door_kitchen",
-                    "description": "厨房门 - 无条件切换场景",
-                    "states": [
-                        {
-                            "id": "default",
-                            "result": {
-                                "code": "SCENE_SWITCH",
-                                "switchScene": "scene_kitchen"
-                            }
-                        }
-                    ]
-                },
-                {
-                    "id": "point_cabinet",
-                    "description": "柜子 - 触发对话",
-                    "states": [
-                        {
-                            "id": "default",
-                            "result": {
-                                "code": "SHOW_DIALOGUE",
-                                "data": { "dialogueId": "dialogue_cabinet" }
-                            }
-                        }
-                    ]
-                },
-                {
-                    "id": "point_note",
-                    "description": "纸条 - 触发对话",
-                    "states": [
-                        {
-                            "id": "default",
-                            "result": {
-                                "code": "SHOW_DIALOGUE",
-                                "data": { "dialogueId": "dialogue_note" }
-                            }
-                        }
-                    ]
-                },
-                {
-                    "id": "point_key_red",
-                    "description": "红钥匙 - 拾取物品（通过 code 通知场景隐藏节点）",
-                    "states": [
-                        {
-                            "id": "default",
-                            "result": {
-                                "code": "PICK_KEY_RED",
-                                "pickItem": "key_red",
-                                "setFlags": [
-                                    { "name": "KEY_RED_PICKED", "value": true }
+                                "flags": [
+                                    { "name": "DIARY_UNLOCKED", "value": true }
                                 ]
-                            }
-                        }
-                    ]
-                },
-                {
-                    "id": "point_treasure",
-                    "description": "宝藏 - 拾取物品 + 设置 flag",
-                    "states": [
-                        {
-                            "id": "default",
-                            "result": {
-                                "code": "PICK_TREASURE",
-                                "pickItem": "gold_coin",
-                                "setFlags": [
-                                    { "name": "TREASURE_FOUND", "value": true },
-                                    { "name": "ACHIEVEMENT_TREASURE_HUNTER", "value": true }
-                                ]
-                            }
-                        }
-                    ]
-                },
-                {
-                    "id": "point_safe",
-                    "description": "保险箱 - 需要特定物品才能打开",
-                    "states": [
-                        {
-                            "id": "has_key_pad",
-                            "condition": {
-                                "requireItem": "key_pad"
                             },
                             "result": {
-                                "code": "SAFE_OPENED",
-                                "pickItem": "diamond",
-                                "setFlags": [{ "name": "SAFE_OPENED", "value": true }]
-                            }
-                        },
-                        {
-                            "id": "no_key",
-                            "result": {
-                                "code": "SAFE_LOCKED",
-                                "data": { "dialogueId": "toast_need_key_pad" }
-                            }
-                        }
-                    ]
-                },
-                {
-                    "id": "point_chandelier",
-                    "description": "吊灯 - 危险物品，触发剧情",
-                    "states": [
-                        {
-                            "id": "default",
-                            "result": {
-                                "code": "CHANDELIER_FALL",
-                                "setFlags": [{ "name": "CHANDELIER_FALLEN", "value": true }],
-                                "data": { "dialogueId": "dialogue_chandelier" }
-                            }
-                        }
-                    ]
-                },
-                {
-                    "id": "point_picture",
-                    "description": "画像 - 调查后改变状态",
-                    "states": [
-                        {
-                            "id": "not_examined",
-                            "condition": {
-                                "flag": "PICTURE_EXAMINED",
-                                "flagValue": false
-                            },
-                            "result": {
-                                "code": "EXAMINE_PICTURE",
-                                "setFlags": [{ "name": "PICTURE_EXAMINED", "value": true }],
-                                "data": { "dialogueId": "dialogue_picture" }
-                            }
-                        },
-                        {
-                            "id": "examined",
-                            "condition": {
-                                "flag": "PICTURE_EXAMINED",
-                                "flagValue": true
-                            },
-                            "result": {
-                                "code": "EXAMINE_PICTURE_AGAIN",
-                                "data": { "dialogueId": "dialogue_picture_again" }
+                                "code": "UNLOCKED"
                             }
                         }
                     ]
                 }
             ]
         },
-        "scene_bedroom": {
-            "name": "卧室",
-            "prefab": "prefabs/scenes/scene_bedroom",
-            "preloadNext": ["scene_main_hall"],
+        "deskMidClose": {
+            "name": "抽屉特写",
+            "prefab": "prefabs/deskMidClose",
+            "preloadNext": ["deskClose", "rightDrawerOpen"],
             "interactables": [
                 {
-                    "id": "point_door",
-                    "description": "卧室门 - 通往大厅",
+                    "id": "point_leftArrow_deskMid_to_deskClose",
+                    "description": "左侧箭头 - 点击切换到书桌特写",
                     "states": [
                         {
                             "id": "default",
                             "result": {
-                                "code": "SCENE_SWITCH",
-                                "switchScene": "scene_main_hall"
+                                "code": "ENTER_DESKCLOSE"
                             }
                         }
                     ]
                 },
                 {
-                    "id": "point_bed",
-                    "description": "床 - 触发剧情",
+                    "id": "point_pencil",
+                    "description": "铅笔 - 点击拾取",
                     "states": [
                         {
-                            "id": "first_time",
+                            "id": "not_picked",
                             "condition": {
-                                "flag": "BED_INTERACTED",
-                                "flagValue": false
+                                "flags": [
+                                    { "name": "PENCIL_PICKED", "value": false }
+                                ]
                             },
                             "result": {
-                                "code": "SLEEP_SCENE",
-                                "setFlags": [{ "name": "BED_INTERACTED", "value": true }],
-                                "data": { "dialogueId": "dialogue_sleep" }
+                                "code": "PICK_PENCIL",
+                                "pickItem": "pencil",
+                                "setFlags": [{ "name": "PENCIL_PICKED", "value": true }]
                             }
                         },
                         {
-                            "id": "returned",
+                            "id": "already_picked",
                             "result": {
-                                "code": "SLEEP_AGAIN",
-                                "data": { "dialogueId": "dialogue_sleep_again" }
+                                "code": "NORMAL_HINT",
+                                "data": { "dialogueId": "pencil_picked" }
                             }
                         }
                     ]
                 },
                 {
-                    "id": "point_window",
-                    "description": "窗户 - 结局触发点",
+                    "id": "point_rightDrawer",
+                    "description": "右抽屉 - 根据状态解锁或提示",
                     "states": [
                         {
-                            "id": "default",
+                            "id": "unlock",
+                            "condition": {
+                                "flags": [
+                                    { "name": "KEY_PICKED", "value": true }
+                                ],
+                                "requireItem": "key"
+                            },
                             "result": {
-                                "code": "ENDING_TRIGGER",
-                                "setFlags": [{ "name": "WINDOW_OPENED", "value": true }]
+                                "code": "UNLOCKED",
+                                "setFlags": [{ "name": "RIGHTDRAWER_UNLOCKED", "value": true }]
+                            }
+                        },
+                        {
+                            "id": "open",
+                            "condition": {
+                                "flags": [
+                                    { "name": "RIGHTDRAWER_UNLOCKED", "value": true }
+                                ]
+                            },
+                            "result": {
+                                "code": "OPEN"
+                            }
+                        },
+                        {
+                            "id": "locked",
+                            "result": {
+                                "code": "LOCKED",
+                                "data": { "dialogueId": "rightdrawer_locked" }
+                            }
+                        }
+                    ]
+                },
+                {
+                    "id": "point_frame",
+                    "description": "相框 - 需要特定flag才能查看",
+                    "states": [
+                        {
+                            "id": "can_examine",
+                            "condition": {
+                                "flags": [
+                                    { "name": "KEY_PICKED", "value": false },
+                                    { "name": "NOTE_CHECKED", "value": true }
+                                ]
+                            },
+                            "result": {
+                                "code": "ENTER_FRAMECLOSE"
+                            }
+                        },
+                        {
+                            "id": "cannot_examine",
+                            "result": {
+                                "code": "NORMAL_HINT",
+                                "data": { "dialogueId": "frame_hint" }
                             }
                         }
                     ]
                 }
             ]
         },
-        "scene_kitchen": {
-            "name": "厨房",
-            "prefab": "prefabs/scenes/scene_kitchen",
-            "preloadNext": ["scene_main_hall"],
+        "deskClose": {
+            "name": "书桌特写",
+            "prefab": "prefabs/deskClose",
+            "preloadNext": ["deskMidClose", "scene_bedroom"],
+            "interactables": [
+                {
+                    "id": "point_drawer",
+                    "description": "抽屉 - 点击切换到抽屉特写",
+                    "states": [
+                        {
+                            "id": "default",
+                            "result": {
+                                "code": "ENTER_DRAWER_MID"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "id": "point_frame",
+                    "description": "相框 - 需要特定flag才能查看",
+                    "states": [
+                        {
+                            "id": "can_examine",
+                            "condition": {
+                                "flags": [
+                                    { "name": "KEY_PICKED", "value": false },
+                                    { "name": "NOTE_CHECKED", "value": true }
+                                ]
+                            },
+                            "result": {
+                                "code": "ENTER_FRAMECLOSE"
+                            }
+                        },
+                        {
+                            "id": "cannot_examine",
+                            "result": {
+                                "code": "NORMAL_HINT",
+                                "data": { "dialogueId": "frame_hint" }
+                            }
+                        }
+                    ]
+                },
+                {
+                    "id": "point_pencil",
+                    "description": "铅笔 - 点击拾取",
+                    "states": [
+                        {
+                            "id": "not_picked",
+                            "condition": {
+                                "flags": [
+                                    { "name": "PENCIL_PICKED", "value": false }
+                                ]
+                            },
+                            "result": {
+                                "code": "PICK_PENCIL",
+                                "pickItem": "pencil",
+                                "setFlags": [{ "name": "PENCIL_PICKED", "value": true }]
+                            }
+                        },
+                        {
+                            "id": "already_picked",
+                            "result": {
+                                "code": "NORMAL_HINT",
+                                "data": { "dialogueId": "pencil_picked" }
+                            }
+                        }
+                    ]
+                },
+                {
+                    "id": "point_rightArrow_desk",
+                    "description": "右侧箭头 - 点击切换到卧室全景",
+                    "states": [
+                        {
+                            "id": "default",
+                            "result": {
+                                "code": "ENTER_BEDROOM_ALL"
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        "bedClose": {
+            "name": "床近景",
+            "prefab": "prefabs/bedClose",
+            "preloadNext": ["scene_bedroom"],
+            "interactables": [
+                {
+                    "id": "point_rigthArrow_bed",
+                    "description": "右侧箭头 - 点击切换到卧室全景",
+                    "states": [
+                        {
+                            "id": "default",
+                            "result": {
+                                "code": "ENTER_BEDROOM_ALL"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "id": "point_pillow",
+                    "description": "枕头 - 点击设置flag",
+                    "states": [
+                        {
+                            "id": "default",
+                            "result": {
+                                "code": "OPEN_PILLOW",
+                                "setFlags": [{ "name": "PILLOW_MOVED", "value": true }]
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        "bedroom_to_bathroom": {
+            "name": "卫生间门口",
+            "prefab": "prefabs/bedroom_to_bathroom",
+            "preloadNext": ["scene_bedroom", "bathroom"],
             "interactables": [
                 {
                     "id": "point_door",
-                    "description": "厨房门 - 通往大厅",
+                    "description": "门 - 点击切换到卫生间",
                     "states": [
                         {
                             "id": "default",
                             "result": {
-                                "code": "SCENE_SWITCH",
-                                "switchScene": "scene_main_hall"
+                                "code": "ENTER_BATHROOM"
                             }
                         }
                     ]
                 },
                 {
-                    "id": "point_fridge",
-                    "description": "冰箱 - 可交互物品",
+                    "id": "point_leftArrow_bedroom_to_bathroom",
+                    "description": "左侧箭头 - 点击切换到卧室全景",
                     "states": [
                         {
                             "id": "default",
                             "result": {
-                                "code": "OPEN_FRIDGE",
-                                "data": { "dialogueId": "dialogue_fridge" }
+                                "code": "ENTER_BEDROOM_ALL"
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        "bathroom": {
+            "name": "卫生间",
+            "prefab": "prefabs/bathroom",
+            "preloadNext": ["bedroom_to_bathroom", "sinkClose"],
+            "interactables": [
+                {
+                    "id": "point_sink",
+                    "description": "水池 - 点击切换到水池特写",
+                    "states": [
+                        {
+                            "id": "default",
+                            "result": {
+                                "code": "ENTER_SINK"
                             }
                         }
                     ]
                 },
                 {
-                    "id": "point_knife",
-                    "description": "刀 - 危险物品",
+                    "id": "point_leftArrow_bathroom_to_bedroom",
+                    "description": "左侧箭头 - 点击切换到卫生间门口",
                     "states": [
                         {
-                            "id": "not_taken",
+                            "id": "default",
+                            "result": {
+                                "code": "ENTER_BATHROOM_TO_BEDROOM"
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        "sinkClose": {
+            "name": "水池特写",
+            "prefab": "prefabs/sinkClose",
+            "preloadNext": ["bathroom"],
+            "interactables": [
+                {
+                    "id": "point_water",
+                    "description": "水池 - 需要宣纸道具才能沾湿",
+                    "states": [
+                        {
+                            "id": "has_xuanzhi",
                             "condition": {
-                                "flag": "KNIFE_TAKEN",
-                                "flagValue": false
+                                "flags": [
+                                    { "name": "XUANZHI_PICKED", "value": true }
+                                ],
+                                "requireItem": "xuanzhi"
                             },
                             "result": {
-                                "code": "TAKE_KNIFE",
-                                "pickItem": "knife",
-                                "setFlags": [{ "name": "KNIFE_TAKEN", "value": true }]
+                                "code": "XUANZHI_WET",
+                                "setFlags": [{ "name": "XUANZHI_WET", "value": true }]
+                            }
+                        },
+                        {
+                            "id": "no_xuanzhi",
+                            "result": {
+                                "code": "NORMAL_HINT",
+                                "data": { "dialogueId": "water_hint" }
+                            }
+                        }
+                    ]
+                },
+                {
+                    "id": "point_leftArrow_sinkClose_to_bathroom",
+                    "description": "左侧箭头 - 点击切换到卫生间",
+                    "states": [
+                        {
+                            "id": "default",
+                            "result": {
+                                "code": "ENTER_BATHROOM"
                             }
                         }
                     ]

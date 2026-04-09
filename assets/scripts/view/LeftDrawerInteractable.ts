@@ -4,7 +4,7 @@ const { ccclass, property} = _decorator;
 
 @ccclass("LeftDrawerInteractable")
 export class LeftDrawerInteractable extends Component {
-    @property(Node)
+    @property({ type : Node , tooltip : "左抽屉" })
     public leftDrawerCloseNode:Node | null = null;
 
     onEnable() {

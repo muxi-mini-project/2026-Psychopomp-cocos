@@ -9,12 +9,12 @@ export class CalendarInteractable extends Component {
 
     onEnable() {
         this.node.on(Node.EventType.TOUCH_END, this.onClick, this)
-        console.log("CalendarInteractable onEnable -> 注册监听,点击监听");
+        console.log("[CalendarInteractable] onEnable -> 注册监听,点击监听");
     }
 
     onDisable() {
         this.node.off(Node.EventType.TOUCH_END, this.onClick, this)
-        console.log("CalendarInteractable onDisable -> 移除监听");
+        console.log("[CalendarInteractable] onDisable -> 移除监听");
     }
     
     protected start(): void {

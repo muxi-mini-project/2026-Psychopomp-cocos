@@ -11,19 +11,19 @@ export class DoorInteractable extends Component {
     
     onEnable() {
         this.node.on(Node.EventType.TOUCH_END,this.onClick,this)
-        console.log("DoorInteractable enabled -> 开启监听");
+        console.log("[DoorInteractable] enabled -> 开启监听");
         director.on(event.INTERACTABLE_TRIGGERED,this.onTriggered,this)
         
     }
 
      onDisable() {
         this.node.off(Node.EventType.TOUCH_END,this.onClick,this)
-        console.log("DoorInteractable disabled -> 关闭监听");
+        console.log("[DoorInteractable] disabled -> 关闭监听");
         director.off(event.INTERACTABLE_TRIGGERED,this.onTriggered,this)
     }
 
     private onClick(){
-        console.log("DoorInteractable clicked -> 触发事件");
+        console.log("[DoorInteractable] clicked -> 触发事件");
         director.emit(event.INTERACTABLE_CLICK,{interactableId:this.interactableId})
     }
 

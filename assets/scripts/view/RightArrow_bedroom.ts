@@ -1,5 +1,5 @@
 import { _decorator,Component,director,Node } from "cc";
-const { ccclass, property } = _decorator;
+const { ccclass } = _decorator;
 const event = {
     INTERACTABLE_TRIGGERED: "INTERACTABLE_TRIGGERED",
     INTERACTABLE_CLICK: "INTERACTABLE_CLICK",
@@ -12,17 +12,17 @@ export class RightArrow extends Component {
     onEnable() {
         director.on(event.INTERACTABLE_TRIGGERED, this.onTriggered, this);
         this.node.on(Node.EventType.TOUCH_END,this.onClick, this)
-        console.log("RightArrow onEnable -> 注册监听,点击监听");
+        console.log("[RightArrow] onEnable -> 注册监听,点击监听");
     }
 
     onDisable() {
         director.off(event.INTERACTABLE_TRIGGERED, this.onTriggered, this);
         this.node.off(Node.EventType.TOUCH_END,this.onClick, this)
-        console.log("RightArrow onDisable -> 移除监听，点击监听");
+        console.log("[RightArrow] onDisable -> 移除监听，点击监听");
     }
 
     private onClick() {
-        console.log(`RightArrow onClick -> 点击事件,emit INTERACTABLE_CLICK: ${this.interactableId}`);
+        console.log(`[RightArrow] onClick -> 点击事件,emit INTERACTABLE_CLICK: ${this.interactableId}`);
         director.emit(event.INTERACTABLE_CLICK, { interactableId: this.interactableId });
     }
 
@@ -35,8 +35,8 @@ export class RightArrow extends Component {
         }
 
         switch (result?.code) {
-            case "ENTER_BEDROOM_ALL":
-                console.log("[RightArrow] 触发 ENTER_BEDROOM_ALL -> 进入卧室全景");
+            case "ENTER_BEDROOM_TO_BATHROOM":
+                console.log("[RightArrow] 触发 ENTER_BEDROOM_TO_BATHROOM -> 进入卫生间门口");
                 return;
         }
     }

@@ -13,17 +13,17 @@ export class DrawerInteractable extends Component {
     onEnable() {
         director.on(event.INTERACTABLE_TRIGGERED, this.onTriggered, this);
         this.node.on(Node.EventType.TOUCH_END,this.onClick, this)
-        console.log("DrawerInteractable onEnable -> 注册监听,点击监听");
+        console.log("[DrawerInteractable] onEnable -> 注册监听,点击监听");
     }
 
     onDisable() {
         director.off(event.INTERACTABLE_TRIGGERED, this.onTriggered, this);
         this.node.off(Node.EventType.TOUCH_END,this.onClick, this)
-        console.log("DrawerInteractable onDisable -> 移除监听，点击监听");
+        console.log("[DrawerInteractable] onDisable -> 移除监听，点击监听");
     }
 
     private onClick() {
-        console.log('DrawerInteractable onClick -> 点击事件,emit INTERACTABLE_CLICK: ${this.interactableId}');
+        console.log('[DrawerInteractable] onClick -> 点击事件,emit INTERACTABLE_CLICK: ${this.interactableId}');
         director.emit(event.INTERACTABLE_CLICK, { interactableId: this.interactableId });
     }
 

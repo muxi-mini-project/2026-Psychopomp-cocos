@@ -9,12 +9,12 @@ export class BookcaseInteractable extends Component {
 
     protected onEnable(): void {
         this.node.on(Node.EventType.TOUCH_END, this.onClickOpen, this);
-        console.log("BookcaseInteractable onEnable -> 注册监听,点击监听");
+        console.log("[BookcaseInteractable] onEnable -> 注册监听,点击监听");
     }
 
     protected onDisable(): void {
         this.node.off(Node.EventType.TOUCH_END, this.onClickOpen, this);
-        console.log("BookcaseInteractable onEnable -> 移除监听");
+        console.log("[BookcaseInteractable] onEnable -> 移除监听");
     }
 
     protected start(): void {
