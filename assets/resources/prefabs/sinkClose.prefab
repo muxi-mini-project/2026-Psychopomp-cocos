@@ -34,14 +34,14 @@
     "_active": true,
     "_components": [
       {
-        "__id__": 42
+        "__id__": 44
       },
       {
-        "__id__": 44
+        "__id__": 46
       }
     ],
     "_prefab": {
-      "__id__": 46
+      "__id__": 48
     },
     "_lpos": {
       "__type__": "cc.Vec3",
@@ -756,10 +756,13 @@
       },
       {
         "__id__": 39
+      },
+      {
+        "__id__": 41
       }
     ],
     "_prefab": {
-      "__id__": 41
+      "__id__": 43
     },
     "_lpos": {
       "__type__": "cc.Vec3",
@@ -875,12 +878,30 @@
     "__prefab": {
       "__id__": 40
     },
-    "interactableId": "point_sinkClose_to_bathroom",
+    "interactableId": "point_leftArrow_sinkClose_to_bathroom",
     "_id": ""
   },
   {
     "__type__": "cc.CompPrefabInfo",
     "fileId": "3fIqcy3Y5NYZU3V8FQSJCv"
+  },
+  {
+    "__type__": "349aca/QelJEqJBHDMUIkC3",
+    "_name": "",
+    "_objFlags": 0,
+    "__editorExtras__": {},
+    "node": {
+      "__id__": 34
+    },
+    "_enabled": true,
+    "__prefab": {
+      "__id__": 42
+    },
+    "_id": ""
+  },
+  {
+    "__type__": "cc.CompPrefabInfo",
+    "fileId": "39gQVxOdBAH42S0p7A+5Vk"
   },
   {
     "__type__": "cc.PrefabInfo",
@@ -905,7 +926,7 @@
     },
     "_enabled": true,
     "__prefab": {
-      "__id__": 43
+      "__id__": 45
     },
     "_contentSize": {
       "__type__": "cc.Size",
@@ -933,7 +954,7 @@
     },
     "_enabled": true,
     "__prefab": {
-      "__id__": 45
+      "__id__": 47
     },
     "_id": ""
   },

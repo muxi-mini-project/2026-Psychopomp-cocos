@@ -722,24 +722,6 @@
     "fileId": "7a8AMfKwBCN5dMGt3Ccsz4"
   },
   {
-    "__type__": "c073fkPPBBIurK6y0+snDKX",
-    "_name": "",
-    "_objFlags": 0,
-    "__editorExtras__": {},
-    "node": {
-      "__id__": 28
-    },
-    "_enabled": true,
-    "__prefab": {
-      "__id__": 34
-    },
-    "_id": ""
-  },
-  {
-    "__type__": "cc.CompPrefabInfo",
-    "fileId": "6b0lHtffdA1plIqN57tCCS"
-  },
-  {
     "__type__": "cc.BlockInputEvents",
     "_name": "",
     "_objFlags": 0,
@@ -749,7 +731,7 @@
     },
     "_enabled": true,
     "__prefab": {
-      "__id__": 36
+      "__id__": 34
     },
     "_id": ""
   },
@@ -767,7 +749,7 @@
     },
     "_enabled": true,
     "__prefab": {
-      "__id__": 38
+      "__id__": 36
     },
     "interactableId": "point_leftArrow_bedroom_to_bathroom",
     "_id": ""
@@ -775,6 +757,24 @@
   {
     "__type__": "cc.CompPrefabInfo",
     "fileId": "7fMiua56JA/YUQlMgT0Kri"
+  },
+  {
+    "__type__": "ee4e97RY9VNppkkpIltpLC5",
+    "_name": "",
+    "_objFlags": 0,
+    "__editorExtras__": {},
+    "node": {
+      "__id__": 28
+    },
+    "_enabled": true,
+    "__prefab": {
+      "__id__": 38
+    },
+    "_id": ""
+  },
+  {
+    "__type__": "cc.CompPrefabInfo",
+    "fileId": "33mBbriuVPKpQnd1lNSt8o"
   },
   {
     "__type__": "cc.PrefabInfo",
