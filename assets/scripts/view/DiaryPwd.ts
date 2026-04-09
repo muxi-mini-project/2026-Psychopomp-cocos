@@ -13,8 +13,15 @@ export class DiaryPwd extends Component {
     @property(Button)
     confirmButton: Button = null
 
+    @property(Node)
+    diaryContent: Node = null
+
     protected onLoad(): void {
         this.confirmButton.node.on("click", this.onClick, this)
+        //隐藏内容页
+        if (this.diaryContent) {
+            this.diaryContent.active = false
+        }
     }
 
     onClick() {
@@ -47,6 +54,17 @@ export class DiaryPwd extends Component {
             }
         }
         console.log("密码正确！")
+        if (this.diaryContent) {
+            this.diaryContent.active = true
+           // this.confirmButton.node.active = false
+        }
+        //打开日记内容
+        console.log("打开日记内容")
+        //this.node.active = false
+        // const pwdPanel = this.node.parent
+        // if (pwdPanel) {
+        //     pwdPanel.active = false
+        // }
         director.emit("DIARY_PWD_SUCCESS")
     }
 }

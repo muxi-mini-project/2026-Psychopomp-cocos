@@ -4,7 +4,7 @@ const { ccclass, property } = _decorator;
 @ccclass('DiaryPanel')
 export class DiaryPanel extends Component {
     @property({ type: Node, tooltip: "日记密码面板" })
-    public diaryPswPanel: Node | null = null;
+    private readonly diaryPswPanel: Node | null = null;
 
     protected onEnable(): void {
         this.node.on(Node.EventType.TOUCH_END, this.onClickOpen, this);
@@ -25,13 +25,13 @@ export class DiaryPanel extends Component {
         }
     }
 
-    protected hidePanel(): void {
+    private hidePanel(): void {
         if (this.diaryPswPanel) {
             this.diaryPswPanel.active = false;
         }
     }
 
-    protected onClickOpen(): void {
+    private onClickOpen(): void {
         this.openPanel();
     }
 
