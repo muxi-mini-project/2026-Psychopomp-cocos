@@ -32,9 +32,11 @@ export class Slot extends Component {
 
     //Todo:获取物品图标组件
     setItemIcon(iconNode: Node, itemId: string) {
+        console.log("[Slot] setItemIcon called, itemId:", itemId)
         this.ItemIcon = iconNode
         this.itemId = itemId
         this.originalScale = iconNode.scale.clone()
+        console.log("[Slot] setItemIcon done")
     }
 
 

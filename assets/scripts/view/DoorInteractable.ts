@@ -24,7 +24,7 @@ export class DoorInteractable extends Component {
 
     private onClick(){
         console.log("[DoorInteractable] clicked -> 触发事件");
-        director.emit(event.INTERACTABLE_CLICK,{interactableId:this.interactableId})
+        // 不再发送 INTERACTABLE_CLICK，由标准 Interactable 组件发送
     }
 
     private onTriggered(result:any){

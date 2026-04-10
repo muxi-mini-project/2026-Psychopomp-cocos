@@ -1,19 +1,19 @@
 import { _decorator, Component, director, Node } from "cc";
+import { DataManager } from "../core/DataManager";
 const { ccclass, property } = _decorator;
 
 @ccclass("XuanZhiInteract")
 export class XuanZhiInteract extends Component {
     @property
-    private readonly itemId: string = "xuanZhi";
+    private readonly itemId: string = "xuanzhi";
 
     @property
     private readonly flagId: string = "XUANZHI_PICKED";
 
-    // TODO: 接入 DataManager 后取消注释
      protected onLoad(): void {
-    //     if (DataManager.instance.getBool(this.flagPicked)) {
-    //         this.node.active = false;
-    //     }
+         if (DataManager.instance.getBool(this.flagId)) {
+             this.node.active = false;
+         }
     }
 
     protected onEnable(): void {

@@ -26,7 +26,7 @@ export class ResumeGame_Button extends Component {
     onResumeClick() {
         this.playClickSound()
         this.playClickAnimation(() => {
-            director.emit("LOAD_GAME")//加载游戏
+            director.emit("LOAD_GAME", { slotId: "auto_save" })  // 加载自动存档
             director.emit("HIDE_MAIN_MENU")
             console.log('已点击ResumeGame_Button')
         })

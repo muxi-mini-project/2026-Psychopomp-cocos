@@ -120,6 +120,30 @@
                 { "text": "（我愣了一下，然后用力点头。）", "expression": null },
                 { "text": "蓁蓁：好。我....去看看。", "expression": null }
             ]
+        },
+        "pencil_picked": {
+            "id": "pencil_picked",
+            "lines": [
+                { "text": "只是一些常用的文具。", "expression": null }
+            ]
+        },
+        "rightdrawer_locked": {
+            "id": "rightdrawer_locked",
+            "lines": [
+                { "text": "抽屉被锁死了。", "expression": null }
+            ]
+        },
+        "frame_hint": {
+            "id": "frame_hint",
+            "lines": [
+                { "text": "一张精致的蝴蝶速写。", "expression": null }
+            ]
+        },
+        "water_hint": {
+            "id": "water_hint",
+            "lines": [
+                { "text": "漏水的水龙头...积水已经快溢出水池。", "expression": null }
+            ]
         }
     }
 }

@@ -29,8 +29,8 @@ export class WaterInteractable extends Component {
     }
 
     private onClick() {
-        director.emit(event.INTERACTABLE_CLICK, { interactableId: this.interactableId });
-         console.log(`[WaterInteractable] onClick -> 点击事件,emit INTERACTABLE_CLICK: ${this.interactableId}`);       
+        console.log(`[WaterInteractable] onClick -> 点击事件`);
+        // 不再发送 INTERACTABLE_CLICK，由标准 Interactable 组件发送
     }
 
     private onTriggered(result: any) {

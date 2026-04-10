@@ -26,6 +26,7 @@ export interface InteractableCondition {
 export interface InteractableResult {
     setFlags?: { name: string; value: boolean }[];
     pickItem?: string;
+    consumeItem?: string;  // 消耗物品（从物品栏移除）
     switchScene?: string;
     code: string;
     data?: any;
@@ -63,7 +64,9 @@ export class InteractableManager extends Component {
     }
 
     public handleClick(interactableId: string): void {
+        const currentSceneId = SceneViewManager.instance.getCurrentSceneId();
         const config = this._getInteractableConfig(interactableId);
+        console.log(`[InteractableManager] handleClick - interactableId: ${interactableId}, currentScene: ${currentSceneId}, config:`, config);
         if (!config || !config.states || config.states.length === 0) {
             console.warn(`[InteractableManager] 交互点配置不存在或无状态: ${interactableId}`);
             return;
@@ -124,6 +127,7 @@ export class InteractableManager extends Component {
 
         // 设置 flag
         if (result.setFlags && result.setFlags.length > 0) {
+            console.log("[InteractableManager] 设置 flag:", result.setFlags);
             for (const flag of result.setFlags) {
                 DataManager.instance.setFlag(flag.name, flag.value);
                 triggerResult.changedFlags!.push(flag);
@@ -136,14 +140,21 @@ export class InteractableManager extends Component {
             triggerResult.pickedItem = result.pickItem;
         }
 
+        // 消耗物品（可消耗物品使用后移除）
+        if (result.consumeItem) {
+            console.log(`[InteractableManager] 消耗物品: ${result.consumeItem}`);
+            DataManager.instance.removeItem(result.consumeItem);
+        }
+
         // 切换场景
         if (result.switchScene) {
+            console.log(`[InteractableManager] 切换场景: ${result.switchScene}`);
             triggerResult.switchedScene = result.switchScene;
             SceneViewManager.instance.switchToScene(result.switchScene);
         }
 
         // 自动触发对话（当 data 包含 dialogueId 时）
-        if (result.data?.dialogueId) {
+        if (result.data && typeof result.data.dialogueId === 'string') {
             DialogManager.instance.showDialogue(result.data.dialogueId);
         }
 
@@ -151,10 +162,19 @@ export class InteractableManager extends Component {
     }
 
     private _emitResult(result: InteractableTriggerResult): void {
+        console.log("[InteractableManager] _emitResult:", result);
         director.emit("INTERACTABLE_TRIGGERED", result);
     }
 
-    private _onInteractableClick(interactableId: string): void {
+    private _onInteractableClick(data: string | { interactableId: string }): void {
+        console.log("[InteractableManager] _onInteractableClick 收到数据:", data);
+        // 兼容两种事件格式：直接传 string 或传 { interactableId: string }
+        const interactableId = typeof data === 'string' ? data : data?.interactableId;
+        if (!interactableId) {
+            console.warn("[InteractableManager] INTERACTABLE_CLICK 事件缺少 interactableId");
+            return;
+        }
+        console.log("[InteractableManager] 调用 handleClick:", interactableId);
         this.handleClick(interactableId);
     }
 

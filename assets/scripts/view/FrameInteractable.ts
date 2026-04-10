@@ -26,8 +26,8 @@ export class FrameInteractable extends Component {
     }
 
     private onClick() {
-        console.log('[FrameInteractable] onClick -> 点击事件,emit INTERACTABLE_CLICK: ${this.interactableId}');
-        director.emit(event.INTERACTABLE_CLICK, { interactableId: this.interactableId });
+        console.log('[FrameInteractable] onClick -> 点击事件');
+        // 不再发送 INTERACTABLE_CLICK，由标准 Interactable 组件发送
     }
 
     private onTriggered(result: any) {

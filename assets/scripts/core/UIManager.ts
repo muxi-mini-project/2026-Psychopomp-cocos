@@ -1,4 +1,6 @@
 import { _decorator, Component, director, Node } from 'cc';
+import { SceneViewManager } from './SceneViewManager';
+import { IntroCutscene } from '../view/IntroCutscene';
 const { ccclass, property } = _decorator;
 
 @ccclass('UIManager')
@@ -90,11 +92,23 @@ export class UIManager extends Component {
     }
 
     public showGameUI(): void {
+        // 隐藏所有 fullscreen 层的内容
+        if (this.fullscreenLayer) {
+            this.fullscreenLayer.active = false;
+        }
+        if (this.videoPlayer) {
+            this.videoPlayer.active = false;
+        }
+        if (this.introCutscene) {
+            this.introCutscene.active = false;
+        }
+
+        // 显示游戏层
         if (this.gameLayer) {
             this.gameLayer.active = true;
         }
-        if (this.fullscreenLayer) {
-            this.fullscreenLayer.active = false;
+        if (this.inventoryPanel) {
+            this.inventoryPanel.active = true;
         }
     }
 
@@ -105,11 +119,19 @@ export class UIManager extends Component {
     }
 
     public showMainMenu(): void {
-        console.log("[UIManager] showMainMenu called, fullscreenLayer:", this.fullscreenLayer, "mainMenu:", this.mainMenu);
         this.showFullscreenUI();
         if (this.mainMenu) {
             this.mainMenu.active = true;
         }
+        // 隐藏游戏层相关内容
+        if (this.gameLayer) {
+            this.gameLayer.active = false;
+        }
+        if (this.inventoryPanel) {
+            this.inventoryPanel.active = false;
+        }
+        // 清除场景预制体
+        SceneViewManager.instance.clearScene();
     }
 
     public hideMainMenu(): void {
@@ -154,6 +176,11 @@ export class UIManager extends Component {
         }
         if (this.introCutscene) {
             this.introCutscene.active = true;
+            // 重置并重新播放开场动画
+            const cutsceneComp = this.introCutscene.getComponent(IntroCutscene);
+            if (cutsceneComp) {
+                cutsceneComp.resetAndPlay();
+            }
         }
         if (this.gameLayer) {
             this.gameLayer.active = false;
@@ -170,10 +197,28 @@ export class UIManager extends Component {
     }
 
     public playVideo(videoId: string): void {
-        this.showFullscreenUI();
+        console.log(`[UIManager] playVideo called, videoId: ${videoId}`);
+        // 清除所有 fullscreen 层的内容
+        if (this.videoPlayer) {
+            this.videoPlayer.active = false;
+        }
+        if (this.introCutscene) {
+            this.introCutscene.active = false;
+        }
+        if (this.fullscreenLayer) {
+            this.fullscreenLayer.active = true;
+        }
+        if (this.gameLayer) {
+            this.gameLayer.active = false;
+        }
+
+        // 播放新视频
         if (this.videoPlayer) {
             this.videoPlayer.active = true;
+            console.log(`[UIManager] playVideo: 发射 VIDEO_PLAY, videoId: ${videoId}`);
             director.emit("VIDEO_PLAY", videoId);
+        } else {
+            console.log(`[UIManager] playVideo: videoPlayer 为空!`);
         }
     }
 
@@ -184,13 +229,12 @@ export class UIManager extends Component {
     }
 
     public onVideoEnded(): void {
-        director.emit("INTRO_COMPLETE");
+        director.emit("INTRO_VIDEO_COMPLETE");
     }
 
     public updateInventoryUI(): void {
-        if (this.inventoryPanel) {
-            director.emit("INVENTORY_UPDATE");
-        }
+        // 仅更新 UI，不应再次发出事件
+        console.log("[UIManager] updateInventoryUI");
     }
 
     public showDialogUI(): void {

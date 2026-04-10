@@ -3,6 +3,7 @@ import { ResourceManager } from './ResourceManager';
 import { DataManager } from './DataManager';
 import { SceneViewManager } from './SceneViewManager';
 import { UIManager } from './UIManager';
+import { ItemInventory } from '../components/ItemInventory';
 const { ccclass } = _decorator;
 
 @ccclass('GameManager')
@@ -58,12 +59,25 @@ export class GameManager extends Component {
     private _resumeGame(): void {
         const introPlayed = DataManager.instance.getIntroPlayed();
         const endingPlayed = DataManager.instance.getEndingPlayed();
+        const currentScene = DataManager.instance.getCurrentScene();
+
+        console.log(`[GameManager] _resumeGame introPlayed: ${introPlayed}, endingPlayed: ${endingPlayed}, currentScene: ${currentScene}`);
 
         if (!introPlayed) {
+            console.log("[GameManager] _resumeGame: 发射 INTRO_START");
             director.emit("INTRO_START");
         } else if (endingPlayed) {
+            console.log("[GameManager] _resumeGame: 发射 SHOW_MAIN_MENU");
             director.emit("SHOW_MAIN_MENU");
         } else {
+            console.log("[GameManager] _resumeGame: 直接进入游戏");
+            UIManager.instance.showGameUI();
+            // 恢复物品栏
+            const inventory = UIManager.instance.gameLayer?.getComponentInChildren(ItemInventory);
+            if (inventory) {
+                console.log("[GameManager] 调用 restoreInventory");
+                inventory.restoreInventory();
+            }
             this._enterGame();
         }
     }
@@ -74,21 +88,29 @@ export class GameManager extends Component {
         console.log("[GameManager] hasCutscene:", hasCutscene);
 
         if (hasCutscene) {
+            console.log("[GameManager] 显示开场对话");
             UIManager.instance.hideVideoPlayer();
             UIManager.instance.showIntroCutscene();
         } else {
+            console.log("[GameManager] 无开场对话，直接进入游戏");
             // 无开场对话，视频结束后直接进入游戏
             DataManager.instance.setIntroPlayed(true);
             DataManager.instance.saveGame("auto_save", true);
+            UIManager.instance.showGameUI();
             this._enterGame();
         }
     }
 
     private _onIntroComplete(): void {
         // 整个开场（视频+对话）结束，进入游戏
+        console.log("[GameManager] _onIntroComplete 开始");
         DataManager.instance.setIntroPlayed(true);
         DataManager.instance.saveGame("auto_save", true);
         UIManager.instance.hideIntroCutscene();
+        console.log("[GameManager] _onIntroComplete: 调用 showGameUI");
+        UIManager.instance.showGameUI();
+        DataManager.instance.setCurrentScene("scene_bedroom");
+        console.log("[GameManager] _onIntroComplete: 调用 _enterGame");
         this._enterGame();
     }
 
@@ -101,7 +123,14 @@ export class GameManager extends Component {
     }
 
     private _enterGame(): void {
-        SceneViewManager.instance.initializeFromSave();
+        const currentScene = DataManager.instance.getCurrentScene();
+        console.log(`[GameManager] _enterGame 调用, currentScene: ${currentScene}`);
+        if (currentScene && currentScene !== "") {
+            console.log(`[GameManager] _enterGame: 调用 SceneViewManager.loadScene: ${currentScene}`);
+            SceneViewManager.instance.loadScene(currentScene);
+        } else {
+            console.warn("[GameManager] _enterGame: 无当前场景数据!");
+        }
     }
 
     private _onStartNewGame(_data: { slotId?: string }): void {
@@ -114,8 +143,22 @@ export class GameManager extends Component {
 
     private _onLoadGame(data: { slotId: string }): void {
         director.emit("HIDE_MAIN_MENU");
-        if (data?.slotId && DataManager.instance.loadGame(data.slotId)) {
+
+        console.log(`[GameManager] _onLoadGame slotId: ${data?.slotId}`);
+        console.log(`[GameManager] _onLoadGame data:`, data);
+        const loaded = data?.slotId && DataManager.instance.loadGame(data.slotId);
+        console.log(`[GameManager] loadGame result: ${loaded}`);
+
+        if (loaded) {
+            // 有存档，正常恢复游戏
+            console.log("[GameManager] 有存档，执行 _resumeGame");
             this._resumeGame();
+        } else {
+            // 无存档，执行新游戏逻辑
+            console.log("[GameManager] 没有找到存档，开始新游戏");
+            DataManager.instance.startNewGame();
+            console.log("[GameManager] 发射 INTRO_START");
+            director.emit("INTRO_START");
         }
     }
 
@@ -132,9 +175,15 @@ export class GameManager extends Component {
     }
 
     private _onInteractableTriggered(result: { changedFlags?: { name: string; value: boolean }[] }): void {
-        if (!result?.changedFlags?.length) return;
+        console.log(`[GameManager] INTERACTABLE_TRIGGERED changedFlags:`, result?.changedFlags);
+
+        if (!result?.changedFlags?.length) {
+            console.log("[GameManager] 没有 changedFlags，不存档");
+            return;
+        }
 
         // flag 变化时自动存档
+        console.log("[GameManager] flag 变化，保存存档");
         DataManager.instance.saveGame("auto_save", true);
 
         // 检查是否设置了结局条件且未触发
@@ -154,6 +203,7 @@ export class GameManager extends Component {
      * 场景加载完成后自动存档
      */
     private _onSceneReady(): void {
+        console.log("[GameManager] _onSceneReady 保存存档");
         DataManager.instance.saveGame("auto_save", true);
     }
 

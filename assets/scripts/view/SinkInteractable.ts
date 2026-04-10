@@ -22,8 +22,8 @@ export class SinkInteractable extends Component {
     }
 
     private onClick() {
-        director.emit(event.INTERACTABLE_CLICK, { interactableId: this.interactableId })
-        console.log(`[SinkInteractable] 点击水池`)
+        console.log(`[SinkInteractable] 点击水池`);
+        // 不再发送 INTERACTABLE_CLICK，由标准 Interactable 组件发送
     }
 
     private onTriggered(result: any) {

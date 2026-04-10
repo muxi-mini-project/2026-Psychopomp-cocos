@@ -1,5 +1,5 @@
 import { _decorator,Component,director,Node } from "cc";
-const { ccclass, property } = _decorator;
+const { ccclass } = _decorator;
 const event = {
     INTERACTABLE_TRIGGERED: "INTERACTABLE_TRIGGERED",
     INTERACTABLE_CLICK: "INTERACTABLE_CLICK",
@@ -22,8 +22,7 @@ export class RightArrow_desk extends Component {
     }
 
     private onClick() {
-        console.log(`[RightArrow] onClick -> 点击事件,emit INTERACTABLE_CLICK: ${this.interactableId}`);
-        director.emit(event.INTERACTABLE_CLICK, { interactableId: this.interactableId });
+        console.log(`[RightArrow] onClick -> 点击事件`);
     }
 
     private onTriggered(result: any) {

@@ -32,10 +32,12 @@ export class SceneViewManager extends Component {
 
     private initializeSceneNodes(): void {
         const container = UIManager.instance?.sceneContainer ?? this.node;
+        console.log(`[SceneViewManager] initializeSceneNodes container: ${container?.name}, sceneContainer: ${UIManager.instance?.sceneContainer?.name}`);
 
         if (!this._currentSceneNode) {
             this._currentSceneNode = new Node("CurrentScene");
             container.addChild(this._currentSceneNode);
+            console.log(`[SceneViewManager] _currentSceneNode 已创建，父节点: ${container?.name}`);
         }
     }
 
@@ -55,6 +57,7 @@ export class SceneViewManager extends Component {
     }
 
     public loadScene(sceneId: string, onComplete?: () => void): void {
+        console.log(`[SceneViewManager] loadScene 开始: ${sceneId}`);
         this._clearAllScenes();
 
         const config = DataManager.instance.getSceneConfig(sceneId);
@@ -63,13 +66,18 @@ export class SceneViewManager extends Component {
             return;
         }
 
+        console.log(`[SceneViewManager] 加载 prefab: ${config.prefab}`);
         this._currentSceneId = sceneId;
         DataManager.instance.setCurrentScene(sceneId);
 
-        ResourceManager.instance.loadScene(sceneId).then((prefab) => {
+        ResourceManager.instance.loadScene(config.prefab).then((prefab) => {
+            console.log(`[SceneViewManager] prefab 加载成功: ${config.prefab}`);
             const node = instantiate(prefab);
             node.name = sceneId;
             this._currentSceneNode.addChild(node);
+
+            // 预加载相邻场景
+            this.preloadNextScenes();
 
             // 发送 SCENE_READY 事件，包含当前 flag
             this._emitSceneReady();
@@ -92,31 +100,58 @@ export class SceneViewManager extends Component {
     }
 
     public preloadSceneForSwitch(sceneId: string): void {
-        if (this._preloadedSceneMap.has(sceneId)) return;
+        if (this._preloadedSceneMap.has(sceneId)) {
+            console.log(`[SceneViewManager] preloadSceneForSwitch: ${sceneId} 已在缓存中`);
+            return;
+        }
 
-        ResourceManager.instance.loadScene(sceneId).then((prefab) => {
+        const config = DataManager.instance.getSceneConfig(sceneId);
+        const prefabPath = config?.prefab || sceneId;
+        console.log(`[SceneViewManager] preloadSceneForSwitch: 开始预加载 ${sceneId}, path: ${prefabPath}`);
+
+        ResourceManager.instance.loadScene(prefabPath).then((prefab) => {
             const node = instantiate(prefab);
             node.name = sceneId;
+            console.log(`[SceneViewManager] 预加载实例化: ${sceneId}, children: ${node.children?.length}, active: ${node.active}`);
             this._preloadedSceneMap.set(sceneId, node);
+        }).catch((err) => {
+            console.error(`[SceneViewManager] 预加载失败: ${sceneId}`, err);
         });
     }
 
     public switchToScene(sceneId: string): void {
-        if (this._transitioning) return;
-        if (this._currentSceneId === sceneId) return;
+        console.log(`[SceneViewManager] switchToScene: ${sceneId}`);
+        if (this._transitioning) {
+            console.log(`[SceneViewManager] 正在切换中，忽略`);
+            return;
+        }
+        if (this._currentSceneId === sceneId) {
+            console.log(`[SceneViewManager] 已是当前场景: ${sceneId}`);
+            return;
+        }
 
         this._transitioning = true;
         director.emit("SCENE_SWITCH_START", sceneId);
 
+        const config = DataManager.instance.getSceneConfig(sceneId);
+        const prefabPath = config?.prefab || sceneId;
+        console.log(`[SceneViewManager] prefabPath: ${prefabPath}`);
+
         let node: Node | null = null;
 
         if (this._preloadedSceneMap.has(sceneId)) {
+            console.log(`[SceneViewManager] 从预加载缓存获取: ${sceneId}`);
             node = this._preloadedSceneMap.get(sceneId);
         } else {
-            ResourceManager.instance.loadScene(sceneId).then((prefab) => {
+            console.log(`[SceneViewManager] 异步加载 prefab: ${prefabPath}`);
+            ResourceManager.instance.loadScene(prefabPath).then((prefab) => {
+                console.log(`[SceneViewManager] prefab 加载成功，开始实例化`);
                 node = instantiate(prefab);
                 node.name = sceneId;
                 this._doSwitch(sceneId, node);
+            }).catch((err) => {
+                console.error(`[SceneViewManager] 异步加载失败: ${prefabPath}`, err);
+                this._transitioning = false;
             });
             return;
         }
@@ -125,17 +160,23 @@ export class SceneViewManager extends Component {
     }
 
     private _doSwitch(sceneId: string, node: Node): void {
+        console.log(`[SceneViewManager] _doSwitch 开始: ${sceneId}, node: ${node}`);
+        console.log(`[SceneViewManager] _currentSceneNode: ${this._currentSceneNode?.name}, parent: ${this._currentSceneNode?.parent?.name}`);
         this._clearCurrentScene();
         node.parent = this._currentSceneNode;
+        console.log(`[SceneViewManager] 节点已添加，node.parent: ${node.parent?.name}, children count: ${this._currentSceneNode?.children?.length}`);
         node.active = true;
+        console.log(`[SceneViewManager] node.active = true, node.children: ${node.children?.length}`);
 
         this._currentSceneId = sceneId;
+        DataManager.instance.setCurrentScene(sceneId);  // 同步到存档
         this._preloadedSceneMap.delete(sceneId);
 
         director.emit("SCENE_SWITCH_COMPLETE", sceneId);
         this._emitSceneReady();
 
         this._transitioning = false;
+        console.log(`[SceneViewManager] _doSwitch 完成`);
         this.preloadNextScenes();
     }
 
@@ -156,6 +197,10 @@ export class SceneViewManager extends Component {
 
     private _clearCurrentScene(): void {
         this._currentSceneNode.removeAllChildren();
+    }
+
+    public clearScene(): void {
+        this._clearCurrentScene();
     }
 
     private _clearAllScenes(): void {

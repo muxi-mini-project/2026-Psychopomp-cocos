@@ -20,6 +20,8 @@ export class InventoryManager extends Component {
         director.addPersistRootNode(this.node);
 
         director.on("ITEM_REMOVED", this._onItemRemoved, this);
+        director.on("ITEM_SELECTED", this._onItemSelected, this);
+        director.on("ITEM_DESELECTED", this._onItemDeselected, this);
     }
 
     public selectItem(itemId: string | null): void {
@@ -54,8 +56,22 @@ export class InventoryManager extends Component {
         }
     }
 
+    private _onItemSelected(itemId: string): void {
+        console.log(`[InventoryManager] _onItemSelected: ${itemId}`);
+        this._selectedItem = itemId;
+    }
+
+    private _onItemDeselected(itemId: string): void {
+        console.log(`[InventoryManager] _onItemDeselected: ${itemId}`);
+        if (this._selectedItem === itemId) {
+            this._selectedItem = null;
+        }
+    }
+
     onDestroy() {
         director.off("ITEM_REMOVED", this._onItemRemoved, this);
+        director.off("ITEM_SELECTED", this._onItemSelected, this);
+        director.off("ITEM_DESELECTED", this._onItemDeselected, this);
         this._selectedItem = null;
     }
 }

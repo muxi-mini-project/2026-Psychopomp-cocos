@@ -37,7 +37,7 @@ export class ResourceManager extends Component {
             return;
         }
 
-        resources.load(`prefabs/scenes/${sceneId}`, Prefab, (err, asset) => {
+        resources.load(`prefabs/${sceneId}`, Prefab, (err, asset) => {
             if (err) {
                 console.error(`[ResourceManager] 场景预加载失败: ${sceneId}`, err);
                 return;
@@ -53,14 +53,16 @@ export class ResourceManager extends Component {
     }
 
     public loadScene(sceneId: string): Promise<Prefab> {
+        console.log(`[ResourceManager] loadScene 开始: ${sceneId}`);
         return new Promise((resolve, reject) => {
-            resources.load(`prefabs/scenes/${sceneId}`, Prefab, (err, asset) => {
+            resources.load(`prefabs/${sceneId}`, Prefab, (err, asset) => {
                 if (err) {
                     console.error(`[ResourceManager] 场景加载失败: ${sceneId}`, err);
                     reject(err);
                     return;
                 }
 
+                console.log(`[ResourceManager] 场景加载成功: ${sceneId}`);
                 this._loadedScenes.add(sceneId);
                 resolve(asset as Prefab);
             });
@@ -82,7 +84,7 @@ export class ResourceManager extends Component {
 
     public releaseScene(sceneId: string): void {
         if (this._loadedScenes.has(sceneId)) {
-            const path = `prefabs/scenes/${sceneId}`;
+            const path = `prefabs/${sceneId}`;
             assetManager.resources.release(path);
             this._loadedScenes.delete(sceneId);
             console.log(`[ResourceManager] 场景资源已释放: ${sceneId}`);

@@ -22,8 +22,8 @@ export class RightDrawerInteractable extends Component {
     }
 
     private onClick() {
-        console.log(`[RightDrawerInteractable] 点击节点 -> emit INTERACTABLE_CLICK: ${this.interactableId}`)
-        director.emit(event.INTERACTABLE_CLICK, this.interactableId)
+        console.log(`[RightDrawerInteractable] 点击节点`);
+        // 不再发送 INTERACTABLE_CLICK，由标准 Interactable 组件发送
     }
 
     private onTriggered(result: any) {

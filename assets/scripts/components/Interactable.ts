@@ -1,4 +1,4 @@
-import { _decorator, Component, input, Input, EventMouse, director } from 'cc';
+import { _decorator, Component, Node, EventTouch, director } from 'cc';
 const { ccclass, property } = _decorator;
 
 @ccclass('Interactable')
@@ -9,21 +9,23 @@ export class Interactable extends Component {
     private _canInteract: boolean = true;
 
     protected onEnable(): void {
-        input.on(Input.EventType.MOUSE_DOWN, this._onMouseDown, this);
+        console.log("[Interactable] onEnable, interactableId:", this.interactableId);
+        this.node.on(Node.EventType.TOUCH_END, this._onTouchEnd, this);
     }
 
     protected onDisable(): void {
-        input.off(Input.EventType.MOUSE_DOWN, this._onMouseDown, this);
+        console.log("[Interactable] onDisable, interactableId:", this.interactableId);
+        this.node.off(Node.EventType.TOUCH_END, this._onTouchEnd, this);
     }
 
     protected onDestroy(): void {
-        input.off(Input.EventType.MOUSE_DOWN, this._onMouseDown, this);
+        this.node.off(Node.EventType.TOUCH_END, this._onTouchEnd, this);
     }
 
-    private _onMouseDown(event: EventMouse): void {
+    private _onTouchEnd(event: EventTouch): void {
         if (!this._canInteract) return;
-        if (event.getButton() !== EventMouse.BUTTON_LEFT) return;
 
+        console.log("[Interactable] _onTouchEnd 发送 INTERACTABLE_CLICK:", this.interactableId);
         director.emit("INTERACTABLE_CLICK", this.interactableId);
     }
 

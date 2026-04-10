@@ -48,6 +48,20 @@ export class IntroCutscene extends Component {
     }
 
     protected start(): void {
+        this._resetAndPlay();
+    }
+
+    public resetAndPlay(): void {
+        this._resetAndPlay();
+    }
+
+    private _resetAndPlay(): void {
+        // 重置状态
+        this._waitingForClick = false;
+        this.container.setPosition(Vec3.ZERO);
+        this.container.setScale(1, 1, 1);
+        this._switchBgByIndex(0);
+
         this.scheduleOnce(() => {
             this._playIntroAnimation();
         }, 0.1);

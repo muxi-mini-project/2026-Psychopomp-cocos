@@ -16,6 +16,7 @@ export class PillowInteractable extends Component {
         if (DataManager.instance.getBool("PILLOW_MOVED")) {
             this.node.active = false
         } 
+        
         director.on(event.INTERACTABLE_TRIGGERED,this.onTriggered,this)  
         this.node.on(Node.EventType.TOUCH_END,this.onClick,this)     
         console.log("[PillowInteractable] onEnable -> 注册监听,点击监听")
@@ -28,8 +29,7 @@ export class PillowInteractable extends Component {
     }
 
     private onClick(){
-        console.log('[PillowInteractable] 点击节点 -> emit INTERACTABLE_CLICK: ${this.interactableId}')
-        this.node.active = false
+        console.log(`[PillowInteractable] 点击节点`)
     }
 
     private onTriggered(result:any){
@@ -42,6 +42,7 @@ export class PillowInteractable extends Component {
         switch (result?.code) {
             case "OPEN_PILLOW":
             console.log("[PillowInteractable]触发 OPEN_PILLOW -> 移开枕头")
+            this.node.active = false
             return
         }
     }

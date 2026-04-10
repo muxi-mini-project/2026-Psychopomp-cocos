@@ -13,19 +13,18 @@ export class BedInteractable extends Component {
     onEnable() {
         director.on(event.INTERACTABLE_TRIGGERED, this.onTriggered, this);
         this.node.on(Node.EventType.TOUCH_END,this.onClick, this)
-        console.log("BedInteractable onEnable -> 注册监听,点击节点");
+        console.log("[BedInteractable] onEnable -> 注册监听,点击节点");
     }
 
     onDisable() {
         director.off(event.INTERACTABLE_TRIGGERED, this.onTriggered, this);
         this.node.off(Node.EventType.TOUCH_END,this.onClick, this)
-        console.log("BedInteractable onDisable -> 移除监听，点击节点");
+        console.log("[BedInteractable] onDisable -> 移除监听，点击节点");
     }
 
     private onClick() {
-        console.log(`[BedInteract] 点击节点 -> emit INTERACTABLE_CLICK: ${this.interactableId}`);
-
-        director.emit(event.INTERACTABLE_CLICK, this.interactableId);
+        console.log(`[BedInteract] 点击节点`);
+        // 不再发送 INTERACTABLE_CLICK，由标准 Interactable 组件发送
     }
 
     private onTriggered(result: any) {

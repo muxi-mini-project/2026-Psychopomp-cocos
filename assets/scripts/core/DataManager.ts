@@ -182,7 +182,10 @@ export class DataManager extends Component {
 
     public loadGame(slotId: string): boolean {
         const key = this._getStorageKey(slotId);
+        console.log(`[DataManager] loadGame尝试读取存档: ${slotId}, key: ${key}`);
         const jsonStr = sys.localStorage.getItem(key);
+
+        console.log(`[DataManager] localStorage值: ${jsonStr ? jsonStr.substring(0, 100) : "null"}`);
 
         if (!jsonStr || jsonStr === "") {
             console.log(`[DataManager] 没有找到存档: ${slotId}`);
@@ -209,6 +212,11 @@ export class DataManager extends Component {
     }
 
     public startNewGame(): void {
+        // 清除旧的 auto_save 存档
+        const autoSaveKey = this._getStorageKey("auto_save");
+        sys.localStorage.removeItem(autoSaveKey);
+        console.log("[DataManager] 已清除旧存档");
+
         this._saveData = {
             saveId: "new_game",
             saveTime: Date.now(),
@@ -264,7 +272,7 @@ export class DataManager extends Component {
 
         if (!this._saveData.inventory.includes(itemId)) {
             this._saveData.inventory.push(itemId);
-            director.emit("ITEM_ADDED", itemId);
+            director.emit("PICK_UP_ITEM", { itemId: itemId });
             director.emit("INVENTORY_UPDATE");
             console.log(`[DataManager] 添加物品: ${itemId}`);
         }
