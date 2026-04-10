@@ -1006,9 +1006,8 @@
     "__prefab": {
       "__id__": 37
     },
-    "displayLabel": {
-      "__id__": 29
-    },
+    "numberSprite": null,
+    "numberFrames": [],
     "_id": ""
   },
   {
@@ -1388,9 +1387,8 @@
     "__prefab": {
       "__id__": 53
     },
-    "displayLabel": {
-      "__id__": 45
-    },
+    "numberSprite": null,
+    "numberFrames": [],
     "_id": ""
   },
   {
@@ -1770,9 +1768,8 @@
     "__prefab": {
       "__id__": 69
     },
-    "displayLabel": {
-      "__id__": 61
-    },
+    "numberSprite": null,
+    "numberFrames": [],
     "_id": ""
   },
   {
@@ -2152,9 +2149,8 @@
     "__prefab": {
       "__id__": 85
     },
-    "displayLabel": {
-      "__id__": 77
-    },
+    "numberSprite": null,
+    "numberFrames": [],
     "_id": ""
   },
   {
@@ -2534,9 +2530,8 @@
     "__prefab": {
       "__id__": 101
     },
-    "displayLabel": {
-      "__id__": 93
-    },
+    "numberSprite": null,
+    "numberFrames": [],
     "_id": ""
   },
   {
@@ -2916,9 +2911,8 @@
     "__prefab": {
       "__id__": 117
     },
-    "displayLabel": {
-      "__id__": 109
-    },
+    "numberSprite": null,
+    "numberFrames": [],
     "_id": ""
   },
   {
@@ -3818,7 +3812,6 @@
       "__id__": 0
     },
     "fileId": "c46/YsCPVOJYA4mWEpNYRx",
-    "instance": null,
     "targetOverrides": null,
     "nestedPrefabInstanceRoots": [
       {
