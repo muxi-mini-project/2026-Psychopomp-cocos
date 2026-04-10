@@ -1,10 +1,12 @@
-import { _decorator, Component, director, Node } from "cc";
+import { _decorator, Component, director, Node, tween, Vec3 } from "cc";
 const { ccclass } = _decorator;
 
 const event = {
     INTERACTABLE_CLICK: "INTERACTABLE_CLICK",
     INTERACTABLE_TRIGGERED: "INTERACTABLE_TRIGGERED",
 } as const;
+
+
 
 @ccclass("PencilInteract")
 export class PencilInteract extends Component {
@@ -26,7 +28,7 @@ export class PencilInteract extends Component {
         console.log(`[PencilInteract] 点击节点 -> emit INTERACTABLE_CLICK: ${this.interactableId}`);
         director.emit(event.INTERACTABLE_CLICK, this.interactableId);
     }
-    
+
     private onTriggered(result: any) {
         console.log("[PencilInteract] 收到交互事件", result);
 
