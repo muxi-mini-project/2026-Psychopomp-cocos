@@ -68,7 +68,7 @@ export class DiaryPwd extends Component {
         if (isSuccess) {
             console.log("✅ 密码正确！打开日记")
             this.diaryContent.active = true
-
+            
             director.emit("DIARY_PWD_SUCCESS")
         } else {
             console.log("❌ 密码错误！")
