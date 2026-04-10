@@ -16,11 +16,14 @@ export class IntroCutscene extends Component {
     @property({ type: Node, tooltip: "动画容器节点" })
     private readonly container: Node | null = null;
 
+    @property({ tooltip: "初始放大（避免露黑边）" })
+    private readonly initialScale: number = 1.3;
+
+    @property({ tooltip: "最终放大倍数" })
+    private readonly finalScale: number = 1.5;
+
     @property({ tooltip: "晃动幅度（屏幕宽高的百分比，0-0.5）" })
     private readonly shakeIntensityRatio: number = 0.05;
-
-    @property({ tooltip: "放大倍数" })
-    private readonly zoomScale: number = 1.5;
 
     @property({ tooltip: "动画时长（秒）" })
     private readonly animDuration: number = 5;
@@ -51,24 +54,36 @@ export class IntroCutscene extends Component {
     }
 
     private _playIntroAnimation(): void {
-        const targetScale = new Vec3(this.zoomScale, this.zoomScale, 1);
-        const stepDuration = this.animDuration / 4;
         const screenHeight = view.getVisibleSize().height;
         const intensity = screenHeight * this.shakeIntensityRatio;
+        const startScale = new Vec3(this.initialScale, this.initialScale, 1);
+        const endScale = new Vec3(this.finalScale, this.finalScale, 1);
+        const stepDuration = this.animDuration / 8;
+        const op = this.container.position.clone();
+        const to = (y: number) => new Vec3(op.x, op.y + y, op.z);
 
-        tween(this.container)
-            .by(stepDuration, { position: new Vec3(0, intensity, 0) })
-            .by(stepDuration, { position: new Vec3(0, -intensity * 2, 0) })
-            .by(stepDuration, { position: new Vec3(0, intensity, 0) })
-            .by(stepDuration, { position: new Vec3(0, 0, 0) })
-            .start();
+        // 初始放大（避免黑边）
+        this.container.setScale(startScale);
 
+        // 晃动动画（绝对位置，确保回到原点）
         tween(this.container)
-            .to(this.animDuration, { scale: targetScale })
+            .to(stepDuration, { position: to(intensity) })
+            .to(stepDuration, { position: to(-intensity) })
+            .to(stepDuration, { position: to(intensity) })
+            .to(stepDuration, { position: to(-intensity) })
+            .to(stepDuration, { position: to(intensity) })
+            .to(stepDuration, { position: to(-intensity) })
+            .to(stepDuration, { position: to(intensity) })
+            .to(stepDuration, { position: to(0) })
             .call(() => {
                 this._switchBgByIndex(this.bgAfterAnim);
                 this._waitForClick();
             })
+            .start();
+
+        // 放大动画
+        tween(this.container)
+            .to(this.animDuration, { scale: endScale })
             .start();
     }
 
@@ -87,7 +102,8 @@ export class IntroCutscene extends Component {
 
     private _startDialogue(): void {
         console.log("[IntroCutscene] _startDialogue called, dialogueId:", this.dialogueId);
-        // 直接恢复图片大小并切图
+        // 重置位置到原点，切图
+        this.container.setPosition(Vec3.ZERO);
         this.container.setScale(1, 1, 1);
         this._switchBgByIndex(this.bgOnClick);
         DialogManager.instance.showDialogue(this.dialogueId);
