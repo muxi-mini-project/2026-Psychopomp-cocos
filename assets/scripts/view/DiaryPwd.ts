@@ -5,7 +5,7 @@ const { ccclass, property } = _decorator
 @ccclass('DiaryPwd')
 export class DiaryPwd extends Component {
 
-    private readonly correctPwd = [2, 5, 0, 3, 1, 0]
+    private readonly correctPwd = [8, 2, 9, 2, 5, 0]
 
     @property(Node)
     boxList: Node[] = []
@@ -56,7 +56,7 @@ export class DiaryPwd extends Component {
         console.log("密码正确！")
         if (this.diaryContent) {
             this.diaryContent.active = true
-           // this.confirmButton.node.active = false
+            // this.confirmButton.node.active = false
         }
         //打开日记内容
         console.log("打开日记内容")
