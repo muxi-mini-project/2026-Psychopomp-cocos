@@ -5,8 +5,10 @@ const { ccclass, property } = _decorator
 @ccclass('DiaryPwd')
 export class DiaryPwd extends Component {
 
+
     // 正确密码：2 5 0 8 2 9
     private readonly correctPwd: number[] = [2, 5, 0, 8, 2, 9]
+
 
     // 拖入 box1 ~ box6
     @property(Node)
@@ -66,6 +68,7 @@ export class DiaryPwd extends Component {
         if (isSuccess) {
             console.log("✅ 密码正确！打开日记")
             this.diaryContent.active = true
+
             director.emit("DIARY_PWD_SUCCESS")
         } else {
             console.log("❌ 密码错误！")

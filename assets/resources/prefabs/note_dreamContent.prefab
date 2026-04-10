@@ -1,7 +1,7 @@
 [
   {
     "__type__": "cc.Prefab",
-    "_name": "noteContent",
+    "_name": "note_dreamContent",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_native": "",
@@ -13,7 +13,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "noteContent",
+    "_name": "note_dreamContent",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": null,
@@ -71,7 +71,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "noteContent",
+    "_name": "note_dreamContent",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
@@ -170,7 +170,7 @@
       "a": 255
     },
     "_spriteFrame": {
-      "__uuid__": "513efae2-fb8f-48ef-9c68-d0c6ca4091a3@f9941",
+      "__uuid__": "2395afd4-832a-4879-b327-1b36efd7dd8c@f9941",
       "__expectedType__": "cc.SpriteFrame"
     },
     "_type": 0,
