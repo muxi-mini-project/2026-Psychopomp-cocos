@@ -359,7 +359,7 @@
     "_string": "",
     "_horizontalAlign": 1,
     "_verticalAlign": 1,
-    "_actualFontSize": 28,
+    "_actualFontSize": 33.512499999999996,
     "_fontSize": 28,
     "_fontFamily": "Arial",
     "_lineHeight": 40,
@@ -4067,20 +4067,50 @@
     "inputDisplayLabel": {
       "__id__": 12
     },
-    "delButton": {
-      "__id__": 110
-    },
     "okButton": {
       "__id__": 126
     },
-    "clearButton": {
-      "__id__": 118
-    },
-    "backButton": {
-      "__id__": 150
-    },
     "enterButton": {
       "__id__": 134
+    },
+    "Btn_1": {
+      "__id__": 30
+    },
+    "Btn_2": {
+      "__id__": 38
+    },
+    "Btn_3": {
+      "__id__": 46
+    },
+    "Btn_4": {
+      "__id__": 54
+    },
+    "Btn_5": {
+      "__id__": 62
+    },
+    "Btn_6": {
+      "__id__": 70
+    },
+    "Btn_7": {
+      "__id__": 78
+    },
+    "Btn_8": {
+      "__id__": 86
+    },
+    "Btn_9": {
+      "__id__": 94
+    },
+    "Btn_0": {
+      "__id__": 102
+    },
+    "Btn_Clear": {
+      "__id__": 118
+    },
+    "Btn_Del": {
+      "__id__": 110
+    },
+    "Btn_Back": {
+      "__id__": 150
     },
     "_id": ""
   },
