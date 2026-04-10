@@ -29,10 +29,10 @@ export class DiaryPwd extends Component {
 
     onClick() {
         // 按钮点击动画
-        tween(this.confirmButton.node)
-            .to(0.1, { scale: new Vec3(0.9, 0.9, 0.9) })
-            .to(0.1, { scale: Vec3.ONE })
-            .start()
+        // tween(this.confirmButton.node)
+        //     .to(0.1, { scale: new Vec3(0.9, 0.9, 0.9) })
+        //     .to(0.1, { scale: Vec3.ONE })
+        //     .start()
 
         this.checkPassword()
     }
@@ -68,7 +68,7 @@ export class DiaryPwd extends Component {
         if (isSuccess) {
             console.log("✅ 密码正确！打开日记")
             this.diaryContent.active = true
-            
+
             director.emit("DIARY_PWD_SUCCESS")
         } else {
             console.log("❌ 密码错误！")
