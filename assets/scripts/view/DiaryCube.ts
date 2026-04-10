@@ -1,4 +1,4 @@
-import { _decorator, Component, Sprite, SpriteFrame, tween, Vec3, director, Node, UITransform } from 'cc'
+import { _decorator, Component, Sprite, SpriteFrame, tween, Vec3, director } from 'cc'
 const { ccclass, property } = _decorator
 
 @ccclass('DiaryCube')
@@ -28,63 +28,24 @@ export class DiaryCube extends Component {
     }
 
     onClick() {
-        // 点击缩放动画
+        // 点击放大动画（保留，手感更好）
         tween(this.node)
-            .to(0.2, { scale: new Vec3(1.2, 1.2, 1.2) })
-            .to(0.2, { scale: new Vec3(1, 1, 1) })
+            .to(0.1, { scale: new Vec3(1.1, 1.1, 1.1) })
+            .to(0.1, { scale: Vec3.ONE })
             .start()
 
-        // 数字 +1
-        const oldIndex = this.index
+        // 数字 +1，0-9循环
         this.index++
         if (this.index > 9) this.index = 0
 
-        // 滚动切换效果
-        this.playRollAnimation(oldIndex, this.index)
+        // 直接切换图片，无滚动
+        this.updateSprite()
     }
 
-    playRollAnimation(oldIdx: number, newIdx: number) {
-        if (!this.numberSprite || !this.numberFrames[oldIdx] || !this.numberFrames[newIdx]) return
-
-        const sprNode = this.numberSprite.node
-        const uiTransform = sprNode.getComponent(UITransform)
-        if (!uiTransform) return
-
-        const h = uiTransform.height
-
-        // 显示旧图
-        this.numberSprite.spriteFrame = this.numberFrames[oldIdx]
-
-        // 创建临时节点
-        const tempNode = new Node()
-        const tempUi = tempNode.addComponent(UITransform)
-        const tempSpr = tempNode.addComponent(Sprite)
-
-        tempSpr.spriteFrame = this.numberFrames[newIdx]
-        tempUi.setContentSize(uiTransform.contentSize)
-        tempNode.setPosition(0, h, 0)
-        sprNode.parent.addChild(tempNode)
-
-        // 旧图滑出
-        tween(sprNode)
-            .to(0.25, { position: new Vec3(0, -h, 0) })
-            .start()
-
-        // 新图滑入
-        tween(tempNode)
-            .to(0.25, { position: new Vec3(0, 0, 0) })
-            .call(() => {
-                this.numberSprite.spriteFrame = this.numberFrames[newIdx]
-                sprNode.setPosition(Vec3.ZERO)
-                tempNode.destroy()
-            })
-            .start()
-    }
-
+    // 直接切换当前数字贴图
     updateSprite() {
         if (this.numberSprite && this.numberFrames[this.index]) {
             this.numberSprite.spriteFrame = this.numberFrames[this.index]
-            this.numberSprite.node.setPosition(Vec3.ZERO)
         }
     }
 
