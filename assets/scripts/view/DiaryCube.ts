@@ -23,6 +23,10 @@ export class DiaryCube extends Component {
         this.updateSprite()
     }
 
+    getNumber() {
+        return this.index;
+    }
+
     onClick() {
         // 点击缩放动画
         tween(this.node)
