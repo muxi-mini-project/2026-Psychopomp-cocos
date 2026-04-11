@@ -119,6 +119,7 @@ export class UIManager extends Component {
     }
 
     public showMainMenu(): void {
+        console.log("[UIManager] showMainMenu called, fullscreenLayer:", this.fullscreenLayer, "mainMenu:", this.mainMenu);
         this.showFullscreenUI();
         if (this.mainMenu) {
             this.mainMenu.active = true;
@@ -219,6 +220,12 @@ export class UIManager extends Component {
             director.emit("VIDEO_PLAY", videoId);
         } else {
             console.log(`[UIManager] playVideo: videoPlayer 为空!`);
+        }
+    }
+
+    public hideVideoPlayer(): void {
+        if (this.videoPlayer) {
+            this.videoPlayer.active = false;
         }
     }
 

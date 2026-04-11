@@ -345,7 +345,26 @@
     "fileId": "99/CTosAJD07x6BCQI5eZc"
   },
   {
-    "__type__": "934f2WPrMtMeo0krR9hf+ug",
+    "__type__": "70e4fqLXEFOmZEnwlvYdfYb",
+    "_name": "",
+    "_objFlags": 0,
+    "__editorExtras__": {},
+    "node": {
+      "__id__": 3
+    },
+    "_enabled": true,
+    "__prefab": {
+      "__id__": 13
+    },
+    "interactableId": "point_water",
+    "_id": ""
+  },
+  {
+    "__type__": "cc.CompPrefabInfo",
+    "fileId": "4804npl0RJ54CnJOkm1Imq"
+  },
+  {
+    "__type__": "47b33rt8d9Mi7Agkvuvlx4c",
     "_name": "",
     "_objFlags": 0,
     "__editorExtras__": {},
@@ -366,7 +385,7 @@
   },
   {
     "__type__": "cc.CompPrefabInfo",
-    "fileId": "2b2wRJbElOkLCp/FVLqiga"
+    "fileId": "8f1gGPgv1IM55s6OaBihLH"
   },
   {
     "__type__": "cc.Node",

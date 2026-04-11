@@ -2,12 +2,12 @@
   "ver": "1.1.50",
   "importer": "prefab",
   "imported": true,
-  "uuid": "13d118dd-09e5-4b04-921d-6649fd34e0e0",
+  "uuid": "dc3cf164-c4f4-413c-ab5b-8a74e6b34e90",
   "files": [
     ".json"
   ],
   "subMetas": {},
   "userData": {
-    "syncNodeName": "codeYuanLiClose"
+    "syncNodeName": "LeftDrawerClose"
   }
 }

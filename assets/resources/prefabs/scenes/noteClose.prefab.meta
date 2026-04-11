@@ -2,12 +2,12 @@
   "ver": "1.1.50",
   "importer": "prefab",
   "imported": true,
-  "uuid": "13d118dd-09e5-4b04-921d-6649fd34e0e0",
+  "uuid": "5ed77679-6a8e-4b14-851d-dbed1e5a4e55",
   "files": [
     ".json"
   ],
   "subMetas": {},
   "userData": {
-    "syncNodeName": "codeYuanLiClose"
+    "syncNodeName": "noteClose"
   }
 }

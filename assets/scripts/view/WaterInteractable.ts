@@ -18,8 +18,12 @@ export class WaterInteractable extends Component {
     onEnable() {
         director.on(event.INTERACTABLE_TRIGGERED, this.onTriggered, this);
         this.node.on(Node.EventType.TOUCH_END, this.onClick, this);
+<<<<<<<< HEAD:assets/scripts/view/WaterInteractable.ts
         console.log("[WaterInteractable] onEnable -> 注册监听，点击监听");
         
+========
+        console.log("点击水池近景 开启监听");
+>>>>>>>> feature/bathroom-scene-interactive:assets/scripts/view/Sink.ts
     }
 
     onDisable() {
