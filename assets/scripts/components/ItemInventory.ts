@@ -56,7 +56,7 @@ export class ItemInventory extends Component {
     /**
      * 从存档恢复物品栏（手动调用）
      */
-    restoreInventory(): void {
+    async restoreInventory(): Promise<void> {
         const inventoryList = DataManager.instance.getInventoryList()
         console.log(`[ItemInventory] restoreInventory, inventoryList:`, inventoryList)
 
@@ -68,10 +68,10 @@ export class ItemInventory extends Component {
             return
         }
 
-        // 逐个加载物品
+        // 逐个顺序加载物品（避免并发加载导致槽位冲突）
         for (let i = 0; i < inventoryList.length; i++) {
             const itemId = inventoryList[i]
-            this._loadItemToSlot(itemId)
+            await this._loadItemToSlotAsync(itemId)
         }
     }
 
@@ -118,6 +118,30 @@ export class ItemInventory extends Component {
         this._loadItemPrefab(itemId, slotNode, slot)
     }
 
+    private _loadItemToSlotAsync(itemId: string): Promise<void> {
+        return new Promise((resolve) => {
+            // 找到空 slot
+            let slotNode: Node | null = null
+            let slot: Slot | null = null
+            for (let i = 0; i < this.slots.length; i++) {
+                const s = this.slots[i].getComponent(Slot)
+                if (s && s.isEmpty()) {
+                    slotNode = this.slots[i]
+                    slot = s
+                    break
+                }
+            }
+
+            if (!slotNode || !slot) {
+                console.log('物品栏已满！')
+                resolve()
+                return
+            }
+
+            this._loadItemPrefabAsync(itemId, slotNode, slot, resolve)
+        })
+    }
+
     private _loadItemPrefab(itemId: string, slotNode: Node, slot: Slot): void {
         this._loadingItems.add(itemId)
 
@@ -139,6 +163,32 @@ export class ItemInventory extends Component {
             slot.setItemIcon(iconNode, itemId)
             this._loadingItems.delete(itemId)
             console.log(`[ItemInventory] 物品添加成功: ${itemId}`)
+        })
+    }
+
+    private _loadItemPrefabAsync(itemId: string, slotNode: Node, slot: Slot, onComplete: () => void): void {
+        this._loadingItems.add(itemId)
+
+        // 预制体路径: prefabs/Items/Item_{itemId}
+        const prefabPath = `prefabs/Items/Item_${itemId}`
+        console.log(`[ItemInventory] 加载预制体: ${prefabPath}`)
+
+        resources.load(prefabPath, Prefab, (err: Error | null, prefab: Prefab | null) => {
+            if (err) {
+                console.error(`[ItemInventory] 加载预制体失败: ${prefabPath}`, err)
+                this._loadingItems.delete(itemId)
+                onComplete()
+                return
+            }
+
+            console.log(`[ItemInventory] 预制体加载成功，实例化: ${prefabPath}`)
+            const iconNode = instantiate(prefab)
+            iconNode.setParent(slotNode)
+            iconNode.setScale(1, 1, 1)
+            slot.setItemIcon(iconNode, itemId)
+            this._loadingItems.delete(itemId)
+            console.log(`[ItemInventory] 物品添加成功: ${itemId}`)
+            onComplete()
         })
     }
 }

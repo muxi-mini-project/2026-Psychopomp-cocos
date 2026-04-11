@@ -139,9 +139,13 @@ export class IntroCutscene extends Component {
         }
     }
 
-    private _onDialogueEnd(): void {
-        DataManager.instance.setFlag("INTRO_CUTSCENE_PLAYED", true);
-        director.emit("INTRO_COMPLETE");
+    private _onDialogueEnd(dialogueId: string): void {
+        // 只处理开场对话的结束
+        if (dialogueId === this.dialogueId) {
+            console.log('[IntroCutscene] 开场对话结束');
+            DataManager.instance.setFlag("INTRO_CUTSCENE_PLAYED", true);
+            director.emit("INTRO_COMPLETE");
+        }
     }
 
     protected onDestroy(): void {

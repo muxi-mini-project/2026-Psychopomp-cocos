@@ -127,6 +127,12 @@
                 { "text": "只是一些常用的文具。", "expression": null }
             ]
         },
+        "pick_pencil": {
+            "id": "pick_pencil",
+            "lines": [
+                { "text": "一只削尖的铅笔。", "expression": null }
+            ]
+        },
         "rightdrawer_locked": {
             "id": "rightdrawer_locked",
             "lines": [
@@ -143,6 +149,12 @@
             "id": "water_hint",
             "lines": [
                 { "text": "漏水的水龙头...积水已经快溢出水池。", "expression": null }
+            ]
+        },
+        "diary_hint": {
+            "id": "diary_hint",
+            "lines": [
+                { "text": "空白处似乎有凹下去的字痕。", "expression": null }
             ]
         }
     }

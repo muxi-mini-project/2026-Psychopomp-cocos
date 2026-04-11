@@ -72,12 +72,7 @@ export class GameManager extends Component {
         } else {
             console.log("[GameManager] _resumeGame: 直接进入游戏");
             UIManager.instance.showGameUI();
-            // 恢复物品栏
-            const inventory = UIManager.instance.gameLayer?.getComponentInChildren(ItemInventory);
-            if (inventory) {
-                console.log("[GameManager] 调用 restoreInventory");
-                inventory.restoreInventory();
-            }
+            this._restoreInventory();
             this._enterGame();
         }
     }
@@ -97,6 +92,7 @@ export class GameManager extends Component {
             DataManager.instance.setIntroPlayed(true);
             DataManager.instance.saveGame("auto_save", true);
             UIManager.instance.showGameUI();
+            this._restoreInventory();
             this._enterGame();
         }
     }
@@ -109,9 +105,21 @@ export class GameManager extends Component {
         UIManager.instance.hideIntroCutscene();
         console.log("[GameManager] _onIntroComplete: 调用 showGameUI");
         UIManager.instance.showGameUI();
+        this._restoreInventory();
         DataManager.instance.setCurrentScene("scene_bedroom");
         console.log("[GameManager] _onIntroComplete: 调用 _enterGame");
         this._enterGame();
+    }
+
+    /**
+     * 恢复物品栏（清空残留物品，从存档加载）
+     */
+    private _restoreInventory(): void {
+        const inventory = UIManager.instance.gameLayer?.getComponentInChildren(ItemInventory);
+        if (inventory) {
+            console.log("[GameManager] _restoreInventory");
+            inventory.restoreInventory();
+        }
     }
 
     private _onEndingComplete(): void {

@@ -1,7 +1,12 @@
 import { _decorator, Component, director, Node, Button } from 'cc'
 import { DiaryCube } from './DiaryCube'
 import { SceneViewManager } from '../core/SceneViewManager'
+import { DataManager } from '../core/DataManager'
 const { ccclass, property } = _decorator
+
+const FLAG = {
+    DIARY_UNLOCKED: 'DIARY_UNLOCKED',
+} as const
 
 @ccclass('DiaryPwd')
 export class DiaryPwd extends Component {
@@ -73,6 +78,9 @@ export class DiaryPwd extends Component {
     }
 
     private _onPasswordSuccess(): void {
+        console.log('[DiaryPwd] 密码正确，设置 DIARY_UNLOCKED flag');
+        DataManager.instance.setFlag(FLAG.DIARY_UNLOCKED, true);
+
         if (!this.targetScene) {
             console.warn('[DiaryPwd] targetScene 未设置，无法切换场景');
             return;

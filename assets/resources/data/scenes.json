@@ -49,7 +49,7 @@
         "rightDrawerOpen": {
             "name": "右抽屉内特写",
             "prefab": "rightDrawerOpen",
-            "preloadNext": ["deskMidClose"],
+            "preloadNext": ["deskMidClose", "diaryCloseOpen_new"],
             "interactables": [
                 {
                     "id": "point_leftArrow_deskMid_to_deskClose",
@@ -87,7 +87,8 @@
                                 ]
                             },
                             "result": {
-                                "code": "UNLOCKED"
+                                "code": "UNLOCKED",
+                                "switchScene": "diaryCloseOpen_new"
                             }
                         }
                     ]
@@ -126,7 +127,8 @@
                             "result": {
                                 "code": "PICK_PENCIL",
                                 "pickItem": "pencil",
-                                "setFlags": [{ "name": "PENCIL_PICKED", "value": true }]
+                                "setFlags": [{ "name": "PENCIL_PICKED", "value": true }],
+                                "data": { "dialogueId": "pick_pencil" }
                             }
                         },
                         {
@@ -153,7 +155,8 @@
                             "result": {
                                 "code": "UNLOCKED",
                                 "consumeItem": "key",
-                                "setFlags": [{ "name": "RIGHTDRAWER_UNLOCKED", "value": true }]
+                                "setFlags": [{ "name": "RIGHTDRAWER_UNLOCKED", "value": true }],
+                                "switchScene": "rightDrawerOpen"
                             }
                         },
                         {
@@ -164,7 +167,8 @@
                                 ]
                             },
                             "result": {
-                                "code": "OPEN"
+                                "code": "OPEN",
+                                "switchScene": "rightDrawerOpen"
                             }
                         },
                         {
@@ -260,7 +264,8 @@
                             "result": {
                                 "code": "PICK_PENCIL",
                                 "pickItem": "pencil",
-                                "setFlags": [{ "name": "PENCIL_PICKED", "value": true }]
+                                "setFlags": [{ "name": "PENCIL_PICKED", "value": true }],
+                                "data": { "dialogueId": "pick_pencil" }
                             }
                         },
                         {
@@ -410,6 +415,20 @@
                             }
                         },
                         {
+                            "id": "already_wet",
+                            "condition": {
+                                "flags": [
+                                    { "name": "XUANZHI_WET", "value": true },
+                                    { "name": "WET_XUANZHI_PICKED", "value": false }
+                                ]
+                            },
+                            "result": {
+                                "code": "PICK_WET_XUANZHI",
+                                "pickItem": "wet_xuanZhi",
+                                "setFlags": [{ "name": "WET_XUANZHI_PICKED", "value": true }]
+                            }
+                        },
+                        {
                             "id": "no_xuanzhi",
                             "result": {
                                 "code": "NORMAL_HINT",
@@ -427,6 +446,58 @@
                             "result": {
                                 "code": "ENTER_BATHROOM",
                                 "switchScene": "bathroom"
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        "diaryCloseOpen_new": {
+            "name": "日记本打开特写",
+            "prefab": "scenes/diaryCloseOpen_new",
+            "preloadNext": ["rightDrawerOpen"],
+            "interactables": [
+                {
+                    "id": "point_leftArrow_diaryCloseOpen_to_rightDrawer",
+                    "description": "返回右抽屉",
+                    "states": [
+                        {
+                            "id": "default",
+                            "result": {
+                                "code": "ENTER_RIGHTDRAWER",
+                                "switchScene": "rightDrawerOpen"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "id": "point_diary_hidden_content",
+                    "description": "日记本隐藏内容 - 需要铅笔才能显示",
+                    "states": [
+                        {
+                            "id": "can_reveal",
+                            "condition": {
+                                "flags": [
+                                    { "name": "PENCIL_PICKED", "value": true },
+                                    { "name": "CONTENT_REVEALED", "value": false }
+                                ],
+                                "requireItem": "pencil"
+                            },
+                            "result": {
+                                "code": "DIARY_HIDDEN_CONTENT_REVEALED",
+                                "setFlags": [{ "name": "CONTENT_REVEALED", "value": true }]
+                            }
+                        },
+                        {
+                            "id": "cannot_reveal",
+                            "condition": {
+                                "flags": [
+                                    { "name": "CONTENT_REVEALED", "value": false }
+                                ]
+                            },
+                            "result": {
+                                "code": "NORMAL_HINT",
+                                "data": { "dialogueId": "diary_hint" }
                             }
                         }
                     ]
