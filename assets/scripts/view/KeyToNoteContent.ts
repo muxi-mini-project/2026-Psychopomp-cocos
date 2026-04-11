@@ -1,28 +1,35 @@
 import { _decorator, Component, Node } from "cc";
+import { DataManager } from "../core/DataManager";
 const { ccclass, property } = _decorator;
 
-@ccclass("KeyToNoteContent")
+const FLAG = {
+    NOTE_CHECKED: 'NOTE_CHECKED',
+} as const;
 
+@ccclass('KeyToNoteContent')
 export class KeyToNoteContent extends Component {
-    @property({ type: Node, tooltip: "备忘录的钥匙节点" })
+    @property({ type: Node, tooltip: '备忘录的钥匙节点' })
     public keyNode: Node | null = null;
 
     onEnable() {
-        this.node.on(Node.EventType.TOUCH_END, this.onClicked, this)
-        console.log("KeyToNoteContent开启监听");
-
-
+        console.log('[KeyToNoteContent] onEnable - 注册点击监听');
+        this.node.on(Node.EventType.TOUCH_END, this._onClicked, this);
     }
 
     onDisable() {
-        this.node.off(Node.EventType.TOUCH_END, this.onClicked, this)
-        console.log("KeyToNoteContent关闭监听");
+        console.log('[KeyToNoteContent] onDisable - 注销点击监听');
+        this.node.off(Node.EventType.TOUCH_END, this._onClicked, this);
     }
-    onClicked() {
+
+    private _onClicked(): void {
+        console.log('[KeyToNoteContent] _onClicked - 点击备忘录钥匙节点');
+
         if (this.keyNode) {
             this.keyNode.active = true;
-            console.log("点击了备忘录钥匙节点");
-
+            console.log('[KeyToNoteContent] 钥匙节点已显示');
         }
+
+        DataManager.instance.setFlag(FLAG.NOTE_CHECKED, true);
+        console.log(`[KeyToNoteContent] 设置 Flag: ${FLAG.NOTE_CHECKED} = true`);
     }
 }
